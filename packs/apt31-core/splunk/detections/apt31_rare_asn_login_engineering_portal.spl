@@ -1,0 +1,3 @@
+index=* (sourcetype=azure:monitor:aad OR sourcetype=web:access)
+("engineering" OR "portal")
+| stats values(src_ip) as src_ips values(src_asn) as asns count by user uri_path app

@@ -1,0 +1,9 @@
+FROM logs-*, m365-*, o365-*, azure-*
+| WHERE (
+    event.dataset LIKE "*mail*" OR event.provider LIKE "*Exchange*" OR event.category == "email"
+  )
+  OR (
+    event.category == "authentication" AND event.outcome == "success" AND user.roles LIKE "*admin*"
+  )
+| KEEP @timestamp, host.name, user.name, source.ip, event.category, event.action, event.dataset, message
+| SORT @timestamp DESC

@@ -1,0 +1,6 @@
+index=* sourcetype=o365:management:activity
+(Operation="New-InboxRule" OR Operation="Set-InboxRule" OR Operation="MailItemsAccessed" OR Operation="SearchQueryInitiated")
+| bucket _time span=1h
+| stats count as action_count values(Operation) as actions by UserId _time
+| where action_count>=5
+| sort - action_count

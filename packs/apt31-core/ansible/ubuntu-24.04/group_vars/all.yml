@@ -1,0 +1,11 @@
+---
+apt31_allowed_admin_sources:
+  - "10.0.0.0/8"
+  - "192.168.0.0/16"
+
+apt31_enable_ufw: true
+apt31_enable_fail2ban: true
+apt31_enable_auditd: true
+apt31_enable_unattended_upgrades: true
+apt31_disable_root_ssh: true
+apt31_disable_password_ssh: true

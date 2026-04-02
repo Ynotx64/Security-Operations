@@ -1,0 +1,4 @@
+FROM logs-*, endpoint-*
+| WHERE host.os.type == "macos" AND (process.name IN ("Microsoft Remote Desktop", "Windows App", "xfreerdp", "rdesktop", "FreeRDP") OR process.command_line LIKE "*3389*")
+| KEEP @timestamp, host.name, user.name, process.name, process.command_line, destination.ip
+| SORT @timestamp DESC

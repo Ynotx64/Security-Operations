@@ -1,0 +1,5 @@
+index=* sourcetype=WinEventLog:Security EventCode=4625 Logon_Type=10
+| bucket _time span=15m
+| stats count as fail_count values(src_ip) as src_ips by host user _time
+| where fail_count>=8
+| sort - fail_count

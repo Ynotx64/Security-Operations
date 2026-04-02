@@ -1,0 +1,31 @@
+<group name="ifrag-dhv,">
+  <rule id="100500" level="10">
+    <if_group>windows,</if_group>
+    <field name="win.system.eventID">4625</field>
+    <field name="win.eventdata.logonType">10</field>
+    <description>ifrag-dhv: Windows RDP failed logon</description>
+    <group>authentication_failed,rdp,windows,</group>
+  </rule>
+
+  <rule id="100501" level="12" frequency="8" timeframe="900">
+    <if_matched_sid>100500</if_matched_sid>
+    <same_field>win.system.computer</same_field>
+    <description>ifrag-dhv: Windows RDP brute-force threshold reached</description>
+    <group>attack,bruteforce,rdp,windows,</group>
+  </rule>
+
+  <rule id="100502" level="10">
+    <if_group>linux,</if_group>
+    <match>xrdp</match>
+    <match>login failed</match>
+    <description>ifrag-dhv: Linux XRDP failed authentication</description>
+    <group>authentication_failed,xrdp,linux,</group>
+  </rule>
+
+  <rule id="100503" level="12" frequency="5" timeframe="900">
+    <if_matched_sid>100502</if_matched_sid>
+    <same_field>agent.name</same_field>
+    <description>ifrag-dhv: Linux XRDP brute-force threshold reached</description>
+    <group>attack,bruteforce,xrdp,linux,</group>
+  </rule>
+</group>

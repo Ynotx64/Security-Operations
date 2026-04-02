@@ -1,0 +1,5 @@
+FROM logs-*, filebeat-*
+| WHERE log.file.path LIKE "*xrdp-sesman.log" OR message LIKE "*xrdp*login failed*"
+| STATS fail_count = COUNT(), examples = VALUES(message) BY host.name, source.ip, DATE_TRUNC(15 minutes, @timestamp)
+| WHERE fail_count >= 5
+| SORT fail_count DESC

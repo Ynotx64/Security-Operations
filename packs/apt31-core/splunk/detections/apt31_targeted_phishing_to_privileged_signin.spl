@@ -1,0 +1,3 @@
+index=* ((sourcetype=o365:management:activity AND (Operation="MailItemsAccessed" OR Operation="New-InboxRule")) OR (sourcetype=azure:monitor:aad AND ResultType=0))
+| stats values(Operation) as mail_ops values(ClientIP) as src_ips values(UserId) as users by _time sourcetype
+| sort _time

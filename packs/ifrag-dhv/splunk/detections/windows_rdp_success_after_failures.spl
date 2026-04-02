@@ -1,0 +1,6 @@
+index=* sourcetype=WinEventLog:Security (EventCode=4624 OR EventCode=4625) Logon_Type=10
+| eval outcome=if(EventCode=4624,"success","failure")
+| bucket _time span=30m
+| stats count(eval(outcome="success")) as success_count count(eval(outcome="failure")) as failure_count values(src_ip) as src_ips by host user _time
+| where success_count>=1 AND failure_count>=5
+| sort - failure_count

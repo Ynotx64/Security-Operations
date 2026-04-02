@@ -1,0 +1,3 @@
+index=* sourcetype=azure:monitor:aad ResultType=0
+(user="*msp*" OR user_role="admin" OR delegated_admin="true")
+| stats count values(ClientIP) as src_ips values(src_asn) as asns by user app displayName

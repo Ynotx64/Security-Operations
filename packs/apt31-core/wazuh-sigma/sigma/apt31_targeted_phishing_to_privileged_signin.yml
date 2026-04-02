@@ -1,0 +1,17 @@
+title: APT31 Targeted Phishing To Privileged Signin
+id: apt31-0002
+status: experimental
+description: Detects email or mailbox activity correlated with a privileged sign-in.
+logsource:
+  product: windows
+  service: security
+detection:
+  selection:
+    EventID: 4624
+  condition: selection
+falsepositives:
+  - Legitimate privileged sign-in after normal email activity
+level: high
+tags:
+  - attack.t1566
+  - attack.t1078

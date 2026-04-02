@@ -1,0 +1,21 @@
+title: Windows Successful RDP Logon After Failure Burst
+id: 1d278b0f-4a54-4d66-8ff9-1b9fdhv0002
+status: experimental
+description: Detects a successful RDP logon after multiple failures in a short period.
+logsource:
+  product: windows
+  service: security
+detection:
+  failure:
+    EventID: 4625
+    LogonType: 10
+  success:
+    EventID: 4624
+    LogonType: 10
+  timeframe: 30m
+  condition: success and failure
+falsepositives:
+  - User correcting a mistyped password after repeated attempts
+level: high
+tags:
+  - attack.t1021.001

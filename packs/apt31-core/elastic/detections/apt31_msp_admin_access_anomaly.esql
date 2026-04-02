@@ -1,0 +1,9 @@
+FROM logs-*, azure-*, o365-*
+| WHERE event.category == "authentication"
+  AND event.outcome == "success"
+  AND (
+    user.roles LIKE "*admin*" OR user.name LIKE "*msp*" OR labels.account_type == "delegated_admin"
+  )
+| STATS signins = COUNT(), src_ips = VALUES(source.ip), asns = VALUES(source.as.organization.name) BY user.name, DATE_TRUNC(1 day, @timestamp)
+| WHERE signins >= 1
+| SORT user.name ASC

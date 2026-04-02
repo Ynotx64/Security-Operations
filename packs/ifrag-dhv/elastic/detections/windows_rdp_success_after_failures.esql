@@ -1,0 +1,6 @@
+FROM logs-*, winlogbeat-*, filebeat-*
+| WHERE event.code IN ("4624","4625") AND winlog.event_data.LogonType == "10"
+| EVAL outcome = CASE(event.code == "4624", "success", event.code == "4625", "failure", "other")
+| STATS success_count = COUNT(IF(outcome == "success", 1, NULL)), failure_count = COUNT(IF(outcome == "failure", 1, NULL)), src_ips = VALUES(source.ip) BY host.name, user.name, DATE_TRUNC(30 minutes, @timestamp)
+| WHERE success_count >= 1 AND failure_count >= 5
+| SORT failure_count DESC

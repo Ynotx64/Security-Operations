@@ -1,0 +1,6 @@
+FROM logs-*, azure-*, okta-*
+| WHERE event.category == "authentication"
+  AND event.outcome == "success"
+  AND (url.path LIKE "*engineering*" OR url.path LIKE "*portal*")
+| KEEP @timestamp, user.name, source.ip, source.as.organization.name, url.path, host.name
+| SORT @timestamp DESC
