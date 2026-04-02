@@ -1,4 +1,4 @@
-# Security Operations Detection Engineering
+# Security Operations
 
 Enterprise-style SOC lab documentation, detection engineering packs, hardening guidance, and validation content.
 
