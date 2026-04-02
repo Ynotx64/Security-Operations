@@ -1,0 +1,25 @@
+## APTPACK Initial Access audit rules
+-D
+-b 8192
+-f 1
+
+-a always,exit -F arch=b64 -S execve -k aptpack_exec
+-a always,exit -F arch=b32 -S execve -k aptpack_exec
+
+-w /etc/passwd -p wa -k aptpack_identity
+-w /etc/shadow -p wa -k aptpack_identity
+-w /etc/group -p wa -k aptpack_identity
+-w /etc/sudoers -p wa -k aptpack_priv
+-w /etc/sudoers.d/ -p wa -k aptpack_priv
+
+-w /etc/ssh/sshd_config -p wa -k aptpack_ssh
+-w /etc/crontab -p wa -k aptpack_persist
+-w /etc/cron.d/ -p wa -k aptpack_persist
+-w /etc/systemd/system/ -p wa -k aptpack_persist
+
+-w /tmp/ -p wa -k aptpack_tmp
+-w /var/tmp/ -p wa -k aptpack_tmp
+-w /dev/shm/ -p wa -k aptpack_tmp
+
+-w /etc/hosts -p wa -k aptpack_net
+-w /etc/resolv.conf -p wa -k aptpack_net

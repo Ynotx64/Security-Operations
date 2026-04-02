@@ -1,0 +1,6 @@
+---
+aptpack_required_packages:
+  - auditd
+  - audispd-plugins
+  - rsyslog
+  - jq

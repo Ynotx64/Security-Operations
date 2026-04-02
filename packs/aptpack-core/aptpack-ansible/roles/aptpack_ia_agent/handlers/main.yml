@@ -1,0 +1,19 @@
+---
+- name: restart journald
+  systemd:
+    name: systemd-journald
+    state: restarted
+
+- name: reload audit rules
+  command: augenrules --load
+  notify: restart auditd
+
+- name: restart auditd
+  systemd:
+    name: auditd
+    state: restarted
+
+- name: restart wazuh-agent
+  systemd:
+    name: wazuh-agent
+    state: restarted
