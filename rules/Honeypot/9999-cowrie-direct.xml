@@ -1,0 +1,70 @@
+<group name="honeypot,cowrie,tpot,override,">
+
+  <!-- hidden helper: cowrie command input -->
+  <rule id="119900" level="0" noalert="1">
+    <if_sid>111053</if_sid>
+    <match>[cowrie.command.input] CMD:</match>
+    <description>Cowrie command execution helper</description>
+    <group>cowrie,helper,command_execution,override,</group>
+  </rule>
+
+  <!-- hidden helper: cowrie file download -->
+  <rule id="119906" level="0" noalert="1">
+    <if_sid>111053</if_sid>
+    <match>[cowrie.session.file_download] Saved http</match>
+    <description>Cowrie file download helper</description>
+    <group>cowrie,helper,file_download,override,</group>
+  </rule>
+
+  <!-- hidden helper: wget retrieval -->
+  <rule id="119901" level="0" noalert="1">
+    <if_sid>119900</if_sid>
+    <match>CMD: wget </match>
+    <description>Cowrie wget helper</description>
+    <group>cowrie,helper,wget,override,</group>
+  </rule>
+
+  <!-- hidden helper: curl retrieval -->
+  <rule id="119902" level="0" noalert="1">
+    <if_sid>119900</if_sid>
+    <match>CMD: /bin/sh -c 'curl </match>
+    <description>Cowrie curl helper</description>
+    <group>cowrie,helper,curl,override,</group>
+  </rule>
+
+  <!-- final alert: wget + chmod -->
+  <rule id="119909" level="16">
+    <if_sid>119901</if_sid>
+    <match>chmod +x</match>
+    <description>Cowrie retrieved payload and prepared it for execution</description>
+    <group>cowrie,payload_delivery,retrieved_and_prepared,post_compromise,override,</group>
+    <mitre><id>T1105</id></mitre>
+  </rule>
+
+  <!-- final alert: miner-specific curl delivery -->
+  <rule id="119905" level="15">
+    <if_sid>119902</if_sid>
+    <match>xmrig</match>
+    <description>Cowrie cryptominer deployment pattern detected</description>
+    <group>cowrie,miner,resource_hijacking,crypto_mining,override,</group>
+    <mitre><id>T1496</id></mitre>
+  </rule>
+
+  <!-- fallback final alert: generic curl pipe-to-shell -->
+  <rule id="119910" level="16">
+    <if_sid>119902</if_sid>
+    <match>| sh</match>
+    <description>Cowrie curl pipe-to-shell payload execution observed</description>
+    <group>cowrie,payload_delivery,curl_pipe_shell,post_compromise,override,</group>
+    <mitre><id>T1059</id></mitre>
+  </rule>
+
+  <!-- final alert: saved file + hash -->
+  <rule id="119908" level="14">
+    <if_sid>119906</if_sid>
+    <match>SHA256:</match>
+    <description>Cowrie file hash IOC candidate observed</description>
+    <group>cowrie,ioc_candidate,ioc_hash,hash_observed,override,</group>
+  </rule>
+
+</group>
