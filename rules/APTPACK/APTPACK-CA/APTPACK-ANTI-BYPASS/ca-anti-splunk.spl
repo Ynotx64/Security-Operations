@@ -1,0 +1,3 @@
+index=* sourcetype=suricata alert.signature="APTPACK CA Domain Fronting Or Header Mismatch"
+| stats count by src_ip dest_ip alert.signature
+| eval phase="CA", anti_bypass="true", severity="critical"

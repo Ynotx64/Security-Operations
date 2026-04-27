@@ -1,0 +1,7 @@
+==================================================
+TEST: 07_event_action_local_user_created
+JSON: {"event_action":"local_user_created"}
+==================================================
+
+
+

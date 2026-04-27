@@ -1,0 +1,48 @@
+validation_plan:
+  id: APTPACK-MASTER-VALIDATION-001
+  name: APTPACK Master Validation Plan
+  objective: >
+    Provide deterministic, phase-based validation using scenario YAMLs, custom test IDs,
+    engine-specific syntax checks, deployment checks, event replay, dashboard verification,
+    and artifact collection.
+
+phases:
+  - IA
+  - EXEC
+  - PE
+  - DISC
+  - CA
+  - STAGE
+
+workflow:
+  - step: syntax_validation
+    actions:
+      - Wazuh: wazuh-analysisd -t
+      - Suricata: suricata -T -c /etc/suricata/suricata.yaml
+      - Zeek: zeekctl check OR /opt/zeek/bin/zeekctl check
+      - Splunk: render searches into savedsearches.conf or import bundle
+  - step: deployment_validation
+    actions:
+      - verify files copied to engine directories
+      - verify handlers completed successfully
+      - verify latest artifact summary contains all expected content
+  - step: scenario_execution
+    actions:
+      - execute only the demo commands defined in each phase YAML
+      - maintain one corr and one anti test_id per run
+  - step: alert_verification
+    actions:
+      - search by unique test_id first
+      - search by event_type second
+      - avoid using broad rule description as primary proof
+  - step: artifact_collection
+    actions:
+      - collect Wazuh alerts extracts
+      - collect Suricata eve/fast snippets
+      - collect Zeek conn/http snippets
+      - collect Splunk query screenshots or exported results
+
+success_definition:
+  - each phase has at least one corr proof artifact
+  - each phase has at least one anti proof artifact
+  - no phase validation depends on unrelated admin noise

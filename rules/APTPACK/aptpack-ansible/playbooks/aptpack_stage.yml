@@ -1,0 +1,11 @@
+---
+- name: Deploy APTPACK Staging / Lateral / Exfiltration phase
+  hosts: soc-admin
+  gather_facts: true
+  vars_files:
+    - ../group_vars/all.yml
+  vars:
+    aptpack_phase_code: STAGE
+    aptpack_phase_dir_name: APTPACK-STAGE
+  roles:
+    - role: aptpack_phase_deploy

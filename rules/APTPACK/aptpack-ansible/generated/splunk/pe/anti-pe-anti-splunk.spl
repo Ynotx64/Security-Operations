@@ -1,0 +1,3 @@
+index=* sourcetype=suricata alert.signature="APTPACK PE LOLBin Persistence Keyword"
+| stats count by src_ip dest_ip alert.signature
+| eval phase="PE", anti_bypass="true", severity="critical"

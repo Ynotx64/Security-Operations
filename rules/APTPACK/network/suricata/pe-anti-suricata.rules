@@ -1,0 +1,9 @@
+alert http $HOME_NET any -> $EXTERNAL_NET any (
+    msg:"APTPACK PE LOLBin Persistence Keyword";
+    flow:to_server,established;
+    pcre:"/(reg add|sc create|schtasks|wmic process|rundll32|mshta)/Ui";
+    classtype:bad-unknown;
+    sid:700202;
+    rev:1;
+    metadata:mitre_tactic TA0003, mitre_tactic TA0004, phase PE, anti_bypass true, severity critical;
+)

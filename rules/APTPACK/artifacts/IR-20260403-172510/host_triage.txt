@@ -1,0 +1,129 @@
+=== hostname ===
+ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009
+=== ip addr ===
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host noprefixroute 
+       valid_lft forever preferred_lft forever
+2: enp1s0: <BROADCAST,MULTICAST,PROMISC,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 52:54:00:8d:08:51 brd ff:ff:ff:ff:ff:ff
+    inet 192.168.20.148/24 brd 192.168.20.255 scope global dynamic noprefixroute enp1s0
+       valid_lft 2466sec preferred_lft 2466sec
+    inet6 fe80::5054:ff:fe8d:851/64 scope link 
+       valid_lft forever preferred_lft forever
+3: enp2s0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 52:54:00:bf:9c:ed brd ff:ff:ff:ff:ff:ff
+    inet 169.254.103.243/16 brd 169.254.255.255 scope link noprefixroute enp2s0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::5054:ff:febf:9ced/64 scope link 
+       valid_lft forever preferred_lft forever
+=== routes ===
+default via 192.168.20.1 dev enp1s0 proto dhcp src 192.168.20.148 metric 100 
+169.254.0.0/16 dev enp2s0 proto kernel scope link src 169.254.103.243 metric 101 
+192.168.20.0/24 dev enp1s0 proto kernel scope link src 192.168.20.148 metric 100 
+224.0.0.0/4 dev enp2s0 proto static scope link metric 101 
+=== listening sockets ===
+Netid State  Recv-Q Send-Q      Local Address:Port  Peer Address:PortProcess                                                 
+udp   UNCONN 0      0                 0.0.0.0:57032      0.0.0.0:*    users:(("avahi-daemon",pid=842,fd=14))                 
+udp   UNCONN 0      0              127.0.0.54:53         0.0.0.0:*    users:(("systemd-resolve",pid=701,fd=16))              
+udp   UNCONN 0      0           127.0.0.53%lo:53         0.0.0.0:*    users:(("systemd-resolve",pid=701,fd=14))              
+udp   UNCONN 0      0                 0.0.0.0:5353       0.0.0.0:*    users:(("avahi-daemon",pid=842,fd=12))                 
+udp   UNCONN 0      0                    [::]:36816         [::]:*    users:(("avahi-daemon",pid=842,fd=15))                 
+udp   UNCONN 0      0                    [::]:5353          [::]:*    users:(("avahi-daemon",pid=842,fd=13))                 
+tcp   LISTEN 0      4096            127.0.0.1:631        0.0.0.0:*    users:(("cupsd",pid=6289,fd=7))                        
+tcp   LISTEN 0      4096           127.0.0.54:53         0.0.0.0:*    users:(("systemd-resolve",pid=701,fd=17))              
+tcp   LISTEN 0      4096              0.0.0.0:22         0.0.0.0:*    users:(("sshd",pid=1203,fd=3),("systemd",pid=1,fd=133))
+tcp   LISTEN 0      100               0.0.0.0:25         0.0.0.0:*    users:(("master",pid=1821,fd=13))                      
+tcp   LISTEN 0      5               127.0.0.1:27759      0.0.0.0:*    users:(("zeek",pid=20123,fd=57))                       
+tcp   LISTEN 0      4096        127.0.0.53%lo:53         0.0.0.0:*    users:(("systemd-resolve",pid=701,fd=15))              
+tcp   LISTEN 0      200               0.0.0.0:9991       0.0.0.0:*    users:(("zeek",pid=20123,fd=3))                        
+tcp   LISTEN 0      4096   [::ffff:127.0.0.1]:9200             *:*    users:(("java",pid=2355,fd=572))                       
+tcp   LISTEN 0      4096   [::ffff:127.0.0.1]:9300             *:*    users:(("java",pid=2355,fd=570))                       
+tcp   LISTEN 0      4096                    *:27762            *:*    users:(("zeek",pid=20123,fd=50))                       
+tcp   LISTEN 0      511                     *:8005             *:*    users:(("node",pid=2464,fd=29))                        
+tcp   LISTEN 0      4096                 [::]:22            [::]:*    users:(("sshd",pid=1203,fd=4),("systemd",pid=1,fd=134))
+tcp   LISTEN 0      100                  [::]:25            [::]:*    users:(("master",pid=1821,fd=14))                      
+tcp   LISTEN 0      100    [::ffff:127.0.0.1]:27761            *:*    users:(("zeek",pid=20123,fd=41))                       
+tcp   LISTEN 0      100    [::ffff:127.0.0.1]:27760            *:*    users:(("zeek",pid=20123,fd=40))                       
+tcp   LISTEN 0      4096                [::1]:631           [::]:*    users:(("cupsd",pid=6289,fd=6))                        
+=== last logins ===
+ids-mana pts/0        192.168.20.110   Fri Apr  3 17:25   still logged in
+ids-mana pts/0        192.168.20.110   Fri Apr  3 17:25 - 17:25  (00:00)
+ids-mana pts/0        192.168.20.110   Fri Apr  3 17:25 - 17:25  (00:00)
+ids-mana pts/0        192.168.20.110   Fri Apr  3 17:25 - 17:25  (00:00)
+ids-mana pts/0        192.168.20.110   Fri Apr  3 17:25 - 17:25  (00:00)
+ids-mana pts/0        192.168.20.110   Fri Apr  3 17:25 - 17:25  (00:00)
+ids-mana pts/0        192.168.20.110   Fri Apr  3 17:25 - 17:25  (00:00)
+ids-mana pts/0        192.168.20.110   Fri Apr  3 17:24 - 17:25  (00:00)
+ids-mana pts/0        192.168.20.110   Fri Apr  3 17:21 - 17:24  (00:02)
+ids-mana pts/0        192.168.20.110   Fri Apr  3 17:20 - 17:20  (00:00)
+ids-mana pts/0        192.168.20.110   Fri Apr  3 17:19 - 17:19  (00:00)
+ids-mana pts/0        192.168.20.110   Fri Apr  3 17:19 - 17:19  (00:00)
+ids-mana pts/0        192.168.20.110   Fri Apr  3 17:19 - 17:19  (00:00)
+ids-mana pts/0        192.168.20.110   Fri Apr  3 17:19 - 17:19  (00:00)
+ids-mana pts/0        192.168.20.110   Fri Apr  3 17:19 - 17:19  (00:00)
+ids-mana pts/0        192.168.20.110   Fri Apr  3 17:19 - 17:19  (00:00)
+ids-mana pts/0        192.168.20.110   Fri Apr  3 17:19 - 17:19  (00:00)
+ids-mana pts/0        192.168.20.110   Fri Apr  3 17:18 - 17:18  (00:00)
+ids-mana pts/0        192.168.20.110   Fri Apr  3 17:18 - 17:18  (00:00)
+ids-mana pts/0        192.168.20.110   Fri Apr  3 17:18 - 17:18  (00:00)
+
+wtmp begins Fri Mar 27 18:08:28 2026
+=== recent auth log ===
+2026-04-03T17:24:09.896243-04:00 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[39432]: pam_unix(sshd:session): session closed for user ids-management
+2026-04-03T17:24:09.909336-04:00 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 systemd-logind[925]: Session 253 logged out. Waiting for processes to exit.
+2026-04-03T17:24:09.914379-04:00 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 systemd-logind[925]: Removed session 253.
+2026-04-03T17:24:15.952190-04:00 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[39922]: Accepted publickey for ids-management from 192.168.20.110 port 36552 ssh2: ED25519 SHA256:p5fMsOQJGuPlem11iDSm3uzLGIKp1Xm6BVgYf7flB58
+2026-04-03T17:24:15.956324-04:00 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[39922]: pam_unix(sshd:session): session opened for user ids-management(uid=1000) by ids-management(uid=0)
+2026-04-03T17:24:15.965375-04:00 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 systemd-logind[925]: New session 254 of user ids-management.
+2026-04-03T17:24:16.121133-04:00 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sudo: pam_unix(sudo:auth): conversation failed
+2026-04-03T17:24:16.121611-04:00 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sudo: pam_unix(sudo:auth): auth could not identify password for [ids-management]
+2026-04-03T17:24:16.125388-04:00 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[39968]: Received disconnect from 192.168.20.110 port 36552:11: disconnected by user
+2026-04-03T17:24:16.125739-04:00 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[39968]: Disconnected from user ids-management 192.168.20.110 port 36552
+2026-04-03T17:24:16.126438-04:00 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[39922]: pam_unix(sshd:session): session closed for user ids-management
+2026-04-03T17:24:16.135119-04:00 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 systemd-logind[925]: Session 254 logged out. Waiting for processes to exit.
+2026-04-03T17:24:16.160657-04:00 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 systemd-logind[925]: Removed session 254.
+2026-04-03T17:24:57.825218-04:00 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[39992]: Accepted publickey for ids-management from 192.168.20.110 port 55858 ssh2: ED25519 SHA256:p5fMsOQJGuPlem11iDSm3uzLGIKp1Xm6BVgYf7flB58
+2026-04-03T17:24:57.829147-04:00 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[39992]: pam_unix(sshd:session): session opened for user ids-management(uid=1000) by ids-management(uid=0)
+2026-04-03T17:24:57.839695-04:00 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 systemd-logind[925]: New session 255 of user ids-management.
+2026-04-03T17:25:00.749388-04:00 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sudo: pam_unix(sudo:auth): authentication failure; logname=ids-management uid=1000 euid=0 tty=/dev/pts/0 ruser=ids-management rhost=  user=ids-management
+2026-04-03T17:25:01.431926-04:00 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 CRON[40041]: pam_unix(cron:session): session opened for user root(uid=0) by root(uid=0)
+2026-04-03T17:25:01.439234-04:00 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 CRON[40041]: pam_unix(cron:session): session closed for user root
+2026-04-03T17:25:03.624699-04:00 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sudo: ids-management : TTY=pts/0 ; PWD=/home/ids-management ; USER=root ; COMMAND=/usr/bin/whoami
+2026-04-03T17:25:03.625944-04:00 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sudo: pam_unix(sudo:session): session opened for user root(uid=0) by ids-management(uid=1000)
+2026-04-03T17:25:03.640969-04:00 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sudo: pam_unix(sudo:session): session closed for user root
+2026-04-03T17:25:03.644420-04:00 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[40038]: Received disconnect from 192.168.20.110 port 55858:11: disconnected by user
+2026-04-03T17:25:03.645325-04:00 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[40038]: Disconnected from user ids-management 192.168.20.110 port 55858
+2026-04-03T17:25:03.646816-04:00 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[39992]: pam_unix(sshd:session): session closed for user ids-management
+2026-04-03T17:25:03.655776-04:00 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 systemd-logind[925]: Session 255 logged out. Waiting for processes to exit.
+2026-04-03T17:25:03.658446-04:00 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 systemd-logind[925]: Removed session 255.
+2026-04-03T17:25:11.316030-04:00 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[40053]: Accepted publickey for ids-management from 192.168.20.110 port 34704 ssh2: ED25519 SHA256:p5fMsOQJGuPlem11iDSm3uzLGIKp1Xm6BVgYf7flB58
+2026-04-03T17:25:11.319963-04:00 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[40053]: pam_unix(sshd:session): session opened for user ids-management(uid=1000) by ids-management(uid=0)
+2026-04-03T17:25:11.327959-04:00 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 systemd-logind[925]: New session 257 of user ids-management.
+2026-04-03T17:25:11.856152-04:00 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sudo: ids-management : TTY=pts/0 ; PWD=/home/ids-management ; USER=root ; COMMAND=/bin/sh -c 'echo BECOME-SUCCESS-wrgxjbvygdvyozogejsvleemtcmokbcr ; /usr/bin/python3 /home/ids-management/.ansible/tmp/ansible-tmp-1775251511.4436612-77411-235808329731845/AnsiballZ_command.py'
+2026-04-03T17:25:11.857510-04:00 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sudo: pam_unix(sudo:session): session opened for user root(uid=0) by ids-management(uid=1000)
+2026-04-03T17:25:12.167071-04:00 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sudo: pam_unix(sudo:session): session closed for user root
+2026-04-03T17:25:12.475945-04:00 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sudo: ids-management : TTY=pts/0 ; PWD=/home/ids-management ; USER=root ; COMMAND=/bin/sh -c 'echo BECOME-SUCCESS-ejgrylxmzcilssthrphcipzqinpnpznr ; /usr/bin/python3 /home/ids-management/.ansible/tmp/ansible-tmp-1775251512.2686057-77424-215653566693785/AnsiballZ_command.py'
+2026-04-03T17:25:12.477629-04:00 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sudo: pam_unix(sudo:session): session opened for user root(uid=0) by ids-management(uid=1000)
+2026-04-03T17:25:12.691150-04:00 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sudo: pam_unix(sudo:session): session closed for user root
+2026-04-03T17:25:12.989149-04:00 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sudo: ids-management : TTY=pts/0 ; PWD=/home/ids-management ; USER=root ; COMMAND=/bin/sh -c 'echo BECOME-SUCCESS-hritezjpyegdmugqmmdnjeyrnwrdeuyi ; /usr/bin/python3 /home/ids-management/.ansible/tmp/ansible-tmp-1775251512.772594-77434-214149213418598/AnsiballZ_command.py'
+2026-04-03T17:25:12.991972-04:00 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sudo: pam_unix(sudo:session): session opened for user root(uid=0) by ids-management(uid=1000)
+2026-04-03T17:25:13.265693-04:00 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sudo: pam_unix(sudo:session): session closed for user root
+2026-04-03T17:25:15.526383-04:00 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sudo: ids-management : TTY=pts/0 ; PWD=/home/ids-management ; USER=root ; COMMAND=/bin/sh -c 'echo BECOME-SUCCESS-jccrlckihisgdwkismfebeojsvmjhoej ; /usr/bin/python3 /home/ids-management/.ansible/tmp/ansible-tmp-1775251515.272692-77557-208736900591545/AnsiballZ_command.py'
+2026-04-03T17:25:15.527834-04:00 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sudo: pam_unix(sudo:session): session opened for user root(uid=0) by ids-management(uid=1000)
+2026-04-03T17:25:15.773170-04:00 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sudo: pam_unix(sudo:session): session closed for user root
+2026-04-03T17:25:16.109598-04:00 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sudo: ids-management : TTY=pts/0 ; PWD=/home/ids-management ; USER=root ; COMMAND=/bin/sh -c 'echo BECOME-SUCCESS-pgsdsnutprthstttnsucaulmmsvbdsau ; /usr/bin/python3 /home/ids-management/.ansible/tmp/ansible-tmp-1775251515.8654323-77567-160493397387481/AnsiballZ_command.py'
+2026-04-03T17:25:16.111069-04:00 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sudo: pam_unix(sudo:session): session opened for user root(uid=0) by ids-management(uid=1000)
+2026-04-03T17:25:16.373696-04:00 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sudo: pam_unix(sudo:session): session closed for user root
+2026-04-03T17:25:16.673325-04:00 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sudo: ids-management : TTY=pts/0 ; PWD=/home/ids-management ; USER=root ; COMMAND=/bin/sh -c 'echo BECOME-SUCCESS-nkfqphqjkekbcgbjwjuckcchdacvozzn ; /usr/bin/python3 /home/ids-management/.ansible/tmp/ansible-tmp-1775251516.443497-77577-242333901213744/AnsiballZ_command.py'
+2026-04-03T17:25:16.674197-04:00 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sudo: pam_unix(sudo:session): session opened for user root(uid=0) by ids-management(uid=1000)
+2026-04-03T17:25:16.894181-04:00 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sudo: pam_unix(sudo:session): session closed for user root
+2026-04-03T17:25:18.807042-04:00 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sudo: ids-management : TTY=pts/0 ; PWD=/home/ids-management ; USER=root ; COMMAND=/bin/sh -c 'echo BECOME-SUCCESS-vxisjclndcmlkjbyxsacnjieeppvdhrh ; /usr/bin/python3 /home/ids-management/.ansible/tmp/ansible-tmp-1775251518.5965648-77699-84867332154019/AnsiballZ_command.py'
+2026-04-03T17:25:18.808886-04:00 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sudo: pam_unix(sudo:session): session opened for user root(uid=0) by ids-management(uid=1000)
+=== recent Suricata alerts ===
+{"timestamp":"2026-04-03T14:22:17.326454-0400","flow_id":134446347552706,"in_iface":"enp1s0","event_type":"alert","src_ip":"217.160.0.187","src_port":80,"dest_ip":"192.168.20.148","dest_port":60882,"proto":"TCP","ip_v":4,"pkt_src":"wire/pcap","alert":{"action":"allowed","gid":1,"signature_id":2100498,"rev":7,"signature":"GPL ATTACK_RESPONSE id check returned root","category":"Potentially Bad Traffic","severity":2,"metadata":{"confidence":["Medium"],"created_at":["2010_09_23"],"signature_severity":["Informational"],"updated_at":["2019_07_26"]}},"app_proto":"http","direction":"to_client","flow":{"pkts_toserver":5,"pkts_toclient":4,"bytes_toserver":414,"bytes_toclient":629,"start":"2026-04-03T14:22:16.817735-0400","src_ip":"192.168.20.148","dest_ip":"217.160.0.187","src_port":60882,"dest_port":80}}
+{"timestamp":"2026-04-03T14:23:49.493929-0400","flow_id":1128349236130062,"in_iface":"enp1s0","event_type":"alert","src_ip":"217.160.0.187","src_port":80,"dest_ip":"192.168.20.148","dest_port":51890,"proto":"TCP","ip_v":4,"pkt_src":"wire/pcap","alert":{"action":"allowed","gid":1,"signature_id":2100498,"rev":7,"signature":"GPL ATTACK_RESPONSE id check returned root","category":"Potentially Bad Traffic","severity":2,"metadata":{"confidence":["Medium"],"created_at":["2010_09_23"],"signature_severity":["Informational"],"updated_at":["2019_07_26"]}},"app_proto":"http","direction":"to_client","flow":{"pkts_toserver":5,"pkts_toclient":4,"bytes_toserver":414,"bytes_toclient":629,"start":"2026-04-03T14:23:48.983610-0400","src_ip":"192.168.20.148","dest_ip":"217.160.0.187","src_port":51890,"dest_port":80}}
+{"timestamp":"2026-04-03T14:37:56.549453-0400","flow_id":856991338805495,"in_iface":"enp1s0","event_type":"alert","src_ip":"217.160.0.187","src_port":80,"dest_ip":"192.168.20.148","dest_port":59152,"proto":"TCP","ip_v":4,"pkt_src":"wire/pcap","alert":{"action":"allowed","gid":1,"signature_id":2100498,"rev":7,"signature":"GPL ATTACK_RESPONSE id check returned root","category":"Potentially Bad Traffic","severity":2,"metadata":{"confidence":["Medium"],"created_at":["2010_09_23"],"signature_severity":["Informational"],"updated_at":["2019_07_26"]}},"app_proto":"http","direction":"to_client","flow":{"pkts_toserver":5,"pkts_toclient":4,"bytes_toserver":414,"bytes_toclient":629,"start":"2026-04-03T14:37:55.854893-0400","src_ip":"192.168.20.148","dest_ip":"217.160.0.187","src_port":59152,"dest_port":80}}
+{"timestamp":"2026-04-03T14:38:12.234980-0400","flow_id":1079256651328732,"in_iface":"enp1s0","event_type":"alert","src_ip":"217.160.0.187","src_port":80,"dest_ip":"192.168.20.148","dest_port":46714,"proto":"TCP","ip_v":4,"pkt_src":"wire/pcap","alert":{"action":"allowed","gid":1,"signature_id":2100498,"rev":7,"signature":"GPL ATTACK_RESPONSE id check returned root","category":"Potentially Bad Traffic","severity":2,"metadata":{"confidence":["Medium"],"created_at":["2010_09_23"],"signature_severity":["Informational"],"updated_at":["2019_07_26"]}},"app_proto":"http","direction":"to_client","flow":{"pkts_toserver":5,"pkts_toclient":4,"bytes_toserver":414,"bytes_toclient":629,"start":"2026-04-03T14:38:11.710036-0400","src_ip":"192.168.20.148","dest_ip":"217.160.0.187","src_port":46714,"dest_port":80}}

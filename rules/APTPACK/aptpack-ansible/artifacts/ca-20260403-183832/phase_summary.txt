@@ -1,0 +1,26 @@
+APTPACK Phase Summary
+=====================
+
+Phase Code: CA
+Phase Directory: APTPACK-CA
+Kill Chain Stage: command-and-control-collection
+MITRE Tactics: TA0011, TA0009
+Severity: critical
+Queue: command-and-control
+
+Correlation Directory: /home/soc-admin/APTPACK/APTPACK-CA/APTPACK-CORR
+Anti-Bypass Directory: /home/soc-admin/APTPACK/APTPACK-CA/APTPACK-ANTI-BYPASS
+
+Correlation Files:
+- /home/soc-admin/APTPACK/APTPACK-CA/APTPACK-CORR/ca-wazuh.xml
+- /home/soc-admin/APTPACK/APTPACK-CA/APTPACK-CORR/ca-suricata.rules
+- /home/soc-admin/APTPACK/APTPACK-CA/APTPACK-CORR/ca-splunk.spl
+- /home/soc-admin/APTPACK/APTPACK-CA/APTPACK-CORR/ca-zeek.zeek
+
+Anti-Bypass Files:
+- /home/soc-admin/APTPACK/APTPACK-CA/APTPACK-ANTI-BYPASS/ca-anti-splunk.spl
+- /home/soc-admin/APTPACK/APTPACK-CA/APTPACK-ANTI-BYPASS/ca-anti-wazuh.xml
+- /home/soc-admin/APTPACK/APTPACK-CA/APTPACK-ANTI-BYPASS/ca-anti-suricata.rules
+- /home/soc-admin/APTPACK/APTPACK-CA/APTPACK-ANTI-BYPASS/ca-anti-zeek.zeek
+
+Artifact Directory: /home/soc-admin/APTPACK/aptpack-ansible/artifacts/ca-20260403-183832

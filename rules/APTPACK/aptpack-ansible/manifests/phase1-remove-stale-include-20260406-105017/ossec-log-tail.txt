@@ -1,0 +1,80 @@
+2026/04/06 10:50:28 wazuh-analysisd: ERROR: Too many fields for JSON decoder.
+2026/04/06 10:50:28 wazuh-analysisd: ERROR: Too many fields for JSON decoder.
+2026/04/06 10:50:28 wazuh-analysisd: ERROR: Too many fields for JSON decoder.
+2026/04/06 10:50:28 wazuh-analysisd: ERROR: Too many fields for JSON decoder.
+2026/04/06 10:50:28 wazuh-analysisd: ERROR: Too many fields for JSON decoder.
+2026/04/06 10:50:28 wazuh-analysisd: ERROR: Too many fields for JSON decoder.
+2026/04/06 10:50:28 wazuh-analysisd: ERROR: Too many fields for JSON decoder.
+2026/04/06 10:50:28 wazuh-analysisd: ERROR: Too many fields for JSON decoder.
+2026/04/06 10:50:28 wazuh-analysisd: ERROR: Too many fields for JSON decoder.
+2026/04/06 10:50:28 wazuh-analysisd: ERROR: Too many fields for JSON decoder.
+2026/04/06 10:50:28 wazuh-analysisd: ERROR: Too many fields for JSON decoder.
+2026/04/06 10:50:28 wazuh-analysisd: ERROR: Too many fields for JSON decoder.
+2026/04/06 10:50:28 wazuh-analysisd: ERROR: Too many fields for JSON decoder.
+2026/04/06 10:50:28 wazuh-analysisd: ERROR: Too many fields for JSON decoder.
+2026/04/06 10:50:28 wazuh-analysisd: ERROR: Too many fields for JSON decoder.
+2026/04/06 10:50:28 wazuh-analysisd: ERROR: Too many fields for JSON decoder.
+2026/04/06 10:50:28 wazuh-analysisd: ERROR: Too many fields for JSON decoder.
+2026/04/06 10:50:28 wazuh-analysisd: ERROR: Too many fields for JSON decoder.
+2026/04/06 10:50:28 wazuh-analysisd: ERROR: Too many fields for JSON decoder.
+2026/04/06 10:50:28 wazuh-analysisd: ERROR: Too many fields for JSON decoder.
+2026/04/06 10:50:28 wazuh-analysisd: ERROR: Too many fields for JSON decoder.
+2026/04/06 10:50:28 wazuh-analysisd: ERROR: Too many fields for JSON decoder.
+2026/04/06 10:50:28 wazuh-analysisd: ERROR: Too many fields for JSON decoder.
+2026/04/06 10:50:28 wazuh-analysisd: ERROR: Too many fields for JSON decoder.
+2026/04/06 10:50:28 wazuh-analysisd: ERROR: Too many fields for JSON decoder.
+2026/04/06 10:50:28 wazuh-analysisd: ERROR: Too many fields for JSON decoder.
+2026/04/06 10:50:28 wazuh-analysisd: ERROR: Too many fields for JSON decoder.
+2026/04/06 10:50:28 wazuh-analysisd: ERROR: Too many fields for JSON decoder.
+2026/04/06 10:50:28 wazuh-analysisd: ERROR: Too many fields for JSON decoder.
+2026/04/06 10:50:28 wazuh-analysisd: ERROR: Too many fields for JSON decoder.
+2026/04/06 10:50:28 wazuh-analysisd: ERROR: Too many fields for JSON decoder.
+2026/04/06 10:50:28 wazuh-analysisd: ERROR: Too many fields for JSON decoder.
+2026/04/06 10:50:28 wazuh-analysisd: ERROR: Too many fields for JSON decoder.
+2026/04/06 10:50:28 wazuh-analysisd: ERROR: Too many fields for JSON decoder.
+2026/04/06 10:50:28 wazuh-analysisd: ERROR: Too many fields for JSON decoder.
+2026/04/06 10:50:28 wazuh-analysisd: ERROR: Too many fields for JSON decoder.
+2026/04/06 10:50:28 wazuh-analysisd: ERROR: Too many fields for JSON decoder.
+2026/04/06 10:50:28 wazuh-analysisd: ERROR: Too many fields for JSON decoder.
+2026/04/06 10:50:28 wazuh-analysisd: ERROR: Too many fields for JSON decoder.
+2026/04/06 10:50:28 wazuh-syscheckd: INFO: (6009): File integrity monitoring scan ended.
+2026/04/06 10:50:28 wazuh-syscheckd: INFO: FIM sync module started.
+2026/04/06 10:50:28 wazuh-logcollector: INFO: (9203): Monitoring journal entries.
+2026/04/06 10:50:29 wazuh-modulesd:router: INFO: Loaded router module.
+2026/04/06 10:50:29 wazuh-modulesd:content_manager: INFO: Loaded content_manager module.
+2026/04/06 10:50:29 wazuh-modulesd:inventory-harvester: INFO: Loaded Inventory harvester module.
+2026/04/06 10:50:29 wazuh-modulesd: INFO: Started (pid: 158636).
+2026/04/06 10:50:29 wazuh-modulesd:ciscat: INFO: Module disabled. Exiting...
+2026/04/06 10:50:29 wazuh-modulesd:osquery: INFO: Module disabled. Exiting...
+2026/04/06 10:50:29 wazuh-modulesd:agent-upgrade: INFO: (8153): Module Agent Upgrade started.
+2026/04/06 10:50:29 sca: INFO: Module started.
+2026/04/06 10:50:29 sca: INFO: Loaded policy '/var/ossec/ruleset/sca/cis_ubuntu24-04.yml'
+2026/04/06 10:50:29 wazuh-modulesd:vulnerability-scanner: INFO: Starting vulnerability_scanner module.
+2026/04/06 10:50:29 sca: INFO: Starting Security Configuration Assessment scan.
+2026/04/06 10:50:29 wazuh-modulesd:task-manager: INFO: (8200): Module Task Manager started.
+2026/04/06 10:50:29 wazuh-modulesd:control: INFO: Starting control thread.
+2026/04/06 10:50:29 wazuh-modulesd:content_manager: INFO: Starting content_manager module.
+2026/04/06 10:50:29 wazuh-modulesd:inventory-harvester: INFO: Starting inventory_harvester module.
+2026/04/06 10:50:29 wazuh-modulesd:download: INFO: Module started.
+2026/04/06 10:50:29 wazuh-modulesd:router: INFO: Starting router module.
+2026/04/06 10:50:29 wazuh-modulesd:database: INFO: Module started.
+2026/04/06 10:50:29 wazuh-modulesd:syscollector: INFO: Module started.
+2026/04/06 10:50:29 wazuh-modulesd:syscollector: INFO: Starting evaluation.
+2026/04/06 10:50:29 sca: INFO: Starting evaluation of policy: '/var/ossec/ruleset/sca/cis_ubuntu24-04.yml'
+2026/04/06 10:50:29 indexer-connector: INFO: IndexerConnector initialized successfully for index: wazuh-states-inventory-packages-soc-admin.
+2026/04/06 10:50:29 indexer-connector: INFO: IndexerConnector initialized successfully for index: wazuh-states-vulnerabilities-soc-admin.
+2026/04/06 10:50:29 indexer-connector: INFO: IndexerConnector initialized successfully for index: wazuh-states-inventory-system-soc-admin.
+2026/04/06 10:50:29 indexer-connector: INFO: IndexerConnector initialized successfully for index: wazuh-states-inventory-processes-soc-admin.
+2026/04/06 10:50:29 indexer-connector: INFO: IndexerConnector initialized successfully for index: wazuh-states-inventory-ports-soc-admin.
+2026/04/06 10:50:29 indexer-connector: INFO: IndexerConnector initialized successfully for index: wazuh-states-inventory-hotfixes-soc-admin.
+2026/04/06 10:50:29 indexer-connector: INFO: IndexerConnector initialized successfully for index: wazuh-states-inventory-hardware-soc-admin.
+2026/04/06 10:50:30 indexer-connector: INFO: IndexerConnector initialized successfully for index: wazuh-states-inventory-protocols-soc-admin.
+2026/04/06 10:50:30 indexer-connector: INFO: IndexerConnector initialized successfully for index: wazuh-states-inventory-interfaces-soc-admin.
+2026/04/06 10:50:30 wazuh-modulesd:vulnerability-scanner: INFO: Vulnerability scanner module started.
+2026/04/06 10:50:30 indexer-connector: INFO: IndexerConnector initialized successfully for index: wazuh-states-inventory-networks-soc-admin.
+2026/04/06 10:50:30 indexer-connector: INFO: IndexerConnector initialized successfully for index: wazuh-states-inventory-users-soc-admin.
+2026/04/06 10:50:30 indexer-connector: INFO: IndexerConnector initialized successfully for index: wazuh-states-inventory-groups-soc-admin.
+2026/04/06 10:50:30 indexer-connector: INFO: IndexerConnector initialized successfully for index: wazuh-states-inventory-browser-extensions-soc-admin.
+2026/04/06 10:50:30 logger-helper: INFO: InventoryHarvesterFacade module started.
+2026/04/06 10:50:30 indexer-connector: INFO: IndexerConnector initialized successfully for index: wazuh-states-inventory-services-soc-admin.
+2026/04/06 10:50:32 wazuh-modulesd:syscollector: INFO: Evaluation finished.

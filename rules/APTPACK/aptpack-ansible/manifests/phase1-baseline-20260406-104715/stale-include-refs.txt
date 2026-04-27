@@ -1,0 +1,1 @@
+/var/ossec/etc/ossec.conf:    <rule_include>rules/aptpack-local-fixes.xml</rule_include>

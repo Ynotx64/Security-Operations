@@ -1,0 +1,18 @@
+playbook:
+  id: pb-edge-local-admin-change
+  title: Local admin creation or privilege change on edge device
+  severity: critical
+  applies_to_rules: [110540, 110541]
+  objective: Detect persistence or privilege tampering on edge infrastructure.
+  immediate_actions:
+    - identify account name, role delta, acting admin, and source IP
+    - validate against approved admin lifecycle or break-glass procedure
+    - review preceding auth, export, and logging events
+  escalation_conditions:
+    - unknown account created
+    - privilege elevation without approved ticket
+    - action occurs shortly after first-seen admin source
+  containment:
+    - disable unauthorized account
+    - revoke local admin privileges
+    - rotate affected credentials and validate AAA backend integrity

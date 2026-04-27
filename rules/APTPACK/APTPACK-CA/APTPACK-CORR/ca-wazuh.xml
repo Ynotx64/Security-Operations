@@ -1,0 +1,12 @@
+<group name="aptpack,ca,correlation">
+  <rule id="170401" level="15">
+    <if_group>suricata,</if_group>
+    <field name="alert.signature">APTPACK CA Beacon Or C2 Checkin Pattern</field>
+    <description>APTPACK CA - potential beaconing or C2 check-in behavior</description>
+    <mitre>
+      <id>T1071</id>
+      <id>T1105</id>
+    </mitre>
+    <group>attack,command_and_control,collection,aptpack_ca,</group>
+  </rule>
+</group>

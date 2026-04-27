@@ -1,0 +1,1 @@
+{"phase_code": "EXEC", "phase_directory": "APTPACK-EXEC", "kill_chain_stage": "execution", "mitre_tactics": ["TA0002"], "severity": "high", "queue": "execution", "correlation_files": [], "anti_bypass_files": []}

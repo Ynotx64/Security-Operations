@@ -1,0 +1,10 @@
+<group name="local,rule_override,">
+
+  <rule id="100520" level="0" overwrite="yes">
+    <description>SUPPRESSED: sudo noise removed for GeoServer campaign demo</description>
+    <options>no_log</options>
+  </rule>
+
+
+
+</group>

@@ -1,0 +1,98 @@
+============================================================
+SOC Detection Content Validation Report
+Timestamp: 20260406-101330
+Base: /opt/soc/detection-content
+Host: soc-admin
+User: root
+============================================================
+
+
+------------------------------------------------------------
+1) Directory structure
+------------------------------------------------------------
+[PASS] Directory exists: /opt/soc/detection-content
+[PASS] Directory exists: /opt/soc/detection-content/packs/yaml/edge
+[PASS] Directory exists: /opt/soc/detection-content/packs/xml/wazuh
+[PASS] Directory exists: /opt/soc/detection-content/packs/suricata
+[PASS] Directory exists: /opt/soc/detection-content/playbooks/edge
+[PASS] Directory exists: /opt/soc/detection-content/scripts
+[PASS] Directory exists: /opt/soc/detection-content/manifests
+
+File counts:
+  YAML edge rules : 8
+  Playbooks       : 8
+  Wazuh XML       : 13
+  Suricata rules  : 12
+  Scripts         : 14
+
+------------------------------------------------------------
+2) YAML syntax validation
+------------------------------------------------------------
+[PASS] Valid YAML: /opt/soc/detection-content/packs/yaml/edge/edge-first-seen-admin-source.yml
+[PASS] Valid YAML: /opt/soc/detection-content/packs/yaml/edge/edge-service-restart.yml
+[PASS] Valid YAML: /opt/soc/detection-content/packs/yaml/edge/edge-config-export.yml
+[PASS] Valid YAML: /opt/soc/detection-content/packs/yaml/edge/edge-afterhours-management-access.yml
+[PASS] Valid YAML: /opt/soc/detection-content/packs/yaml/edge/edge-control-plane-destination-change.yml
+[PASS] Valid YAML: /opt/soc/detection-content/packs/yaml/edge/edge-logging-disabled-or-redirected.yml
+[PASS] Valid YAML: /opt/soc/detection-content/packs/yaml/edge/edge-local-admin-change.yml
+[PASS] Valid YAML: /opt/soc/detection-content/packs/yaml/edge/edge-unexpected-egress.yml
+[PASS] Valid YAML: /opt/soc/detection-content/playbooks/edge/pb-edge-config-export.yml
+[PASS] Valid YAML: /opt/soc/detection-content/playbooks/edge/pb-edge-afterhours-management-access.yml
+[PASS] Valid YAML: /opt/soc/detection-content/playbooks/edge/pb-edge-local-admin-change.yml
+[PASS] Valid YAML: /opt/soc/detection-content/playbooks/edge/pb-edge-first-seen-admin-source.yml
+[PASS] Valid YAML: /opt/soc/detection-content/playbooks/edge/pb-edge-service-restart.yml
+[PASS] Valid YAML: /opt/soc/detection-content/playbooks/edge/pb-edge-unexpected-egress.yml
+[PASS] Valid YAML: /opt/soc/detection-content/playbooks/edge/pb-edge-logging-disabled-or-redirected.yml
+[PASS] Valid YAML: /opt/soc/detection-content/playbooks/edge/pb-edge-control-plane-destination-change.yml
+[PASS] Valid YAML: /opt/soc/detection-content/manifests/edge-pack-manifest.yml
+
+------------------------------------------------------------
+3) Ansible playbook syntax
+------------------------------------------------------------
+[PASS] Ansible syntax OK: /opt/soc/detection-content/playbooks/edge/pb-edge-config-export.yml
+[PASS] Ansible syntax OK: /opt/soc/detection-content/playbooks/edge/pb-edge-afterhours-management-access.yml
+[PASS] Ansible syntax OK: /opt/soc/detection-content/playbooks/edge/pb-edge-local-admin-change.yml
+[PASS] Ansible syntax OK: /opt/soc/detection-content/playbooks/edge/pb-edge-first-seen-admin-source.yml
+[PASS] Ansible syntax OK: /opt/soc/detection-content/playbooks/edge/pb-edge-service-restart.yml
+[PASS] Ansible syntax OK: /opt/soc/detection-content/playbooks/edge/pb-edge-unexpected-egress.yml
+[PASS] Ansible syntax OK: /opt/soc/detection-content/playbooks/edge/pb-edge-logging-disabled-or-redirected.yml
+[PASS] Ansible syntax OK: /opt/soc/detection-content/playbooks/edge/pb-edge-control-plane-destination-change.yml
+
+------------------------------------------------------------
+4) Wazuh XML well-formedness
+------------------------------------------------------------
+[WARN] xmllint not installed; skipping XML well-formedness checks
+
+------------------------------------------------------------
+5) Active Wazuh edge rule presence
+------------------------------------------------------------
+[WARN] No EDGE-* identifiers found in active Wazuh paths; edge YAML pack is still source content only
+
+------------------------------------------------------------
+6) Wazuh logtest availability
+------------------------------------------------------------
+[PASS] Wazuh logtest available: /var/ossec/bin/wazuh-logtest
+
+------------------------------------------------------------
+7) Suricata test mode availability
+------------------------------------------------------------
+[WARN] suricata not installed; skipping Suricata rule validation
+
+------------------------------------------------------------
+8) Edge search script dry run
+------------------------------------------------------------
+[PASS] Edge search script executable: /opt/soc/detection-content/scripts/search-edge-sequence.sh
+[PASS] Edge search script ran successfully against alerts.json
+total 0
+-rw-r--r-- 1 root root 0 Apr  6 10:13 edge-sequence-ordered.tsv
+-rw-r--r-- 1 root root 0 Apr  6 10:13 edge-sequence-raw.jsonl
+-rw-r--r-- 1 root root 0 Apr  6 10:13 edge-sequence-timeline.tsv
+
+------------------------------------------------------------
+9) Summary
+------------------------------------------------------------
+Warnings : 3
+Failures : 0
+[PASS] Validation completed with no hard failures
+
+Report saved to: /opt/soc/detection-content/manifests/validation-report-20260406-101330.txt

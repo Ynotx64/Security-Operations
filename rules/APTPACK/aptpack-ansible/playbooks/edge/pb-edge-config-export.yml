@@ -1,0 +1,18 @@
+playbook:
+  id: pb-edge-config-export
+  title: Edge configuration export or backup detected
+  severity: high
+  applies_to_rules: [110530, 110531]
+  objective: Detect bulk collection or staging of device configuration.
+  immediate_actions:
+    - identify exporting user, source IP, channel (CLI or GUI), and device
+    - determine destination of exported artifact
+    - compare against approved backup automation schedule
+    - inspect adjacent admin session for privilege change or logging impairment
+  escalation_conditions:
+    - manual export from unusual source
+    - export outside backup window
+    - export followed by outbound egress or account creation
+  containment:
+    - suspend admin session if unauthorized
+    - snapshot current running config and preserve audit trail

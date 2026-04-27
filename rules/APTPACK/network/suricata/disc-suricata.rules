@@ -1,0 +1,9 @@
+alert http $HOME_NET any -> $EXTERNAL_NET any (
+    msg:"APTPACK DISC Reconnaissance Path Enumeration";
+    flow:to_server,established;
+    http.uri; pcre:"/(whoami|ipconfig|ifconfig|hostname|net user|net group|arp -a|route print)/Ui";
+    classtype:network-scan;
+    sid:700301;
+    rev:1;
+    metadata:mitre_tactic TA0007, phase DISC, severity medium;
+)

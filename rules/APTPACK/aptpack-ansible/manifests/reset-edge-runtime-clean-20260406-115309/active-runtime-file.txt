@@ -1,0 +1,1 @@
+-rw-r----- 1 root wazuh 6276 Apr  6 11:53 /var/ossec/etc/rules/119500-edge-enterprise-runtime.xml

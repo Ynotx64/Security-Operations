@@ -1,0 +1,13 @@
+---
+- name: Containment block of source IP
+  hosts: soc-admin
+  gather_facts: false
+  tasks:
+    - name: Fail if containment target is not set
+      ansible.builtin.fail:
+        msg: "Set containment_block_target, for example: -e containment_block_target=217.160.0.187"
+      when: containment_block_target | length == 0
+
+    - name: Run firewall block role
+      ansible.builtin.include_role:
+        name: firewall_block

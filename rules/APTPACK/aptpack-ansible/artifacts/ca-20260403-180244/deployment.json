@@ -1,0 +1,1 @@
+{"phase_code": "CA", "phase_directory": "APTPACK-CA", "kill_chain_stage": "command-and-control-collection", "mitre_tactics": ["TA0011", "TA0009"], "severity": "critical", "queue": "command-and-control", "correlation_files": [], "anti_bypass_files": []}

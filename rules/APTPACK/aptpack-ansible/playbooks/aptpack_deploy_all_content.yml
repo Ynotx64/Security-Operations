@@ -1,0 +1,7 @@
+---
+- import_playbook: aptpack_ia.yml
+- import_playbook: aptpack_exec.yml
+- import_playbook: aptpack_pe.yml
+- import_playbook: aptpack_disc.yml
+- import_playbook: aptpack_ca.yml
+- import_playbook: aptpack_stage.yml

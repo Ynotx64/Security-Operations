@@ -1,0 +1,227 @@
+<group name="custom,edge,identity_enrichment,vpn,">
+
+  <!-- Base enrichment ingestion -->
+  <rule id="119560" level="5">
+    <decoded_as>json</decoded_as>
+    <field name="event_type">^vpn_identity_enrichment$</field>
+    <description>EDGE-VPN-ID-001 VPN identity enrichment event received</description>
+    <group>custom,edge,identity_enrichment,vpn,correlation</group>
+  </rule>
+
+  <rule id="119561" level="8">
+    <if_sid>119560</if_sid>
+    <field name="correlation_status">^matched$</field>
+    <description>EDGE-VPN-ID-002 VPN session matched to identity source</description>
+    <group>custom,edge,identity_enrichment,vpn,identity_matched</group>
+  </rule>
+
+  <rule id="119562" level="10">
+    <if_sid>119560</if_sid>
+    <field name="enrichment_status">^failed$</field>
+    <description>EDGE-VPN-ID-003 VPN enrichment failed</description>
+    <group>custom,edge,identity_enrichment,vpn,enrichment_failure</group>
+  </rule>
+
+  <!-- Azure AD / Entra -->
+  <rule id="119570" level="12">
+    <if_sid>119561</if_sid>
+    <field name="identity_source">^azure_ad$|^entra_id$</field>
+    <description>EDGE-VPN-AAD-001 Risky VPN session mapped to Azure AD identity</description>
+    <group>custom,edge,identity_enrichment,azure_ad,vpn,idp,t1078</group>
+  </rule>
+
+  <rule id="119571" level="14">
+    <if_sid>119570</if_sid>
+    <field name="identity_mfa">^false$</field>
+    <description>EDGE-VPN-AAD-002 Risky VPN session tied to Azure AD identity without MFA</description>
+    <group>custom,edge,identity_enrichment,azure_ad,vpn,mfa_absent,t1078,t1133</group>
+    <options>alert_by_email</options>
+  </rule>
+
+  <rule id="119572" level="15">
+    <if_sid>119570</if_sid>
+    <field name="identity_privileged">^true$</field>
+    <description>EDGE-VPN-AAD-003 Risky VPN session tied to privileged Azure AD identity</description>
+    <group>custom,edge,identity_enrichment,azure_ad,vpn,privileged,t1078</group>
+    <options>alert_by_email</options>
+  </rule>
+
+  <rule id="119573" level="15">
+    <if_sid>119570</if_sid>
+    <field name="identity_failed_attempts_last_15m">^[3-9]$|^[1-9][0-9]+$</field>
+    <description>EDGE-VPN-AAD-004 Risky VPN session preceded by Azure AD auth failures</description>
+    <group>custom,edge,identity_enrichment,azure_ad,vpn,preauth_failures,password_spray,t1110,t1078</group>
+    <options>alert_by_email</options>
+  </rule>
+
+  <rule id="119574" level="14">
+    <if_sid>119570</if_sid>
+    <field name="identity_first_seen_ip_for_user">^true$</field>
+    <description>EDGE-VPN-AAD-005 Risky VPN session from first-seen IP for Azure AD identity</description>
+    <group>custom,edge,identity_enrichment,azure_ad,vpn,first_seen_ip,t1078</group>
+    <options>alert_by_email</options>
+  </rule>
+
+  <rule id="119575" level="16">
+    <if_sid>119570</if_sid>
+    <field name="identity_mfa">^false$</field>
+    <field name="identity_privileged">^true$</field>
+    <description>EDGE-VPN-AAD-006 Critical risky VPN session: privileged Azure AD identity without MFA</description>
+    <group>custom,edge,identity_enrichment,azure_ad,vpn,critical,privileged,mfa_absent,t1078,t1133</group>
+    <options>alert_by_email</options>
+  </rule>
+
+  <!-- Okta -->
+  <rule id="119580" level="12">
+    <if_sid>119561</if_sid>
+    <field name="identity_source">^okta$</field>
+    <description>EDGE-VPN-OKTA-001 Risky VPN session mapped to Okta identity</description>
+    <group>custom,edge,identity_enrichment,okta,vpn,idp,t1078</group>
+  </rule>
+
+  <rule id="119581" level="14">
+    <if_sid>119580</if_sid>
+    <field name="identity_mfa">^false$</field>
+    <description>EDGE-VPN-OKTA-002 Risky VPN session tied to Okta identity without MFA</description>
+    <group>custom,edge,identity_enrichment,okta,vpn,mfa_absent,t1078,t1133</group>
+    <options>alert_by_email</options>
+  </rule>
+
+  <rule id="119582" level="15">
+    <if_sid>119580</if_sid>
+    <field name="identity_privileged">^true$</field>
+    <description>EDGE-VPN-OKTA-003 Risky VPN session tied to privileged Okta identity</description>
+    <group>custom,edge,identity_enrichment,okta,vpn,privileged,t1078</group>
+    <options>alert_by_email</options>
+  </rule>
+
+  <rule id="119583" level="14">
+    <if_sid>119580</if_sid>
+    <field name="identity_new_device">^true$</field>
+    <description>EDGE-VPN-OKTA-004 Risky VPN session tied to Okta sign-in from new device</description>
+    <group>custom,edge,identity_enrichment,okta,vpn,new_device,t1078</group>
+    <options>alert_by_email</options>
+  </rule>
+
+  <rule id="119584" level="15">
+    <if_sid>119580</if_sid>
+    <field name="identity_failed_attempts_last_15m">^[3-9]$|^[1-9][0-9]+$</field>
+    <description>EDGE-VPN-OKTA-005 Risky VPN session preceded by Okta sign-in failures</description>
+    <group>custom,edge,identity_enrichment,okta,vpn,preauth_failures,password_spray,t1110,t1078</group>
+    <options>alert_by_email</options>
+  </rule>
+
+  <rule id="119585" level="14">
+    <if_sid>119580</if_sid>
+    <field name="identity_first_seen_ip_for_user">^true$</field>
+    <description>EDGE-VPN-OKTA-006 Risky VPN session from first-seen IP for Okta identity</description>
+    <group>custom,edge,identity_enrichment,okta,vpn,first_seen_ip,t1078</group>
+    <options>alert_by_email</options>
+  </rule>
+
+  <rule id="119586" level="16">
+    <if_sid>119580</if_sid>
+    <field name="identity_privileged">^true$</field>
+    <field name="identity_new_device">^true$</field>
+    <description>EDGE-VPN-OKTA-007 Critical risky VPN session: privileged Okta identity from new device</description>
+    <group>custom,edge,identity_enrichment,okta,vpn,critical,privileged,new_device,t1078,t1133</group>
+    <options>alert_by_email</options>
+  </rule>
+
+  <!-- RADIUS -->
+  <rule id="119590" level="12">
+    <if_sid>119561</if_sid>
+    <field name="identity_source">^radius$</field>
+    <description>EDGE-VPN-RADIUS-001 Risky VPN session mapped to RADIUS identity</description>
+    <group>custom,edge,identity_enrichment,radius,vpn,auth_backend,t1078</group>
+  </rule>
+
+  <rule id="119591" level="14">
+    <if_sid>119590</if_sid>
+    <field name="identity_result">^success$</field>
+    <field name="identity_failed_attempts_last_15m">^[3-9]$|^[1-9][0-9]+$</field>
+    <description>EDGE-VPN-RADIUS-002 Risky VPN session preceded by multiple RADIUS failures</description>
+    <group>custom,edge,identity_enrichment,radius,vpn,preauth_failures,password_spray,t1110,t1078</group>
+    <options>alert_by_email</options>
+  </rule>
+
+  <rule id="119592" level="15">
+    <if_sid>119590</if_sid>
+    <field name="identity_privileged">^true$</field>
+    <description>EDGE-VPN-RADIUS-003 Risky VPN session tied to privileged RADIUS identity</description>
+    <group>custom,edge,identity_enrichment,radius,vpn,privileged,t1078</group>
+    <options>alert_by_email</options>
+  </rule>
+
+  <rule id="119593" level="14">
+    <if_sid>119590</if_sid>
+    <field name="identity_first_seen_ip_for_user">^true$</field>
+    <description>EDGE-VPN-RADIUS-004 Risky VPN session from first-seen IP for RADIUS user</description>
+    <group>custom,edge,identity_enrichment,radius,vpn,first_seen_ip,t1078</group>
+    <options>alert_by_email</options>
+  </rule>
+
+  <rule id="119594" level="15">
+    <if_sid>119590</if_sid>
+    <field name="risk_afterhours">^true$</field>
+    <field name="identity_privileged">^true$</field>
+    <description>EDGE-VPN-RADIUS-005 Risky after-hours VPN session tied to privileged RADIUS identity</description>
+    <group>custom,edge,identity_enrichment,radius,vpn,afterhours,privileged,t1078,t1133</group>
+    <options>alert_by_email</options>
+  </rule>
+
+  <rule id="119595" level="16">
+    <if_sid>119590</if_sid>
+    <field name="risk_peer_reputation">^unknown$</field>
+    <field name="identity_failed_attempts_last_15m">^[3-9]$|^[1-9][0-9]+$</field>
+    <description>EDGE-VPN-RADIUS-006 Critical risky VPN session: unknown peer with repeated RADIUS failures</description>
+    <group>custom,edge,identity_enrichment,radius,vpn,critical,peer_risk,password_spray,t1110,t1078</group>
+    <options>alert_by_email</options>
+  </rule>
+
+  <!-- Cross-provider -->
+  <rule id="119600" level="14">
+    <if_sid>119561</if_sid>
+    <field name="identity_privileged">^true$</field>
+    <description>EDGE-VPN-XP-001 Risky VPN session tied to privileged identity</description>
+    <group>custom,edge,identity_enrichment,cross_provider,vpn,privileged,t1078</group>
+    <options>alert_by_email</options>
+  </rule>
+
+  <rule id="119601" level="15">
+    <if_sid>119561</if_sid>
+    <field name="identity_mfa">^false$</field>
+    <description>EDGE-VPN-XP-002 Risky VPN session tied to identity without MFA</description>
+    <group>custom,edge,identity_enrichment,cross_provider,vpn,mfa_absent,t1078,t1133</group>
+    <options>alert_by_email</options>
+  </rule>
+
+  <rule id="119602" level="15">
+    <if_sid>119561</if_sid>
+    <field name="identity_first_seen_ip_for_user">^true$</field>
+    <field name="risk_afterhours">^true$</field>
+    <description>EDGE-VPN-XP-003 Risky VPN session from first-seen IP during after-hours period</description>
+    <group>custom,edge,identity_enrichment,cross_provider,vpn,first_seen_ip,afterhours,t1078,t1133</group>
+    <options>alert_by_email</options>
+  </rule>
+
+  <rule id="119603" level="16">
+    <if_sid>119561</if_sid>
+    <field name="identity_mfa">^false$</field>
+    <field name="identity_privileged">^true$</field>
+    <field name="risk_peer_reputation">^unknown$</field>
+    <description>EDGE-VPN-XP-004 Critical risky VPN session: unknown peer, privileged identity, no MFA</description>
+    <group>custom,edge,identity_enrichment,cross_provider,vpn,critical,peer_risk,privileged,mfa_absent,t1078,t1133,t1041</group>
+    <options>alert_by_email</options>
+  </rule>
+
+  <rule id="119604" level="16">
+    <if_sid>119561</if_sid>
+    <field name="identity_failed_attempts_last_15m">^[3-9]$|^[1-9][0-9]+$</field>
+    <field name="identity_result">^success$</field>
+    <description>EDGE-VPN-XP-005 Critical risky VPN session preceded by multiple failed logins</description>
+    <group>custom,edge,identity_enrichment,cross_provider,vpn,critical,password_spray,t1110,t1078</group>
+    <options>alert_by_email</options>
+  </rule>
+
+</group>

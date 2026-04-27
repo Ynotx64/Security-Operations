@@ -1,0 +1,35 @@
+● wazuh-manager.service - Wazuh manager
+     Loaded: loaded (/usr/lib/systemd/system/wazuh-manager.service; enabled; preset: enabled)
+     Active: active (running) since Mon 2026-04-06 11:02:05 EDT; 3s ago
+    Process: 174456 ExecStart=/usr/bin/env /var/ossec/bin/wazuh-control start (code=exited, status=0/SUCCESS)
+      Tasks: 238 (limit: 9201)
+     Memory: 344.8M (peak: 354.3M)
+        CPU: 28.737s
+     CGroup: /system.slice/wazuh-manager.service
+             ├─174519 /var/ossec/framework/python/bin/python3 /var/ossec/api/scripts/wazuh_apid.py
+             ├─174520 /var/ossec/framework/python/bin/python3 /var/ossec/api/scripts/wazuh_apid.py
+             ├─174521 /var/ossec/framework/python/bin/python3 /var/ossec/api/scripts/wazuh_apid.py
+             ├─174524 /var/ossec/framework/python/bin/python3 /var/ossec/api/scripts/wazuh_apid.py
+             ├─174527 /var/ossec/framework/python/bin/python3 /var/ossec/api/scripts/wazuh_apid.py
+             ├─174568 /var/ossec/bin/wazuh-authd
+             ├─174583 /var/ossec/bin/wazuh-db
+             ├─174618 /var/ossec/bin/wazuh-execd
+             ├─174632 /var/ossec/bin/wazuh-analysisd
+             ├─174645 /var/ossec/bin/wazuh-syscheckd
+             ├─174723 /var/ossec/bin/wazuh-remoted
+             ├─174759 /var/ossec/bin/wazuh-logcollector
+             ├─174799 /var/ossec/bin/wazuh-monitord
+             ├─174843 /var/ossec/bin/wazuh-modulesd
+             ├─176485 sh -c -- "/bin/ps -p 152 > /dev/null 2>&1"
+             └─176486 /bin/ps -p 152
+
+Apr 06 11:01:59 soc-admin env[174456]: Started wazuh-syscheckd...
+Apr 06 11:02:00 soc-admin env[174456]: Started wazuh-remoted...
+Apr 06 11:02:01 soc-admin env[174456]: Started wazuh-logcollector...
+Apr 06 11:02:02 soc-admin env[174456]: Started wazuh-monitord...
+Apr 06 11:02:02 soc-admin env[174841]: 2026/04/06 11:02:02 wazuh-modulesd:router: INFO: Loaded router module.
+Apr 06 11:02:02 soc-admin env[174841]: 2026/04/06 11:02:02 wazuh-modulesd:content_manager: INFO: Loaded content_manager module.
+Apr 06 11:02:02 soc-admin env[174841]: 2026/04/06 11:02:02 wazuh-modulesd:inventory-harvester: INFO: Loaded Inventory harvester module.
+Apr 06 11:02:03 soc-admin env[174456]: Started wazuh-modulesd...
+Apr 06 11:02:05 soc-admin env[174456]: Completed.
+Apr 06 11:02:05 soc-admin systemd[1]: Started wazuh-manager.service - Wazuh manager.

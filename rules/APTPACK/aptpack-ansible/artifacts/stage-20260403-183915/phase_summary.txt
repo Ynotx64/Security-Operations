@@ -1,0 +1,26 @@
+APTPACK Phase Summary
+=====================
+
+Phase Code: STAGE
+Phase Directory: APTPACK-STAGE
+Kill Chain Stage: staging-lateral-exfil
+MITRE Tactics: TA0005, TA0010
+Severity: critical
+Queue: staging-and-exfil
+
+Correlation Directory: /home/soc-admin/APTPACK/APTPACK-STAGE/APTPACK-CORR
+Anti-Bypass Directory: /home/soc-admin/APTPACK/APTPACK-STAGE/APTPACK-ANTI-BYPASS
+
+Correlation Files:
+- /home/soc-admin/APTPACK/APTPACK-STAGE/APTPACK-CORR/stage-wazuh.xml
+- /home/soc-admin/APTPACK/APTPACK-STAGE/APTPACK-CORR/stage-zeek.zeek
+- /home/soc-admin/APTPACK/APTPACK-STAGE/APTPACK-CORR/stage-splunk.spl
+- /home/soc-admin/APTPACK/APTPACK-STAGE/APTPACK-CORR/stage-suricata.rules
+
+Anti-Bypass Files:
+- /home/soc-admin/APTPACK/APTPACK-STAGE/APTPACK-ANTI-BYPASS/stage-anti-suricata.rules
+- /home/soc-admin/APTPACK/APTPACK-STAGE/APTPACK-ANTI-BYPASS/stage-anti-splunk.spl
+- /home/soc-admin/APTPACK/APTPACK-STAGE/APTPACK-ANTI-BYPASS/stage-anti-zeek.zeek
+- /home/soc-admin/APTPACK/APTPACK-STAGE/APTPACK-ANTI-BYPASS/stage-anti-wazuh.xml
+
+Artifact Directory: /home/soc-admin/APTPACK/aptpack-ansible/artifacts/stage-20260403-183915

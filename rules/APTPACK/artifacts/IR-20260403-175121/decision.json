@@ -1,0 +1,1 @@
+{"incident_id": "IR-20260403-175121", "suricata_hit_count": 4, "escalation_decision": true, "escalation_reason": "Matched Suricata alert(s) collected and correlated into case artifacts"}

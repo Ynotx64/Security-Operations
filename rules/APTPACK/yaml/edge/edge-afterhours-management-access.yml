@@ -1,0 +1,41 @@
+id: EDGE-MGMT-008
+name: edge_afterhours_management_access
+version: 1.0
+status: enabled
+phase: edge_appliance_access
+severity: high
+confidence: medium
+log_source:
+  - firewall_auth
+  - router_auth
+  - vpn_auth
+  - web_admin_log
+  - ssh_log
+mitre:
+  tactic:
+    - Initial Access
+    - Persistence
+  technique:
+    - T1078
+    - T1133
+metadata:
+  test_id: EDGE-MGMT-008
+  response_playbook: pb-edge-afterhours-management-access.yml
+  response_guidance: Validate against approved change window and user roster, review session actions, contain if anomalous.
+detection:
+  type: correlation
+  condition: >
+    management_login_success == true
+    AND asset_role IN ["firewall","router","vpn_gateway","security_appliance"]
+    AND in_maintenance_window == false
+fields:
+  required:
+    - timestamp
+    - asset_hostname
+    - username
+    - src_ip
+    - management_protocol
+tags:
+  - edge
+  - afterhours
+  - management_plane

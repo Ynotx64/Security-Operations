@@ -1,0 +1,8 @@
+---
+- name: Deploy APTPACK Initial Access telemetry and hardening
+  hosts: aptpack_agents
+  gather_facts: true
+  become: true
+
+  roles:
+    - aptpack_ia_agent

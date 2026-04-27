@@ -1,0 +1,5 @@
+==================================================
+EVENT: {"telemetry_heartbeat_missing":"true","asset_role":"security_appliance"}
+==================================================
+
+

@@ -1,0 +1,57 @@
+---
+- name: Validate APTPACK phase content exists
+  hosts: soc-admin
+  gather_facts: false
+  vars_files:
+    - ../group_vars/all.yml
+  vars:
+    phase_dirs:
+      - "{{ aptpack_root }}/APTPACK-IA"
+      - "{{ aptpack_root }}/APTPACK-EXEC"
+      - "{{ aptpack_root }}/APTPACK-PE"
+      - "{{ aptpack_root }}/APTPACK-DISC"
+      - "{{ aptpack_root }}/APTPACK-CA"
+      - "{{ aptpack_root }}/APTPACK-STAGE"
+
+  tasks:
+    - name: Check required phase directories
+      stat:
+        path: "{{ item }}"
+      loop: "{{ phase_dirs }}"
+      register: phase_stats
+
+    - name: Assert phase directories exist
+      assert:
+        that:
+          - item.stat.exists
+          - item.stat.isdir
+      loop: "{{ phase_stats.results }}"
+
+    - name: Find all starter pack files
+      find:
+        paths:
+          - "{{ aptpack_root }}/APTPACK-IA/APTPACK-CORR"
+          - "{{ aptpack_root }}/APTPACK-IA/APTPACK-ANTI-BYPASS"
+          - "{{ aptpack_root }}/APTPACK-EXEC/APTPACK-CORR"
+          - "{{ aptpack_root }}/APTPACK-EXEC/APTPACK-ANTI-BYPASS"
+          - "{{ aptpack_root }}/APTPACK-PE/APTPACK-CORR"
+          - "{{ aptpack_root }}/APTPACK-PE/APTPACK-ANTI-BYPASS"
+          - "{{ aptpack_root }}/APTPACK-DISC/APTPACK-CORR"
+          - "{{ aptpack_root }}/APTPACK-DISC/APTPACK-ANTI-BYPASS"
+          - "{{ aptpack_root }}/APTPACK-CA/APTPACK-CORR"
+          - "{{ aptpack_root }}/APTPACK-CA/APTPACK-ANTI-BYPASS"
+          - "{{ aptpack_root }}/APTPACK-STAGE/APTPACK-CORR"
+          - "{{ aptpack_root }}/APTPACK-STAGE/APTPACK-ANTI-BYPASS"
+        recurse: yes
+        patterns:
+          - "*.rules"
+          - "*.xml"
+          - "*.zeek"
+          - "*.spl"
+      register: pack_files
+
+    - name: Assert starter content exists
+      assert:
+        that:
+          - (pack_files.files | length) >= 48
+        fail_msg: "Expected starter pack files were not created"

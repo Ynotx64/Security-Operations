@@ -1,0 +1,27 @@
+---
+- name: Set case artifact dir compatibility for validation role
+  set_fact:
+    case_artifact_dir: "{{ case_artifact_dir | default(artifact_dir) }}"
+
+- name: Validate required case files exist
+  stat:
+    path: "{{ case_artifact_dir }}/{{ item }}"
+  loop:
+    - suricata_pipeline_hits.log
+    - suricata_eve_recent.log
+    - suricata_fast_recent.log
+    - wazuh_agent_status.log
+    - wazuh_suricata_refs.log
+    - wazuh_log_tail.log
+    - host_triage.txt
+    - decision.json
+    - case_summary.txt
+    - case_report.md
+  register: case_file_stats
+
+- name: Assert all case files exist
+  assert:
+    that:
+      - item.stat.exists
+    fail_msg: "Missing expected case file: {{ item.item }}"
+  loop: "{{ case_file_stats.results }}"

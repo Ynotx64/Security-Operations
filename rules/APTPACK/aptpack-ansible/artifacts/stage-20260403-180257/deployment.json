@@ -1,0 +1,1 @@
+{"phase_code": "STAGE", "phase_directory": "APTPACK-STAGE", "kill_chain_stage": "staging-lateral-exfil", "mitre_tactics": ["TA0005", "TA0010"], "severity": "critical", "queue": "staging-and-exfil", "correlation_files": [], "anti_bypass_files": []}

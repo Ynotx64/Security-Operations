@@ -1,0 +1,4 @@
+---
+collect_host: ids-management
+suricata_eve_path: /var/log/suricata/eve.json
+suricata_fast_path: /var/log/suricata/fast.log

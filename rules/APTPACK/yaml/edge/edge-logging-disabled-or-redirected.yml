@@ -1,0 +1,40 @@
+id: EDGE-LOG-007
+name: edge_logging_disabled_or_redirected
+version: 1.0
+status: enabled
+phase: defense_evasion
+severity: critical
+confidence: high
+log_source:
+  - config_change_log
+  - firewall_audit
+  - router_audit
+  - telemetry_health
+mitre:
+  tactic:
+    - Defense Evasion
+  technique:
+    - T1562.001
+metadata:
+  test_id: EDGE-LOG-007
+  response_playbook: pb-edge-logging-disabled-or-redirected.yml
+  response_guidance: Restore telemetry immediately, verify alternate sink, check for missed alerts during gap window.
+detection:
+  type: correlation
+  match_any:
+    - command CONTAINS "no logging"
+    - command CONTAINS "logging disable"
+    - setting_changed == "logging_destination"
+    - telemetry_heartbeat_missing == true
+  condition: >
+    asset_role IN ["firewall","router","vpn_gateway","security_appliance"]
+fields:
+  required:
+    - timestamp
+    - asset_hostname
+    - event_action
+tags:
+  - edge
+  - logging
+  - telemetry_gap
+  - defense_evasion

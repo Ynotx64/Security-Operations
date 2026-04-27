@@ -1,0 +1,20 @@
+APTPACK Phase Summary
+=====================
+
+Phase Code: DISC
+Phase Directory: APTPACK-DISC
+Kill Chain Stage: discovery
+MITRE Tactics: TA0007
+Severity: medium
+Queue: discovery
+
+Correlation Directory: /home/soc-admin/APTPACK/APTPACK-DISC/APTPACK-CORR
+Anti-Bypass Directory: /home/soc-admin/APTPACK/APTPACK-DISC/APTPACK-ANTI-BYPASS
+
+Correlation Files:
+- none found
+
+Anti-Bypass Files:
+- none found
+
+Artifact Directory: /home/soc-admin/APTPACK/aptpack-ansible/artifacts/disc-20260403-180230

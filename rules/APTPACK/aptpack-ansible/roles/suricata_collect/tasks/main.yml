@@ -1,0 +1,43 @@
+---
+- name: Set case artifact dir compatibility for Suricata role
+  set_fact:
+    case_artifact_dir: "{{ case_artifact_dir | default(artifact_dir) }}"
+
+- name: Collect recent Suricata alerts from eve.json
+  become: true
+  delegate_to: "{{ collect_host }}"
+  shell: "tail -n 50 {{ suricata_eve_path | default('/var/log/suricata/eve.json') }} | grep '\"event_type\":\"alert\"' || true"
+  register: suricata_eve_recent_raw
+  changed_when: false
+
+- name: Collect matching pipeline test alerts from eve.json
+  become: true
+  delegate_to: "{{ collect_host }}"
+  shell: "grep 'GPL ATTACK_RESPONSE id check returned root' {{ suricata_eve_path | default('/var/log/suricata/eve.json') }} | tail -n 20 || true"
+  register: suricata_pipeline_hits_raw
+  changed_when: false
+
+- name: Collect recent Suricata fast.log entries
+  become: true
+  delegate_to: "{{ collect_host }}"
+  shell: "tail -n 50 {{ suricata_fast_path | default('/var/log/suricata/fast.log') }} || true"
+  register: suricata_fast_recent_raw
+  changed_when: false
+
+- name: Save Suricata recent alerts
+  copy:
+    dest: "{{ case_artifact_dir }}/suricata_eve_recent.log"
+    content: "{{ suricata_eve_recent_raw.stdout | default('') }}\n"
+    mode: "0644"
+
+- name: Save Suricata pipeline hits
+  copy:
+    dest: "{{ case_artifact_dir }}/suricata_pipeline_hits.log"
+    content: "{{ suricata_pipeline_hits_raw.stdout | default('') }}\n"
+    mode: "0644"
+
+- name: Save Suricata fast log
+  copy:
+    dest: "{{ case_artifact_dir }}/suricata_fast_recent.log"
+    content: "{{ suricata_fast_recent_raw.stdout | default('') }}\n"
+    mode: "0644"

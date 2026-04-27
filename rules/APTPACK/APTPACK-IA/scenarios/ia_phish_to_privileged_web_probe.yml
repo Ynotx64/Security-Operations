@@ -1,0 +1,107 @@
+scenario:
+  id: APTPACK-IA-SCN-001
+  name: Initial Access - Phish-to-web-probe with suspicious user agent and spoofed forwarding header
+  phase_code: IA
+  phase_directory: APTPACK-IA
+  cyber_kill_chain: reconnaissance_to_initial_access
+  severity: high
+  confidence: medium
+  status: ready_for_validation
+
+threat_model:
+  summary: >
+    Simulates a user-driven web request pattern consistent with initial access staging,
+    including suspicious user-agent activity and an evasive header commonly abused
+    during access broker or proxy-aware application testing.
+  realistic_use_case: >
+    Mirrors investigations where suspicious HTTP requests hit a public application
+    shortly before credential abuse or follow-on activity.
+  attack_story: >
+    An operator sends a crafted probe to a reachable web service, first with a
+    recognizable custom user-agent, then with a loopback X-Forwarded-For header
+    to test trust assumptions.
+
+mitre:
+  tactics:
+    - TA0001
+    - TA0006
+  techniques:
+    - id: T1190
+      name: Exploit Public-Facing Application
+    - id: T1078
+      name: Valid Accounts
+
+metadata:
+  log_source:
+    - suricata_http
+    - zeek_http
+    - apache_access
+  test_ids:
+    corr: APTPACK-IA-CORR-001
+    anti: APTPACK-IA-ANTI-001
+  response_guidance:
+    - Confirm target vhost and requested URI.
+    - Review source IP, reverse proxy headers, and HTTP response code pattern.
+    - Pivot into auth logs for follow-on access attempts.
+    - If tied to exposed admin pathing, isolate and review WAF/proxy trust configuration.
+
+triggers:
+  correlation_rule_intent: >
+    Match suspicious web initial-access probe carrying APT-PACK-IA-TEST-UA
+    and the correlation test ID.
+  anti_bypass_rule_intent: >
+    Match suspicious web request using APT-PACK-IA-EVASION with X-Forwarded-For: 127.0.0.1
+    and the anti-bypass test ID.
+
+demo:
+  prerequisites:
+    - TARGET must be a real reachable HTTP service.
+    - Suricata and Zeek must see the traffic path.
+  commands:
+    - |
+      curl -v -A "APT-PACK-IA-TEST-UA" \
+        "http://$TARGET/login.php?phase=ia&test_id=APTPACK-IA-CORR-001"
+    - |
+      curl -v -A "APT-PACK-IA-EVASION" \
+        -H "X-Forwarded-For: 127.0.0.1" \
+        "http://$TARGET/admin?test_id=APTPACK-IA-ANTI-001"
+  safety_notes:
+    - Intended for lab-owned web targets only.
+    - 404 responses are acceptable if the HTTP request still traverses the monitored path.
+
+expected_telemetry:
+  suricata:
+    - eve.json contains APT-PACK-IA-TEST-UA or APT-PACK-IA-EVASION
+    - rule match references test_id APTPACK-IA-CORR-001 or APTPACK-IA-ANTI-001
+  zeek:
+    - http.log contains URI with test_id
+    - user_agent field includes the expected APT-PACK markers
+  wazuh:
+    - Only expected if web logs are ingested into Wazuh
+    - Must not rely on generic sudo events for IA validation
+  splunk:
+    - Search by test_id or user-agent string across HTTP indexes
+
+dashboard_searches:
+  wazuh:
+    - 'full_log:*APTPACK-IA-CORR-001*'
+    - 'full_log:*APTPACK-IA-ANTI-001*'
+    - 'full_log:*APT-PACK-IA-TEST-UA*'
+    - 'full_log:*APT-PACK-IA-EVASION*'
+  splunk:
+    - '("APTPACK-IA-CORR-001" OR "APT-PACK-IA-TEST-UA")'
+    - '("APTPACK-IA-ANTI-001" OR "APT-PACK-IA-EVASION" OR "X-Forwarded-For: 127.0.0.1")'
+  zeek_grep:
+    - 'grep -R "APTPACK-IA-CORR-001\|APTPACK-IA-ANTI-001\|APT-PACK-IA" /opt/zeek/logs/current'
+  suricata_grep:
+    - 'grep -R "APTPACK-IA-CORR-001\|APTPACK-IA-ANTI-001\|APT-PACK-IA" /var/log/suricata'
+
+validation:
+  pass_criteria:
+    - At least one HTTP transaction is visible in Zeek or Suricata.
+    - Correlation and anti-bypass markers are searchable by test_id.
+    - No validation depends on rule 100520 sudo noise.
+  fail_indicators:
+    - TARGET is unresolved or unreachable.
+    - Traffic never appears in IDS path.
+    - Only admin noise appears in dashboard results.

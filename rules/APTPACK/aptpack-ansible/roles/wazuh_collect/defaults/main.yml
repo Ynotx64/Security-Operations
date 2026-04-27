@@ -1,0 +1,6 @@
+---
+collect_host: ids-management
+wazuh_agent_service_name: wazuh-agent
+wazuh_agent_log_path: /var/ossec/logs/ossec.log
+wazuh_agent_conf_path: /var/ossec/etc/ossec.conf
+wazuh_agent_conf_backup_path: /var/ossec/etc/ossec.conf.bak

@@ -1,0 +1,13 @@
+<group name="aptpack,disc,correlation">
+  <rule id="170301" level="9">
+    <if_group>suricata,</if_group>
+    <field name="alert.signature">APTPACK DISC Reconnaissance Path Enumeration</field>
+    <description>APTPACK DISC - reconnaissance enumeration observed</description>
+    <mitre>
+      <id>T1082</id>
+      <id>T1016</id>
+      <id>T1033</id>
+    </mitre>
+    <group>attack,discovery,aptpack_disc,</group>
+  </rule>
+</group>

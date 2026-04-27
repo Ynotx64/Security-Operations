@@ -1,0 +1,46 @@
+---
+- name: End-to-end IR workflow for Suricata alert
+  hosts: soc-admin
+  gather_facts: true
+  vars:
+    artifact_root: "{{ playbook_dir | dirname }}/artifacts"
+
+  tasks:
+    - name: Generate fixed incident id for this run
+      set_fact:
+        incident_id: "IR-{{ ansible_date_time.date | regex_replace('-', '') }}-{{ ansible_date_time.time | regex_replace(':', '') }}"
+
+    - name: Ensure case artifact directory exists
+      file:
+        path: "{{ artifact_root }}/{{ incident_id }}"
+        state: directory
+        mode: "0755"
+
+    - name: Set artifact directory facts
+      set_fact:
+        artifact_dir: "{{ artifact_root }}/{{ incident_id }}"
+        case_artifact_dir: "{{ artifact_root }}/{{ incident_id }}"
+
+    - name: Collect Suricata evidence
+      include_role:
+        name: suricata_collect
+
+    - name: Collect Wazuh evidence
+      include_role:
+        name: wazuh_collect
+
+    - name: Collect host triage
+      include_role:
+        name: host_triage
+
+    - name: Run decision engine
+      include_role:
+        name: decision_engine
+
+    - name: Render case report
+      include_role:
+        name: report_case
+
+    - name: Validate case outputs
+      include_role:
+        name: validate_case

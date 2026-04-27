@@ -1,0 +1,153 @@
+=== hostname ===
+ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009
+=== ip addr ===
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host noprefixroute 
+       valid_lft forever preferred_lft forever
+2: enp1s0: <BROADCAST,MULTICAST,PROMISC,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 52:54:00:8d:08:51 brd ff:ff:ff:ff:ff:ff
+    inet 192.168.20.148/24 brd 192.168.20.255 scope global dynamic noprefixroute enp1s0
+       valid_lft 2498sec preferred_lft 2498sec
+    inet6 fe80::5054:ff:fe8d:851/64 scope link 
+       valid_lft forever preferred_lft forever
+3: enp2s0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 52:54:00:bf:9c:ed brd ff:ff:ff:ff:ff:ff
+    inet 169.254.103.243/16 brd 169.254.255.255 scope link noprefixroute enp2s0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::5054:ff:febf:9ced/64 scope link 
+       valid_lft forever preferred_lft forever
+=== routes ===
+default via 192.168.20.1 dev enp1s0 proto dhcp src 192.168.20.148 metric 100 
+169.254.0.0/16 dev enp2s0 proto kernel scope link src 169.254.103.243 metric 101 
+192.168.20.0/24 dev enp1s0 proto kernel scope link src 192.168.20.148 metric 100 
+224.0.0.0/4 dev enp2s0 proto static scope link metric 101 
+=== listening sockets ===
+Netid State  Recv-Q Send-Q      Local Address:Port  Peer Address:PortProcess                                                 
+udp   UNCONN 0      0                 0.0.0.0:57032      0.0.0.0:*    users:(("avahi-daemon",pid=842,fd=14))                 
+udp   UNCONN 0      0              127.0.0.54:53         0.0.0.0:*    users:(("systemd-resolve",pid=701,fd=16))              
+udp   UNCONN 0      0           127.0.0.53%lo:53         0.0.0.0:*    users:(("systemd-resolve",pid=701,fd=14))              
+udp   UNCONN 0      0                 0.0.0.0:5353       0.0.0.0:*    users:(("avahi-daemon",pid=842,fd=12))                 
+udp   UNCONN 0      0                    [::]:36816         [::]:*    users:(("avahi-daemon",pid=842,fd=15))                 
+udp   UNCONN 0      0                    [::]:5353          [::]:*    users:(("avahi-daemon",pid=842,fd=13))                 
+tcp   LISTEN 0      4096            127.0.0.1:631        0.0.0.0:*    users:(("cupsd",pid=6289,fd=7))                        
+tcp   LISTEN 0      4096           127.0.0.54:53         0.0.0.0:*    users:(("systemd-resolve",pid=701,fd=17))              
+tcp   LISTEN 0      4096              0.0.0.0:22         0.0.0.0:*    users:(("sshd",pid=1203,fd=3),("systemd",pid=1,fd=133))
+tcp   LISTEN 0      100               0.0.0.0:25         0.0.0.0:*    users:(("master",pid=1821,fd=13))                      
+tcp   LISTEN 0      5               127.0.0.1:27759      0.0.0.0:*    users:(("zeek",pid=20123,fd=57))                       
+tcp   LISTEN 0      4096        127.0.0.53%lo:53         0.0.0.0:*    users:(("systemd-resolve",pid=701,fd=15))              
+tcp   LISTEN 0      200               0.0.0.0:9991       0.0.0.0:*    users:(("zeek",pid=20123,fd=3))                        
+tcp   LISTEN 0      4096   [::ffff:127.0.0.1]:9200             *:*    users:(("java",pid=2355,fd=572))                       
+tcp   LISTEN 0      4096   [::ffff:127.0.0.1]:9300             *:*    users:(("java",pid=2355,fd=570))                       
+tcp   LISTEN 0      4096                    *:27762            *:*    users:(("zeek",pid=20123,fd=50))                       
+tcp   LISTEN 0      511                     *:8005             *:*    users:(("node",pid=2464,fd=29))                        
+tcp   LISTEN 0      4096                 [::]:22            [::]:*    users:(("sshd",pid=1203,fd=4),("systemd",pid=1,fd=134))
+tcp   LISTEN 0      100                  [::]:25            [::]:*    users:(("master",pid=1821,fd=14))                      
+tcp   LISTEN 0      100    [::ffff:127.0.0.1]:27761            *:*    users:(("zeek",pid=20123,fd=41))                       
+tcp   LISTEN 0      100    [::ffff:127.0.0.1]:27760            *:*    users:(("zeek",pid=20123,fd=40))                       
+tcp   LISTEN 0      4096                [::1]:631           [::]:*    users:(("cupsd",pid=6289,fd=6))                        
+=== last logins ===
+ids-mana pts/0        192.168.20.110   Fri Apr  3 17:51   still logged in
+ids-mana pts/0        192.168.20.110   Fri Apr  3 17:51 - 17:51  (00:00)
+ids-mana pts/0        192.168.20.110   Fri Apr  3 17:51 - 17:51  (00:00)
+ids-mana pts/0        192.168.20.110   Fri Apr  3 17:51 - 17:51  (00:00)
+ids-mana pts/0        192.168.20.110   Fri Apr  3 17:51 - 17:51  (00:00)
+ids-mana pts/0        192.168.20.110   Fri Apr  3 17:51 - 17:51  (00:00)
+ids-mana pts/0        192.168.20.110   Fri Apr  3 17:51 - 17:51  (00:00)
+ids-mana pts/0        192.168.20.110   Fri Apr  3 17:49 - 17:49  (00:00)
+ids-mana pts/0        192.168.20.110   Fri Apr  3 17:49 - 17:49  (00:00)
+ids-mana pts/0        192.168.20.110   Fri Apr  3 17:49 - 17:49  (00:00)
+ids-mana pts/0        192.168.20.110   Fri Apr  3 17:26 - 17:26  (00:00)
+ids-mana pts/0        192.168.20.110   Fri Apr  3 17:26 - 17:26  (00:00)
+ids-mana pts/0        192.168.20.110   Fri Apr  3 17:26 - 17:26  (00:00)
+ids-mana pts/0        192.168.20.110   Fri Apr  3 17:26 - 17:26  (00:00)
+ids-mana pts/0        192.168.20.110   Fri Apr  3 17:26 - 17:26  (00:00)
+ids-mana pts/0        192.168.20.110   Fri Apr  3 17:26 - 17:26  (00:00)
+ids-mana pts/0        192.168.20.110   Fri Apr  3 17:26 - 17:26  (00:00)
+ids-mana pts/0        192.168.20.110   Fri Apr  3 17:25 - 17:25  (00:00)
+ids-mana pts/0        192.168.20.110   Fri Apr  3 17:25 - 17:25  (00:00)
+ids-mana pts/0        192.168.20.110   Fri Apr  3 17:25 - 17:25  (00:00)
+
+wtmp begins Fri Mar 27 18:08:28 2026
+=== recent auth log ===
+Mar 27 18:23:01 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 systemd[1]: Starting ssh.service - OpenBSD Secure Shell server...
+Mar 27 18:23:01 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[11154]: Server listening on 0.0.0.0 port 22.
+Mar 27 18:23:01 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[11154]: Server listening on :: port 22.
+Mar 27 18:23:01 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 systemd[1]: Started ssh.service - OpenBSD Secure Shell server.
+Mar 27 18:25:05 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[12218]: Accepted password for ids-management from 192.168.20.1 port 42366 ssh2
+Mar 27 18:25:05 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[12218]: pam_unix(sshd:session): session opened for user ids-management(uid=1000) by ids-management(uid=0)
+Mar 28 08:47:47 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[54180]: Accepted password for ids-management from 192.168.20.1 port 38832 ssh2
+Mar 28 08:47:47 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[54180]: pam_unix(sshd:session): session opened for user ids-management(uid=1000) by ids-management(uid=0)
+Mar 30 10:05:19 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[112264]: Accepted password for ids-management from 192.168.20.1 port 37520 ssh2
+Mar 30 10:05:19 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[112264]: pam_unix(sshd:session): session opened for user ids-management(uid=1000) by ids-management(uid=0)
+Mar 30 10:15:16 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[112550]: Accepted password for ids-management from 192.168.20.1 port 37474 ssh2
+Mar 30 10:15:16 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[112550]: pam_unix(sshd:session): session opened for user ids-management(uid=1000) by ids-management(uid=0)
+Apr 01 18:19:33 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 systemd[1]: Stopping ssh.service - OpenBSD Secure Shell server...
+Apr 01 18:19:34 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[11154]: Received signal 15; terminating.
+Apr 01 18:19:34 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 systemd[1]: ssh.service: Deactivated successfully.
+Apr 01 18:19:34 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 systemd[1]: Stopped ssh.service - OpenBSD Secure Shell server.
+-- Boot 55788086e98240b9b037200efe54eee6 --
+Apr 02 12:52:02 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 systemd[1]: Starting ssh.service - OpenBSD Secure Shell server...
+Apr 02 12:52:02 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[1203]: Server listening on 0.0.0.0 port 22.
+Apr 02 12:52:02 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[1203]: Server listening on :: port 22.
+Apr 02 12:52:02 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 systemd[1]: Started ssh.service - OpenBSD Secure Shell server.
+Apr 02 13:16:58 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[2741]: Accepted password for ids-management from 192.168.20.1 port 42234 ssh2
+Apr 02 13:16:58 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[2741]: pam_unix(sshd:session): session opened for user ids-management(uid=1000) by ids-management(uid=0)
+Apr 02 18:46:49 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[4968]: Accepted password for ids-management from 192.168.20.1 port 45950 ssh2
+Apr 02 18:46:49 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[4968]: pam_unix(sshd:session): session opened for user ids-management(uid=1000) by ids-management(uid=0)
+Apr 03 09:58:55 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[13518]: Accepted password for ids-management from 192.168.20.1 port 33486 ssh2
+Apr 03 09:58:55 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[13518]: pam_unix(sshd:session): session opened for user ids-management(uid=1000) by ids-management(uid=0)
+Apr 03 10:04:11 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[13881]: Accepted password for ids-management from 192.168.20.1 port 36746 ssh2
+Apr 03 10:04:11 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[13881]: pam_unix(sshd:session): session opened for user ids-management(uid=1000) by ids-management(uid=0)
+Apr 03 10:08:04 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[14215]: Accepted password for ids-management from 192.168.20.138 port 56780 ssh2
+Apr 03 10:08:04 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[14215]: pam_unix(sshd:session): session opened for user ids-management(uid=1000) by ids-management(uid=0)
+Apr 03 10:10:59 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[17817]: Accepted password for ids-management from 192.168.20.110 port 60042 ssh2
+Apr 03 10:10:59 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[17817]: pam_unix(sshd:session): session opened for user ids-management(uid=1000) by ids-management(uid=0)
+Apr 03 10:16:15 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[18660]: Accepted password for ids-management from 192.168.20.110 port 43654 ssh2
+Apr 03 10:16:15 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[18660]: pam_unix(sshd:session): session opened for user ids-management(uid=1000) by ids-management(uid=0)
+Apr 03 10:22:16 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[20348]: Accepted password for ids-management from 192.168.20.110 port 35960 ssh2
+Apr 03 10:22:16 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[20348]: pam_unix(sshd:session): session opened for user ids-management(uid=1000) by ids-management(uid=0)
+Apr 03 10:24:56 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[22259]: Accepted password for ids-management from 192.168.20.110 port 36334 ssh2
+Apr 03 10:24:56 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[22259]: pam_unix(sshd:session): session opened for user ids-management(uid=1000) by ids-management(uid=0)
+Apr 03 13:43:32 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[30640]: Accepted password for ids-management from 192.168.20.1 port 38438 ssh2
+Apr 03 13:43:32 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[30640]: pam_unix(sshd:session): session opened for user ids-management(uid=1000) by ids-management(uid=0)
+Apr 03 14:37:21 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[32128]: Accepted password for ids-management from 192.168.20.1 port 54378 ssh2
+Apr 03 14:37:21 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[32128]: pam_unix(sshd:session): session opened for user ids-management(uid=1000) by ids-management(uid=0)
+Apr 03 16:57:21 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[37387]: Connection closed by authenticating user ids-management 192.168.20.110 port 50002 [preauth]
+Apr 03 16:59:43 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[37390]: Connection closed by authenticating user ids-management 192.168.20.110 port 37626 [preauth]
+Apr 03 16:59:43 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[37392]: Connection closed by authenticating user ids-management 192.168.20.110 port 37640 [preauth]
+Apr 03 16:59:52 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[37394]: Accepted password for ids-management from 192.168.20.110 port 37644 ssh2
+Apr 03 16:59:53 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[37394]: pam_unix(sshd:session): session opened for user ids-management(uid=1000) by ids-management(uid=0)
+Apr 03 16:59:53 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[37394]: pam_unix(sshd:session): session closed for user ids-management
+Apr 03 17:00:12 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[37757]: Accepted publickey for ids-management from 192.168.20.110 port 49386 ssh2: ED25519 SHA256:p5fMsOQJGuPlem11iDSm3uzLGIKp1Xm6BVgYf7flB58
+Apr 03 17:00:12 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[37757]: pam_unix(sshd:session): session opened for user ids-management(uid=1000) by ids-management(uid=0)
+Apr 03 17:00:12 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[37757]: pam_unix(sshd:session): session closed for user ids-management
+Apr 03 17:00:29 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[37815]: Accepted publickey for ids-management from 192.168.20.110 port 38630 ssh2: ED25519 SHA256:p5fMsOQJGuPlem11iDSm3uzLGIKp1Xm6BVgYf7flB58
+Apr 03 17:00:29 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[37815]: pam_unix(sshd:session): session opened for user ids-management(uid=1000) by ids-management(uid=0)
+Apr 03 17:02:46 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[37934]: Accepted publickey for ids-management from 192.168.20.110 port 34442 ssh2: ED25519 SHA256:p5fMsOQJGuPlem11iDSm3uzLGIKp1Xm6BVgYf7flB58
+Apr 03 17:02:46 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[37934]: pam_unix(sshd:session): session opened for user ids-management(uid=1000) by ids-management(uid=0)
+Apr 03 17:10:32 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[38101]: Accepted publickey for ids-management from 192.168.20.110 port 48670 ssh2: ED25519 SHA256:p5fMsOQJGuPlem11iDSm3uzLGIKp1Xm6BVgYf7flB58
+Apr 03 17:10:32 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[38101]: pam_unix(sshd:session): session opened for user ids-management(uid=1000) by ids-management(uid=0)
+Apr 03 17:11:52 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[38259]: Accepted publickey for ids-management from 192.168.20.110 port 57428 ssh2: ED25519 SHA256:p5fMsOQJGuPlem11iDSm3uzLGIKp1Xm6BVgYf7flB58
+Apr 03 17:11:52 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[38259]: pam_unix(sshd:session): session opened for user ids-management(uid=1000) by ids-management(uid=0)
+Apr 03 17:12:44 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[38589]: Accepted publickey for ids-management from 192.168.20.110 port 59072 ssh2: ED25519 SHA256:p5fMsOQJGuPlem11iDSm3uzLGIKp1Xm6BVgYf7flB58
+Apr 03 17:12:44 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[38589]: pam_unix(sshd:session): session opened for user ids-management(uid=1000) by ids-management(uid=0)
+Apr 03 17:17:51 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[38768]: Accepted publickey for ids-management from 192.168.20.110 port 56726 ssh2: ED25519 SHA256:p5fMsOQJGuPlem11iDSm3uzLGIKp1Xm6BVgYf7flB58
+Apr 03 17:17:51 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[38768]: pam_unix(sshd:session): session opened for user ids-management(uid=1000) by ids-management(uid=0)
+Apr 03 17:20:39 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[39348]: Accepted publickey for ids-management from 192.168.20.110 port 44606 ssh2: ED25519 SHA256:p5fMsOQJGuPlem11iDSm3uzLGIKp1Xm6BVgYf7flB58
+Apr 03 17:20:39 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[39348]: pam_unix(sshd:session): session opened for user ids-management(uid=1000) by ids-management(uid=0)
+Apr 03 17:21:45 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[39432]: Accepted publickey for ids-management from 192.168.20.110 port 43414 ssh2: ED25519 SHA256:p5fMsOQJGuPlem11iDSm3uzLGIKp1Xm6BVgYf7flB58
+Apr 03 17:21:45 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[39432]: pam_unix(sshd:session): session opened for user ids-management(uid=1000) by ids-management(uid=0)
+Apr 03 17:24:15 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[39922]: Accepted publickey for ids-management from 192.168.20.110 port 36552 ssh2: ED25519 SHA256:p5fMsOQJGuPlem11iDSm3uzLGIKp1Xm6BVgYf7flB58
+Apr 03 17:24:15 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[39922]: pam_unix(sshd:session): session opened for user ids-management(uid=1000) by ids-management(uid=0)
+Apr 03 17:24:16 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[39922]: pam_unix(sshd:session): session closed for user ids-management
+Apr 03 17:24:57 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[39992]: Accepted publickey for ids-management from 192.168.20.110 port 55858 ssh2: ED25519 SHA256:p5fMsOQJGuPlem11iDSm3uzLGIKp1Xm6BVgYf7flB58
+Apr 03 17:24:57 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[39992]: pam_unix(sshd:session): session opened for user ids-management(uid=1000) by ids-management(uid=0)
+Apr 03 17:25:11 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[40053]: Accepted publickey for ids-management from 192.168.20.110 port 34704 ssh2: ED25519 SHA256:p5fMsOQJGuPlem11iDSm3uzLGIKp1Xm6BVgYf7flB58
+Apr 03 17:25:11 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[40053]: pam_unix(sshd:session): session opened for user ids-management(uid=1000) by ids-management(uid=0)
+Apr 03 17:49:22 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[40657]: Accepted publickey for ids-management from 192.168.20.110 port 49064 ssh2: ED25519 SHA256:p5fMsOQJGuPlem11iDSm3uzLGIKp1Xm6BVgYf7flB58
+Apr 03 17:49:22 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[40657]: pam_unix(sshd:session): session opened for user ids-management(uid=1000) by ids-management(uid=0)
+Apr 03 17:51:23 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[40820]: Accepted publickey for ids-management from 192.168.20.110 port 49990 ssh2: ED25519 SHA256:p5fMsOQJGuPlem11iDSm3uzLGIKp1Xm6BVgYf7flB58
+Apr 03 17:51:23 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 sshd[40820]: pam_unix(sshd:session): session opened for user ids-management(uid=1000) by ids-management(uid=0)

@@ -1,0 +1,100 @@
+<decoder_list>
+
+  <!-- Generic JSON passthrough -->
+  <decoder name="edge-json-base">
+    <prematch>^\{.*\}$</prematch>
+    <plugin_decoder>JSON_Decoder</plugin_decoder>
+  </decoder>
+
+  <!-- Cisco / IOS / ASA / FTD syslog -->
+  <decoder name="edge-cisco-syslog">
+    <prematch>%(ASA|FTD|SEC_LOGIN|SYS|PARSER|AAA|AUTHPRIV|SSH|CONFIG)</prematch>
+  </decoder>
+
+  <decoder name="edge-cisco-admin-login-success">
+    <parent>edge-cisco-syslog</parent>
+    <regex offset="after_prematch">.*(login|Login|SSH|ssh).*(Successful|accepted|succeeded).*(from|src)[ =:]+([0-9]{1,3}(?:\.[0-9]{1,3}){3})</regex>
+    <order>message,src_ip</order>
+  </decoder>
+
+  <decoder name="edge-cisco-config-command">
+    <parent>edge-cisco-syslog</parent>
+    <regex offset="after_prematch">.*(CMD|command|configured from|entered command)[ =:"]+([^"]+)</regex>
+    <order>message,command</order>
+  </decoder>
+
+  <!-- Fortinet -->
+  <decoder name="edge-fortinet-kv">
+    <prematch>date=.*time=.*devname=.*(FortiGate|fortigate|FortiOS)</prematch>
+  </decoder>
+
+  <decoder name="edge-fortinet-admin-auth">
+    <parent>edge-fortinet-kv</parent>
+    <regex>.*user="([^"]+)".*srcip=([0-9]{1,3}(?:\.[0-9]{1,3}){3}).*action="([^"]+)".*status="([^"]+)"</regex>
+    <order>dst_user,src_ip,event_action,message</order>
+  </decoder>
+
+  <decoder name="edge-fortinet-config">
+    <parent>edge-fortinet-kv</parent>
+    <regex>.*cfgpath="([^"]+)".*cfgobj="([^"]+)".*action="([^"]+)"</regex>
+    <order>setting_changed,command,event_action</order>
+  </decoder>
+
+  <!-- Palo Alto -->
+  <decoder name="edge-panos-base">
+    <prematch>,(SYSTEM|CONFIG|AUTH|TRAFFIC),</prematch>
+  </decoder>
+
+  <decoder name="edge-panos-auth-success">
+    <parent>edge-panos-base</parent>
+    <regex>.*,(AUTH|SYSTEM),.*,(success|auth-success|login-success),.*?([0-9]{1,3}(?:\.[0-9]{1,3}){3})</regex>
+    <order>message,event_action,src_ip</order>
+  </decoder>
+
+  <decoder name="edge-panos-config-change">
+    <parent>edge-panos-base</parent>
+    <regex>.*,(CONFIG),.*,(commit|change|set|delete),.*</regex>
+    <order>message,event_action</order>
+  </decoder>
+
+  <!-- Juniper -->
+  <decoder name="edge-juniper-base">
+    <prematch>(mgd|sshd|UI_COMMIT|UI_CFG_AUDIT|AUTH|SYSTEM_AUTH)</prematch>
+  </decoder>
+
+  <decoder name="edge-juniper-auth-success">
+    <parent>edge-juniper-base</parent>
+    <regex>.*(Accepted|authenticated|login succeeded).*(from|source)[ =:]+([0-9]{1,3}(?:\.[0-9]{1,3}){3})</regex>
+    <order>message,src_ip</order>
+  </decoder>
+
+  <decoder name="edge-juniper-config">
+    <parent>edge-juniper-base</parent>
+    <regex>.*(UI_CFG_AUDIT|UI_COMMIT).*'(.*)'</regex>
+    <order>message,command</order>
+  </decoder>
+
+  <!-- OpenVPN / StrongSwan / generic VPN -->
+  <decoder name="edge-vpn-base">
+    <prematch>(openvpn|OpenVPN|charon|strongSwan|ikev2|ipsec|vpn)</prematch>
+  </decoder>
+
+  <decoder name="edge-vpn-admin-session">
+    <parent>edge-vpn-base</parent>
+    <regex>.*(AUTH_SUCCESS|login success|session established|IKE_SA established).*(from|src|peer)[ =:]+([0-9]{1,3}(?:\.[0-9]{1,3}){3})</regex>
+    <order>message,src_ip</order>
+  </decoder>
+
+  <!-- Zeek normalized JSON -->
+  <decoder name="edge-zeek-json">
+    <prematch>^\{.*"zeek_notice".*\}$</prematch>
+    <plugin_decoder>JSON_Decoder</plugin_decoder>
+  </decoder>
+
+  <!-- Suricata normalized JSON -->
+  <decoder name="edge-suricata-json">
+    <prematch>^\{.*"suricata_event_type".*\}$</prematch>
+    <plugin_decoder>JSON_Decoder</plugin_decoder>
+  </decoder>
+
+</decoder_list>

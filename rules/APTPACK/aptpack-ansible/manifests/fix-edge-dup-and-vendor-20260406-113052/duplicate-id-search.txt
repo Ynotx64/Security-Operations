@@ -1,0 +1,4 @@
+/var/ossec/etc/rules/110500-edge-appliance-access.xml:  <rule id="110500" level="12">
+/var/ossec/etc/rules/110500-edge-appliance-access.xml:  <rule id="110512" level="15">
+/var/ossec/etc/rules/110500-edge-appliance-access.xml:  <rule id="110511" level="15">
+/var/ossec/etc/rules/110500-edge-appliance-access.xml:  <rule id="110513" level="15">

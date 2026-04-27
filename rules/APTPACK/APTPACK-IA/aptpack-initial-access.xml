@@ -1,0 +1,90 @@
+<group name="aptpack,aptpack_ia,initial_access,">
+
+  <rule id="100510" level="8">
+    <if_group>authentication_failed</if_group>
+    <description>APTPACK-IA: Linux authentication failure detected</description>
+    <mitre>
+      <id>T1110</id>
+    </mitre>
+    <group>aptpack,aptpack_ia,credential_access,auth_failure,</group>
+  </rule>
+
+  <rule id="100511" level="10" frequency="3" timeframe="120">
+    <if_matched_sid>100510</if_matched_sid>
+    <same_srcip />
+    <description>APTPACK-IA: Multiple authentication failures from same source</description>
+    <mitre>
+      <id>T1110</id>
+    </mitre>
+    <group>aptpack,aptpack_ia,credential_access,bruteforce_pattern,</group>
+  </rule>
+
+  <rule id="100530" level="9">
+    <if_sid>80700</if_sid>
+    <field name="audit.execve.a0" type="pcre2">^(curl|wget)$</field>
+    <description>APTPACK-IA: Transfer tool execution observed in audit EXECVE</description>
+    <mitre>
+      <id>T1105</id>
+    </mitre>
+    <group>aptpack,aptpack_ia,tool_transfer,audit_execve,</group>
+  </rule>
+
+  <rule id="100531" level="10">
+    <if_sid>80700</if_sid>
+    <field name="audit.execve.a0" type="pcre2">^(curl|wget)$</field>
+    <field name="audit.execve.a1" type="pcre2">(?i)^https?://</field>
+    <description>APTPACK-IA: Transfer tool with remote URL observed</description>
+    <mitre>
+      <id>T1105</id>
+    </mitre>
+    <group>aptpack,aptpack_ia,tool_transfer,remote_fetch,audit_execve,</group>
+  </rule>
+
+  <rule id="100540" level="10">
+    <if_sid>80700</if_sid>
+    <field name="audit.execve.a0" type="pcre2">^(bash|sh|python|python3)$</field>
+    <match>base64 -d</match>
+    <description>APTPACK-IA: Encoded or decoded execution pattern observed</description>
+    <mitre>
+      <id>T1027.010</id>
+      <id>T1059</id>
+    </mitre>
+    <group>aptpack,aptpack_ia,obfuscation,execution,audit_execve,</group>
+  </rule>
+
+  <rule id="100542" level="10">
+    <if_sid>80700</if_sid>
+    <field name="audit.execve.a0" type="pcre2">^(python|python3)$</field>
+    <match>base64.b64decode</match>
+    <description>APTPACK-IA: Python base64 decode execution pattern observed</description>
+    <mitre>
+      <id>T1027.010</id>
+      <id>T1059.006</id>
+    </mitre>
+    <group>aptpack,aptpack_ia,obfuscation,execution,python_behavior,</group>
+  </rule>
+
+  <rule id="100543" level="10">
+    <if_sid>80700</if_sid>
+    <field name="audit.execve.a0" type="pcre2">^(python|python3)$</field>
+    <match>exec(</match>
+    <description>APTPACK-IA: Python exec pattern observed</description>
+    <mitre>
+      <id>T1059.006</id>
+    </mitre>
+    <group>aptpack,aptpack_ia,execution,python_behavior,</group>
+  </rule>
+
+  <rule id="100541" level="10">
+    <if_sid>80700</if_sid>
+    <field name="audit.execve.a0" type="pcre2">^(bash|sh)$</field>
+    <regex type="pcre2">\$[A-Za-z_][A-Za-z0-9_]*</regex>
+    <description>APTPACK-IA: Shell variable-substitution execution pattern observed</description>
+    <mitre>
+      <id>T1059.004</id>
+      <id>T1027</id>
+    </mitre>
+    <group>aptpack,aptpack_ia,execution,obfuscation,shell_behavior,</group>
+  </rule>
+
+</group>

@@ -1,0 +1,12 @@
+total 56
+-rw-r----- 1 root  wazuh 5660 Apr  6 11:01 110500-edge-appliance-access.xml
+-rw-r----- 1 root  wazuh 6276 Apr  6 11:41 119500-edge-enterprise-runtime.xml
+drwxr-x--- 2 root  root  4096 Apr  3 18:39 aptpack
+-rw-r--r-- 1 root  root  4169 Mar 23 16:37 aptpack-initial-access.xml
+drwxr-xr-x 2 root  root  4096 Mar 23 16:37 backups
+-rw-rw---- 1 wazuh wazuh 1008 Apr  3 11:10 local_rules.xml
+-rw-r----- 1 root  root  1755 Mar 23 18:00 local_rules.xml.2026-03-23-180004.bak
+-rw-r----- 1 root  root  1755 Mar 23 18:03 local_rules.xml.2026-03-23-180351.bak
+-rw-r----- 1 root  root   497 Mar 22 16:42 local_rules.xml.bak.2026-03-22-164213
+-rw-r----- 1 root  root  1587 Apr  3 11:08 local_rules.xml.bak.2026-04-03-110838
+-rw-r----- 1 root  root  1073 Apr  3 11:10 local_rules.xml.bak.2026-04-03-111033

@@ -1,0 +1,7 @@
+==================================================
+TEST: 11_telemetry_heartbeat_missing
+JSON: {"telemetry_heartbeat_missing":"true"}
+==================================================
+
+
+

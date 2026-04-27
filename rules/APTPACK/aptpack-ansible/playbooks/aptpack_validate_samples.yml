@@ -1,0 +1,15 @@
+---
+- name: Validate sample test events exist
+  hosts: soc-admin
+  gather_facts: false
+  tasks:
+    - name: Find sample JSON files
+      find:
+        paths: "{{ playbook_dir }}/../tests/samples"
+        patterns: "*.json"
+      register: sample_files
+
+    - name: Assert six synthetic phase test events exist
+      assert:
+        that:
+          - (sample_files.files | length) == 6

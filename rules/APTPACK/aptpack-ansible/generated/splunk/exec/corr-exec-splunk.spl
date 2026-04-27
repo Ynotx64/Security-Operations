@@ -1,0 +1,3 @@
+index=* sourcetype=suricata alert.signature="APTPACK EXEC Script Download Followed By Command Pattern"
+| stats count by src_ip dest_ip alert.signature
+| eval phase="EXEC", mitre="T1059", severity="high"

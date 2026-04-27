@@ -1,0 +1,26 @@
+APTPACK Phase Summary
+=====================
+
+Phase Code: IA
+Phase Directory: APTPACK-IA
+Kill Chain Stage: initial-access
+MITRE Tactics: TA0001, TA0006
+Severity: high
+Queue: initial-access
+
+Correlation Directory: /home/soc-admin/APTPACK/APTPACK-IA/APTPACK-CORR
+Anti-Bypass Directory: /home/soc-admin/APTPACK/APTPACK-IA/APTPACK-ANTI-BYPASS
+
+Correlation Files:
+- /home/soc-admin/APTPACK/APTPACK-IA/APTPACK-CORR/ia-splunk.spl
+- /home/soc-admin/APTPACK/APTPACK-IA/APTPACK-CORR/ia-zeek.zeek
+- /home/soc-admin/APTPACK/APTPACK-IA/APTPACK-CORR/ia-suricata.rules
+- /home/soc-admin/APTPACK/APTPACK-IA/APTPACK-CORR/ia-wazuh.xml
+
+Anti-Bypass Files:
+- /home/soc-admin/APTPACK/APTPACK-IA/APTPACK-ANTI-BYPASS/ia-anti-splunk.spl
+- /home/soc-admin/APTPACK/APTPACK-IA/APTPACK-ANTI-BYPASS/ia-anti-zeek.zeek
+- /home/soc-admin/APTPACK/APTPACK-IA/APTPACK-ANTI-BYPASS/ia-anti-suricata.rules
+- /home/soc-admin/APTPACK/APTPACK-IA/APTPACK-ANTI-BYPASS/ia-anti-wazuh.xml
+
+Artifact Directory: /home/soc-admin/APTPACK/aptpack-ansible/artifacts/ia-20260403-183232

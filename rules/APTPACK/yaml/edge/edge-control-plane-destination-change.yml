@@ -1,0 +1,48 @@
+id: EDGE-CTRL-004
+name: edge_control_plane_destination_change
+version: 1.0
+status: enabled
+phase: defense_evasion
+severity: critical
+confidence: high
+log_source:
+  - firewall_audit
+  - router_audit
+  - config_change_log
+mitre:
+  tactic:
+    - Defense Evasion
+    - Command and Control
+  technique:
+    - T1562
+    - T1071
+metadata:
+  test_id: EDGE-CTRL-004
+  response_playbook: pb-edge-control-plane-destination-change.yml
+  response_guidance: Validate intended infra destination, compare against baseline, revert unauthorized changes, inspect downstream impact.
+detection:
+  type: rule
+  match_any:
+    - command CONTAINS "logging host"
+    - command CONTAINS "syslog server"
+    - command CONTAINS "ntp server"
+    - command CONTAINS "ip name-server"
+    - command CONTAINS "radius-server host"
+    - command CONTAINS "tacacs-server host"
+    - setting_changed IN ["dns","ntp","aaa","syslog","logging_destination"]
+  condition: >
+    asset_role IN ["firewall","router","vpn_gateway","security_appliance"]
+fields:
+  required:
+    - timestamp
+    - asset_hostname
+    - changed_setting
+    - old_value
+    - new_value
+tags:
+  - edge
+  - dns
+  - ntp
+  - aaa
+  - logging
+  - config_drift

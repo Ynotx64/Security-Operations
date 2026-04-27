@@ -1,0 +1,31 @@
+alert http $HOME_NET any -> $EXTERNAL_NET any (
+    msg:"SOC ACTOR PACK Volt Typhoon suspicious web probe";
+    flow:to_server,established;
+    http.method; content:"GET";
+    http.uri; pcre:"/\/(cgi-bin|api|admin|vpn|owa|ecp|remote|login)/Ui";
+    classtype:web-application-attack;
+    sid:900001;
+    rev:1;
+    metadata: actor volt_typhoon, mitre_tactic Initial_Access, mitre_technique T1190, confidence medium, severity high, pack volt_typhoon_core;
+)
+
+alert tcp $HOME_NET any -> $EXTERNAL_NET 80 (
+    msg:"SOC ACTOR PACK suspicious id-check style response";
+    flow:established,to_client;
+    content:"uid=0(root)"; nocase;
+    classtype:bad-unknown;
+    sid:900002;
+    rev:1;
+    metadata: actor generic, mitre_tactic Command_and_Control, mitre_technique T1071, confidence medium, severity medium, pack generic_web_response;
+)
+
+alert tcp $HOME_NET any -> $EXTERNAL_NET any (
+    msg:"SOC ACTOR PACK outbound long-lived low-volume session candidate";
+    flow:established;
+    flags:S,12;
+    detection_filter:track by_src,count 5,seconds 300;
+    classtype:trojan-activity;
+    sid:900003;
+    rev:1;
+    metadata: actor volt_typhoon, mitre_tactic Command_and_Control, mitre_technique T1071, confidence low, severity medium, pack volt_typhoon_core;
+)

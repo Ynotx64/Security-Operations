@@ -1,0 +1,29 @@
+---
+- name: Set case artifact dir compatibility for host triage role
+  set_fact:
+    case_artifact_dir: "{{ case_artifact_dir | default(artifact_dir) }}"
+
+- name: Collect host triage bundle
+  become: true
+  delegate_to: "{{ collect_host }}"
+  shell: |
+    echo '=== hostname ==='
+    hostname
+    echo '=== ip addr ==='
+    ip addr
+    echo '=== routes ==='
+    ip route
+    echo '=== listening sockets ==='
+    ss -tulpn
+    echo '=== last logins ==='
+    last -n 20 || true
+    echo '=== recent auth log ==='
+    journalctl -u ssh -n 80 --no-pager || tail -n 80 /var/log/auth.log || true
+  register: host_triage_raw
+  changed_when: false
+
+- name: Save host triage bundle
+  copy:
+    dest: "{{ case_artifact_dir }}/host_triage.txt"
+    content: "{{ host_triage_raw.stdout | default('') }}\n"
+    mode: "0644"

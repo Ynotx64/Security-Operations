@@ -1,0 +1,19 @@
+playbook:
+  id: pb-edge-logging-disabled-or-redirected
+  title: Logging disabled or redirected on edge device
+  severity: critical
+  applies_to_rules: [110511, 110512, 110513]
+  objective: Detect defense evasion against SOC telemetry visibility.
+  immediate_actions:
+    - determine whether logging stopped, changed destination, or was disabled by command
+    - compare against baseline collector and relay configuration
+    - identify acting admin and source IP
+    - review immediately adjacent admin, export, and account-change events
+  escalation_conditions:
+    - logging destination moved off-baseline
+    - logging disabled by command
+    - telemetry heartbeat missing together with restart or config export
+  containment:
+    - restore known-good syslog/logging destination
+    - snapshot running config and preserve evidence
+    - escalate to incident response if paired with other edge anomalies

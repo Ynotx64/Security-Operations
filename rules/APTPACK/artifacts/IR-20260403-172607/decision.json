@@ -1,0 +1,1 @@
+{"incident_id": "IR-20260403-172607", "detected_src": "217.160.0.187", "detected_dst": "192.168.20.148", "detected_sig_id": "2100498", "detected_sig": "GPL ATTACK_RESPONSE id check returned root", "detected_category": "Potentially Bad Traffic", "detected_severity": "2", "ir_escalate": true, "ir_containment_recommended": false}

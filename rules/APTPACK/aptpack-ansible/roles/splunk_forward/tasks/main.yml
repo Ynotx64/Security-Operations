@@ -1,0 +1,42 @@
+---
+- name: Check whether Splunk forwarding is enabled
+  debug:
+    msg: "Splunk forwarding enabled={{ splunk_hec_enabled }}"
+
+- name: Send decision.json to Splunk HEC
+  uri:
+    url: "{{ splunk_hec_url }}"
+    method: POST
+    headers:
+      Authorization: "Splunk {{ splunk_hec_token }}"
+    body_format: json
+    body:
+      time: "{{ ansible_date_time.epoch }}"
+      host: "{{ inventory_hostname }}"
+      source: "ansible_ir_decision"
+      sourcetype: "_json"
+      index: "{{ splunk_index }}"
+      event: "{{ lookup('file', artifact_dir + '/decision.json') | from_json }}"
+    status_code: 200
+    validate_certs: false
+  when: splunk_hec_enabled | bool
+
+- name: Send case report to Splunk HEC
+  uri:
+    url: "{{ splunk_hec_url }}"
+    method: POST
+    headers:
+      Authorization: "Splunk {{ splunk_hec_token }}"
+    body_format: json
+    body:
+      time: "{{ ansible_date_time.epoch }}"
+      host: "{{ inventory_hostname }}"
+      source: "ansible_ir_case_report"
+      sourcetype: "soc:case:report"
+      index: "{{ splunk_index }}"
+      event:
+        incident_id: "{{ incident_id }}"
+        report: "{{ lookup('file', artifact_dir + '/case_report.md') }}"
+    status_code: 200
+    validate_certs: false
+  when: splunk_hec_enabled | bool

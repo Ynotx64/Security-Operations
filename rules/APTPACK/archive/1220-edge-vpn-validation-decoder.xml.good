@@ -1,0 +1,23 @@
+<decoder name="edge-vpn-validation-119540">
+  <program_name>^EDGEVPNTEST$</program_name>
+  <regex>^asset_role=([^ ]+) vendor=([^ ]+) service=([^ ]+) event_category=([^ ]+) event_action=([^ ]+) vpn_tunnel_name=([^ ]+) src_ip=([^ ]+) dst_ip=([^ ]+)$</regex>
+  <order>asset_role,vendor,service,event_category,event_action,vpn_tunnel_name,src_ip,dst_ip</order>
+</decoder>
+
+<decoder name="edge-vpn-validation-119541">
+  <program_name>^EDGEVPNTEST$</program_name>
+  <regex>^asset_role=([^ ]+) vendor=([^ ]+) service=([^ ]+) event_category=([^ ]+) event_action=([^ ]+) vpn_tunnel_name=([^ ]+) src_ip=([^ ]+) dst_ip=([^ ]+) first_seen_dst_ip_for_asset=([^ ]+)$</regex>
+  <order>asset_role,vendor,service,event_category,event_action,vpn_tunnel_name,src_ip,dst_ip,first_seen_dst_ip_for_asset</order>
+</decoder>
+
+<decoder name="edge-vpn-validation-119542">
+  <program_name>^EDGEVPNTEST$</program_name>
+  <regex>^asset_role=([^ ]+) vendor=([^ ]+) service=([^ ]+) event_category=([^ ]+) event_action=([^ ]+) vpn_tunnel_name=([^ ]+) src_ip=([^ ]+) dst_ip=([^ ]+) in_maintenance_window=([^ ]+)$</regex>
+  <order>asset_role,vendor,service,event_category,event_action,vpn_tunnel_name,src_ip,dst_ip,in_maintenance_window</order>
+</decoder>
+
+<decoder name="edge-vpn-validation-119543">
+  <program_name>^EDGEVPNTEST$</program_name>
+  <regex>^asset_role=([^ ]+) vendor=([^ ]+) service=([^ ]+) event_category=([^ ]+) event_action=([^ ]+) vpn_tunnel_name=([^ ]+) src_ip=([^ ]+) dst_ip=([^ ]+) peer_reputation=([^ ]+)$</regex>
+  <order>asset_role,vendor,service,event_category,event_action,vpn_tunnel_name,src_ip,dst_ip,peer_reputation</order>
+</decoder>

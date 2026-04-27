@@ -1,0 +1,34 @@
+---
+- name: Set case artifact dir compatibility for decision engine role
+  set_fact:
+    case_artifact_dir: "{{ case_artifact_dir | default(artifact_dir) }}"
+
+- name: Read Suricata pipeline hits
+  slurp:
+    src: "{{ case_artifact_dir }}/suricata_pipeline_hits.log"
+  register: suricata_pipeline_hits_file
+
+- name: Set decision facts
+  set_fact:
+    suricata_pipeline_hits_text: "{{ suricata_pipeline_hits_file.content | b64decode }}"
+    suricata_hit_count: "{{ (suricata_pipeline_hits_file.content | b64decode).splitlines() | reject('equalto','') | list | length }}"
+    escalation_decision: "{{ ((suricata_pipeline_hits_file.content | b64decode).splitlines() | reject('equalto','') | list | length) > 0 }}"
+    escalation_reason: >-
+      {{
+        'Matched Suricata alert(s) collected and correlated into case artifacts'
+        if (((suricata_pipeline_hits_file.content | b64decode).splitlines() | reject('equalto','') | list | length) > 0)
+        else
+        'No matching Suricata pipeline hits found'
+      }}
+
+- name: Write decision file
+  copy:
+    dest: "{{ case_artifact_dir }}/decision.json"
+    mode: "0644"
+    content: |
+      {
+        "incident_id": "{{ incident_id }}",
+        "suricata_hit_count": {{ suricata_hit_count }},
+        "escalation_decision": {{ escalation_decision | lower }},
+        "escalation_reason": {{ escalation_reason | to_json }}
+      }

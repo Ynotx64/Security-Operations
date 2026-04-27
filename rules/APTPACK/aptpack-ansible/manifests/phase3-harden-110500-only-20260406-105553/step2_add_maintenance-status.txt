@@ -1,0 +1,30 @@
+● wazuh-manager.service - Wazuh manager
+     Loaded: loaded (/usr/lib/systemd/system/wazuh-manager.service; enabled; preset: enabled)
+     Active: active (running) since Mon 2026-04-06 10:56:40 EDT; 2s ago
+    Process: 164609 ExecStart=/usr/bin/env /var/ossec/bin/wazuh-control start (code=exited, status=0/SUCCESS)
+      Tasks: 238 (limit: 9201)
+     Memory: 371.6M (peak: 381.0M)
+        CPU: 29.459s
+     CGroup: /system.slice/wazuh-manager.service
+             ├─164674 /var/ossec/framework/python/bin/python3 /var/ossec/api/scripts/wazuh_apid.py
+             ├─164675 /var/ossec/framework/python/bin/python3 /var/ossec/api/scripts/wazuh_apid.py
+             ├─164676 /var/ossec/framework/python/bin/python3 /var/ossec/api/scripts/wazuh_apid.py
+             ├─164679 /var/ossec/framework/python/bin/python3 /var/ossec/api/scripts/wazuh_apid.py
+             ├─164682 /var/ossec/framework/python/bin/python3 /var/ossec/api/scripts/wazuh_apid.py
+             ├─164723 /var/ossec/bin/wazuh-authd
+             ├─164741 /var/ossec/bin/wazuh-db
+             ├─164776 /var/ossec/bin/wazuh-execd
+             ├─164788 /var/ossec/bin/wazuh-analysisd
+             ├─164800 /var/ossec/bin/wazuh-syscheckd
+             ├─164874 /var/ossec/bin/wazuh-remoted
+             ├─164909 /var/ossec/bin/wazuh-logcollector
+             ├─164925 /var/ossec/bin/wazuh-monitord
+             ├─164944 /var/ossec/bin/wazuh-modulesd
+             └─166224 "[wazuh-modulesd]"
+
+Apr 06 10:56:36 soc-admin env[164609]: Started wazuh-syscheckd...
+Apr 06 10:56:37 soc-admin env[164609]: Started wazuh-remoted...
+Apr 06 10:56:37 soc-admin env[164609]: Started wazuh-logcollector...
+Apr 06 10:56:38 soc-admin env[164609]: Started wazuh-monitord...
+Apr 06 10:56:38 soc-admin env[164942]: 2026/04/06 10:56:38 wazuh-modulesd:router: INFO: Loaded router module.
+Apr 06 10:56:38 soc-admin env[164942]: 2026/04/06 10:56:38 wazuh-modulesd:content_manager: INFO: Loaded content_manager module.

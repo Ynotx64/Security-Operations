@@ -1,0 +1,80 @@
+<group name="aptpack,aptpack_ia,kubernetes,containers,react2shell,">
+
+  <rule id="121000" level="0">
+    <if_group>osquery</if_group>
+    <description>APTPACK IA React2Shell base rule for osquery events</description>
+    <group>aptpack,aptpack_ia,osquery,</group>
+  </rule>
+
+  <rule id="121001" level="10">
+    <if_group>osquery</if_group>
+    <match>/var/run/secrets/kubernetes.io/serviceaccount/token</match>
+    <description>APTPACK-IA-010A Kubernetes service account token access or reference</description>
+    <group>aptpack,aptpack_ia,kubernetes,credential_access,t1528,</group>
+    <mitre>
+      <id>T1528</id>
+    </mitre>
+  </rule>
+
+  <rule id="121002" level="8">
+    <if_group>osquery</if_group>
+    <regex type="pcre2">(?i)(kubectl\s+(get|describe|config\s+view)|cat\s+/var/run/secrets/kubernetes\.io/serviceaccount/token)</regex>
+    <description>APTPACK-IA-010B Kubernetes identity or namespace discovery from shell tooling</description>
+    <group>aptpack,aptpack_ia,kubernetes,discovery,t1087,</group>
+    <mitre>
+      <id>T1087</id>
+    </mitre>
+  </rule>
+
+  <rule id="121003" level="10">
+    <if_group>osquery</if_group>
+    <regex type="pcre2">(?i)(curl|wget).*(Authorization:\s*Bearer|--token|kubernetes\.default\.svc|:443/api/)</regex>
+    <description>APTPACK-IA-010C Kubernetes API access from shell tooling using bearer context</description>
+    <group>aptpack,aptpack_ia,kubernetes,execution,t1059,</group>
+    <mitre>
+      <id>T1059</id>
+    </mitre>
+  </rule>
+
+  <rule id="121004" level="9">
+    <if_group>osquery</if_group>
+    <regex type="pcre2">(?i)(base64|tar|zip).*(token|kubeconfig|serviceaccount|/tmp/|/dev/shm/|/var/tmp/)</regex>
+    <description>APTPACK-IA-010D Sensitive file or token staged with archive or base64 behavior</description>
+    <group>aptpack,aptpack_ia,collection,t1005,</group>
+    <mitre>
+      <id>T1005</id>
+    </mitre>
+  </rule>
+
+  <rule id="121005" level="10">
+    <if_group>osquery</if_group>
+    <regex type="pcre2">(?i)(curl|wget).*(http|https)://</regex>
+    <description>APTPACK-IA-010E Outbound transfer via curl or wget from container or host</description>
+    <group>aptpack,aptpack_ia,exfiltration,t1041,</group>
+    <mitre>
+      <id>T1041</id>
+    </mitre>
+  </rule>
+
+  <rule id="121006" level="12">
+    <if_group>osquery</if_group>
+    <regex type="pcre2">(?i)(curl|wget).*(/tmp/|/dev/shm/|/var/tmp/).*(\&\&|;).*(chmod\s+\+x).*(\&\&|;).*(bash|sh|python3?)</regex>
+    <description>APTPACK-IA-010F Download chmod and execute payload chain</description>
+    <group>aptpack,aptpack_ia,execution,t1105,t1059,</group>
+    <mitre>
+      <id>T1105</id>
+      <id>T1059</id>
+    </mitre>
+  </rule>
+
+  <rule id="121007" level="11">
+    <if_group>osquery</if_group>
+    <regex type="pcre2">(?i)(/tmp/|/dev/shm/|/var/tmp/).*(rm\s+-f|unlink)</regex>
+    <description>APTPACK-IA-010G Execute and delete temporary payload behavior</description>
+    <group>aptpack,aptpack_ia,defense_evasion,t1070,</group>
+    <mitre>
+      <id>T1070</id>
+    </mitre>
+  </rule>
+
+</group>

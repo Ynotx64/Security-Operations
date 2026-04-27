@@ -1,0 +1,40 @@
+id: EDGE-SVC-005
+name: edge_service_restart
+version: 1.0
+status: enabled
+phase: defense_evasion
+severity: medium
+confidence: medium
+log_source:
+  - firewall_system_log
+  - router_system_log
+  - service_event_log
+mitre:
+  tactic:
+    - Defense Evasion
+    - Persistence
+  technique:
+    - T1562
+metadata:
+  test_id: EDGE-SVC-005
+  response_playbook: pb-edge-service-restart.yml
+  response_guidance: Determine whether restart aligns with change window, inspect preceding commands, review config and telemetry continuity.
+detection:
+  type: rule
+  match_any:
+    - message CONTAINS "service restarted"
+    - message CONTAINS "daemon restarted"
+    - command CONTAINS "restart"
+    - event_action == "process_restart"
+  condition: >
+    asset_role IN ["firewall","router","vpn_gateway","security_appliance"]
+fields:
+  required:
+    - timestamp
+    - asset_hostname
+    - service_name
+    - event_action
+tags:
+  - edge
+  - service_restart
+  - defense_evasion

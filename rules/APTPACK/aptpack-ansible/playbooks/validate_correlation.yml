@@ -1,0 +1,44 @@
+---
+- name: Validate correlated SOC pipeline artifacts
+  hosts: soc-admin
+  gather_facts: true
+  vars:
+    artifact_root: "{{ playbook_dir | dirname }}/artifacts"
+  tasks:
+    - name: Find latest completed artifact directory
+      shell: |
+        for d in $(find {{ artifact_root }} -maxdepth 1 -type d -name 'IR-*' | sort -r); do
+          if [ -f "$d/decision.json" ] && [ -f "$d/case_report.md" ] && [ -f "$d/case_summary.txt" ]; then
+            echo "$d"
+            exit 0
+          fi
+        done
+        exit 1
+      register: latest_case_dir
+      changed_when: false
+
+    - name: Set artifact_dir from latest completed case
+      set_fact:
+        artifact_dir: "{{ latest_case_dir.stdout }}"
+
+    - name: Read decision file
+      slurp:
+        src: "{{ artifact_dir }}/decision.json"
+      register: decision_json_raw
+
+    - name: Parse decision JSON
+      set_fact:
+        decision_json: "{{ decision_json_raw.content | b64decode | from_json }}"
+
+    - name: Validate score and escalation logic
+      assert:
+        that:
+          - decision_json.suricata_hit_count | int >= 1
+          - decision_json.decision_score | int >= 1
+          - decision_json.ir_phase in ['observe', 'triage', 'escalate', 'contain']
+        fail_msg: "Correlation validation failed"
+        success_msg: "Correlation validation passed"
+
+    - name: Show decision
+      debug:
+        var: decision_json

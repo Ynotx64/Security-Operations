@@ -1,0 +1,11 @@
+<group name="aptpack,ia,anti_bypass">
+  <rule id="170002" level="10">
+    <if_group>suricata,</if_group>
+    <field name="alert.signature">APTPACK IA User-Agent Missing On Auth Request</field>
+    <description>APTPACK IA anti-bypass - missing User-Agent during auth flow</description>
+    <mitre>
+      <id>T1036</id>
+    </mitre>
+    <group>attack,defense_evasion,aptpack_ia_anti_bypass,</group>
+  </rule>
+</group>

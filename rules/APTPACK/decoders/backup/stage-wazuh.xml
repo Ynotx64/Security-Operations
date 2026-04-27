@@ -1,0 +1,12 @@
+<group name="aptpack,stage,correlation">
+  <rule id="170501" level="15">
+    <if_group>suricata,</if_group>
+    <field name="alert.signature">APTPACK STAGE Archive Or Exfil Artifact Transfer</field>
+    <description>APTPACK STAGE - staging or exfiltration artifact transfer detected</description>
+    <mitre>
+      <id>T1560</id>
+      <id>T1041</id>
+    </mitre>
+    <group>attack,collection,exfiltration,aptpack_stage,</group>
+  </rule>
+</group>

@@ -1,0 +1,24 @@
+case_artifact_root: "/home/soc-admin/soc-ir-automation/artifacts"
+
+suricata_eve_path: "/var/log/suricata/eve.json"
+suricata_fast_path: "/var/log/suricata/fast.log"
+
+wazuh_agent_log: "/var/ossec/logs/ossec.log"
+wazuh_agent_conf: "/var/ossec/etc/ossec.conf"
+
+splunk_api_scheme: "https"
+splunk_api_host: "127.0.0.1"
+splunk_api_port: 8089
+splunk_index: "main"
+splunk_user: "admin"
+splunk_password: "Kill9114319"
+
+pipeline_test_string: "GPL ATTACK_RESPONSE id check returned root"
+pipeline_test_sid: "2100498"
+
+containment_enabled: false
+containment_block_target: ""
+firewall_block_comment: "SOC IR automated containment"
+
+report_owner: "soc-admin"
+report_group: "soc-admin"

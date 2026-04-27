@@ -1,0 +1,23 @@
+---
+- name: Fail if block target missing
+  ansible.builtin.fail:
+    msg: "containment_block_target must be set"
+  when: containment_block_target | length == 0
+
+- name: Apply temporary ufw deny rule on ids-management
+  ansible.builtin.shell: |
+    ufw status numbered
+    ufw deny from {{ containment_block_target }} comment "{{ firewall_block_comment }}"
+    ufw status numbered
+  args:
+    executable: /bin/bash
+  delegate_to: ids-management
+  become: true
+  register: ufw_block_result
+  changed_when: true
+
+- name: Save containment action log
+  ansible.builtin.copy:
+    dest: "{{ case_artifact_dir }}/containment_block.txt"
+    mode: "0640"
+    content: "{{ ufw_block_result.stdout | default('') }}"

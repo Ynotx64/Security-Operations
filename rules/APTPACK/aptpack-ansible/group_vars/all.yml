@@ -1,0 +1,47 @@
+---
+collect_host: ids-management
+collect_host_ip: 192.168.20.148
+
+soc_actor_pack: "volt_typhoon_core"
+
+soc_severity_map:
+  low: 3
+  medium: 6
+  high: 9
+  critical: 12
+
+soc_asset_criticality:
+  ids-management: 4
+  wazuh-manager: 5
+  default: 2
+
+soc_mitre_weight:
+  T1071: 4
+  T1041: 5
+  T1021: 5
+  T1110: 4
+  T1190: 6
+  T1090: 5
+  T1562: 6
+  T1078: 6
+  T1046: 3
+  default: 2
+
+soc_decision_thresholds:
+  observe: 0
+  triage: 8
+  escalate: 14
+  contain: 20
+
+soc_containment_rules:
+  allow_auto_containment: false
+
+soc_case_defaults:
+  owner: "soc"
+  queue: "network-detections"
+  tlp: "amber"
+
+splunk_hec_enabled: false
+splunk_hec_url: "https://splunk.example.local:8088/services/collector"
+splunk_hec_token: "REPLACE_ME"
+splunk_index: "soc_cases"

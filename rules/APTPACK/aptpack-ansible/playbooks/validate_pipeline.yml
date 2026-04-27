@@ -1,0 +1,50 @@
+---
+- name: Validate full SOC pipeline
+  hosts: soc-admin
+  gather_facts: false
+  vars:
+    target_host: "ids-management"
+
+  pre_tasks:
+    - name: Generate fixed incident id for this run
+      ansible.builtin.set_fact:
+        incident_id: "IR-{{ lookup('pipe', 'date +%Y%m%d-%H%M%S') }}"
+        case_artifact_dir: "{{ case_artifact_root }}/IR-{{ lookup('pipe', 'date +%Y%m%d-%H%M%S') }}"
+
+    - name: Ensure validation artifact directory exists
+      ansible.builtin.file:
+        path: "{{ case_artifact_dir }}"
+        state: directory
+        mode: "0750"
+
+  tasks:
+    - name: Validate Suricata local alert presence
+      ansible.builtin.shell: |
+        grep -F "{{ pipeline_test_string }}" {{ suricata_eve_path }} | tail -n 10
+      args:
+        executable: /bin/bash
+      delegate_to: "{{ target_host }}"
+      become: true
+      register: validate_suricata
+      changed_when: false
+
+    - name: Save Suricata validation
+      ansible.builtin.copy:
+        dest: "{{ case_artifact_dir }}/validate_suricata.log"
+        mode: "0640"
+        content: "{{ validate_suricata.stdout | default('') }}"
+
+    - name: Validate Wazuh alert presence on manager
+      ansible.builtin.shell: |
+        grep -R "{{ pipeline_test_sid }}\|{{ pipeline_test_string }}" /var/ossec/logs/alerts 2>/dev/null | tail -n 20
+      args:
+        executable: /bin/bash
+      register: validate_wazuh
+      changed_when: false
+      become: true
+
+    - name: Save Wazuh validation
+      ansible.builtin.copy:
+        dest: "{{ case_artifact_dir }}/validate_wazuh.log"
+        mode: "0640"
+        content: "{{ validate_wazuh.stdout | default('') }}"

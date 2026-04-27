@@ -1,0 +1,12 @@
+<group name="aptpack,pe,anti_bypass">
+  <rule id="170202" level="14">
+    <if_group>suricata,</if_group>
+    <field name="alert.signature">APTPACK PE LOLBin Persistence Keyword</field>
+    <description>APTPACK PE anti-bypass - LOLBin based persistence keyword observed</description>
+    <mitre>
+      <id>T1218</id>
+      <id>T1546</id>
+    </mitre>
+    <group>attack,defense_evasion,persistence,aptpack_pe_anti_bypass,</group>
+  </rule>
+</group>

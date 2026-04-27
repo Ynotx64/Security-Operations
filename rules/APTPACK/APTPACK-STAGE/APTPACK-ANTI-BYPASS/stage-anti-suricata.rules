@@ -1,0 +1,9 @@
+alert http $HOME_NET any -> $EXTERNAL_NET any (
+    msg:"APTPACK STAGE Chunked Or Encoded Exfil Indicator";
+    flow:to_server,established;
+    pcre:"/(multipart\/form-data|chunked|content-range|gzip|base64)/Ui";
+    classtype:bad-unknown;
+    sid:700502;
+    rev:1;
+    metadata:mitre_tactic TA0010, phase STAGE, anti_bypass true, severity critical;
+)

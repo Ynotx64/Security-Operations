@@ -1,0 +1,16 @@
+playbook:
+  id: pb-edge-service-restart
+  title: Service restart on edge or security appliance
+  severity: medium
+  applies_to_rules: [110560, 110561]
+  objective: Distinguish normal maintenance from evasive restart behavior.
+  immediate_actions:
+    - identify process/service restarted
+    - verify whether change window exists
+    - inspect immediately preceding config changes, logging changes, and admin logins
+  escalation_conditions:
+    - restart follows logging disable/redirection
+    - restart occurs repeatedly without maintenance
+  containment:
+    - increase telemetry collection
+    - preserve logs around restart window

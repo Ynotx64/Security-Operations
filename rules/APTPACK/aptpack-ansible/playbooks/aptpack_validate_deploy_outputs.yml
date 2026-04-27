@@ -1,0 +1,19 @@
+---
+- name: Validate deployed phase artifacts
+  hosts: soc-admin
+  gather_facts: false
+  tasks:
+    - name: Find artifact summaries
+      find:
+        paths: "{{ playbook_dir }}/../artifacts"
+        recurse: yes
+        patterns:
+          - "phase_summary.txt"
+          - "deployment.json"
+      register: deploy_artifacts
+
+    - name: Assert deployment artifacts exist
+      assert:
+        that:
+          - (deploy_artifacts.files | length) >= 12
+        fail_msg: "Expected deployment summaries and metadata were not found"

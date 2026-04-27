@@ -1,0 +1,60 @@
+2026/04/03 14:38:06 wazuh-syscheckd: INFO: (6003): Monitoring path: '/usr/bin', with options 'size | permissions | owner | group | mtime | inode | hash_md5 | hash_sha1 | hash_sha256 | scheduled'.
+2026/04/03 14:38:06 wazuh-syscheckd: INFO: (6003): Monitoring path: '/usr/sbin', with options 'size | permissions | owner | group | mtime | inode | hash_md5 | hash_sha1 | hash_sha256 | scheduled'.
+2026/04/03 14:38:06 wazuh-syscheckd: INFO: (6206): Ignore 'file' entry '/etc/mtab'
+2026/04/03 14:38:06 wazuh-syscheckd: INFO: (6206): Ignore 'file' entry '/etc/hosts.deny'
+2026/04/03 14:38:06 wazuh-syscheckd: INFO: (6206): Ignore 'file' entry '/etc/mail/statistics'
+2026/04/03 14:38:06 wazuh-syscheckd: INFO: (6206): Ignore 'file' entry '/etc/random-seed'
+2026/04/03 14:38:06 wazuh-syscheckd: INFO: (6206): Ignore 'file' entry '/etc/random.seed'
+2026/04/03 14:38:06 wazuh-syscheckd: INFO: (6206): Ignore 'file' entry '/etc/adjtime'
+2026/04/03 14:38:06 wazuh-syscheckd: INFO: (6206): Ignore 'file' entry '/etc/httpd/logs'
+2026/04/03 14:38:06 wazuh-syscheckd: INFO: (6206): Ignore 'file' entry '/etc/utmpx'
+2026/04/03 14:38:06 wazuh-syscheckd: INFO: (6206): Ignore 'file' entry '/etc/wtmpx'
+2026/04/03 14:38:06 wazuh-syscheckd: INFO: (6206): Ignore 'file' entry '/etc/cups/certs'
+2026/04/03 14:38:06 wazuh-syscheckd: INFO: (6206): Ignore 'file' entry '/etc/dumpdates'
+2026/04/03 14:38:06 wazuh-syscheckd: INFO: (6206): Ignore 'file' entry '/etc/svc/volatile'
+2026/04/03 14:38:06 wazuh-syscheckd: INFO: (6207): Ignore 'file' sregex '.log$|.swp$'
+2026/04/03 14:38:06 wazuh-syscheckd: INFO: (6004): No diff for file: '/etc/ssl/private.key'
+2026/04/03 14:38:06 wazuh-syscheckd: INFO: (6000): Starting daemon...
+2026/04/03 14:38:06 wazuh-syscheckd: INFO: (6010): File integrity monitoring scan frequency: 43200 seconds
+2026/04/03 14:38:06 wazuh-syscheckd: INFO: (6008): File integrity monitoring scan started.
+2026/04/03 14:38:06 rootcheck: INFO: Starting rootcheck scan.
+2026/04/03 14:38:06 wazuh-logcollector: INFO: (1950): Analyzing file: '/var/log/suricata/eve.json'.
+2026/04/03 14:38:06 wazuh-logcollector: INFO: Monitoring output of command(360): df -P
+2026/04/03 14:38:06 wazuh-logcollector: INFO: Monitoring full output of command(360): netstat -tulpn | sed 's/\([[:alnum:]]\+\)\ \+[[:digit:]]\+\ \+[[:digit:]]\+\ \+\(.*\):\([[:digit:]]*\)\ \+\([0-9\.\:\*]\+\).\+\ \([[:digit:]]*\/[[:alnum:]\-]*\).*/\1 \2 == \3 == \4 \5/' | sort -k 4 -g | sed 's/ == \(.*\) ==/:\1/' | sed 1,2d
+2026/04/03 14:38:06 wazuh-logcollector: INFO: Monitoring full output of command(360): last -n 20
+2026/04/03 14:38:06 wazuh-logcollector: INFO: (1950): Analyzing file: '/var/ossec/logs/active-responses.log'.
+2026/04/03 14:38:06 wazuh-logcollector: INFO: (1950): Analyzing file: '/var/log/dpkg.log'.
+2026/04/03 14:38:06 wazuh-logcollector: INFO: Started (pid: 33726).
+2026/04/03 14:38:06 wazuh-modulesd: INFO: Started (pid: 33740).
+2026/04/03 14:38:06 wazuh-modulesd:agent-upgrade: INFO: (8153): Module Agent Upgrade started.
+2026/04/03 14:38:06 wazuh-modulesd:ciscat: INFO: Module disabled. Exiting...
+2026/04/03 14:38:06 wazuh-modulesd:osquery: INFO: Module disabled. Exiting...
+2026/04/03 14:38:06 sca: INFO: Module started.
+2026/04/03 14:38:06 sca: INFO: Loaded policy '/var/ossec/ruleset/sca/cis_ubuntu24-04.yml'
+2026/04/03 14:38:06 wazuh-modulesd:control: INFO: Starting control thread.
+2026/04/03 14:38:06 sca: INFO: Starting Security Configuration Assessment scan.
+2026/04/03 14:38:06 wazuh-modulesd:syscollector: INFO: Module started.
+2026/04/03 14:38:06 wazuh-modulesd:syscollector: INFO: Starting evaluation.
+2026/04/03 14:38:06 sca: INFO: Starting evaluation of policy: '/var/ossec/ruleset/sca/cis_ubuntu24-04.yml'
+2026/04/03 14:38:07 wazuh-modulesd:syscollector: INFO: Evaluation finished.
+2026/04/03 14:38:08 wazuh-logcollector: INFO: (9203): Monitoring journal entries.
+2026/04/03 14:38:08 wazuh-syscheckd: INFO: (6009): File integrity monitoring scan ended.
+2026/04/03 14:38:08 wazuh-syscheckd: INFO: FIM sync module started.
+2026/04/03 14:38:13 sca: INFO: Evaluation finished for policy '/var/ossec/ruleset/sca/cis_ubuntu24-04.yml'
+2026/04/03 14:38:13 sca: INFO: Security Configuration Assessment scan finished. Duration: 7 seconds.
+2026/04/03 14:39:29 rootcheck: INFO: Ending rootcheck scan.
+2026/04/03 14:51:38 wazuh-agentd: ERROR: (1137): Lost connection with manager. Setting lock.
+2026/04/03 14:51:38 wazuh-agentd: INFO: Closing connection to server ([192.168.20.110]:1514/tcp).
+2026/04/03 14:51:38 wazuh-agentd: INFO: Trying to connect to server ([192.168.20.110]:1514/tcp).
+2026/04/03 14:51:38 wazuh-agentd: ERROR: (1216): Unable to connect to '[192.168.20.110]:1514/tcp': 'Transport endpoint is not connected'.
+2026/04/03 14:51:46 wazuh-logcollector: WARNING: Process locked due to agent is offline. Waiting for connection...
+2026/04/03 14:51:48 wazuh-agentd: INFO: Trying to connect to server ([192.168.20.110]:1514/tcp).
+2026/04/03 14:51:48 wazuh-agentd: ERROR: (1216): Unable to connect to '[192.168.20.110]:1514/tcp': 'Transport endpoint is not connected'.
+2026/04/03 14:51:58 wazuh-agentd: INFO: Trying to connect to server ([192.168.20.110]:1514/tcp).
+2026/04/03 14:51:58 wazuh-agentd: INFO: (4102): Connected to the server ([192.168.20.110]:1514/tcp).
+2026/04/03 14:51:58 wazuh-agentd: INFO: Server responded. Releasing lock.
+2026/04/03 14:52:01 wazuh-logcollector: INFO: Agent is now online. Process unlocked, continuing...
+2026/04/03 15:38:09 wazuh-modulesd:syscollector: INFO: Starting evaluation.
+2026/04/03 15:38:23 wazuh-modulesd:syscollector: INFO: Evaluation finished.
+2026/04/03 16:38:24 wazuh-modulesd:syscollector: INFO: Starting evaluation.
+2026/04/03 16:38:36 wazuh-modulesd:syscollector: INFO: Evaluation finished.

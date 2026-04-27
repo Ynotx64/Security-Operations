@@ -1,0 +1,57 @@
+  <rule id="110512" level="15">
+    <decoded_as>json</decoded_as>
+    <field name="asset_role">firewall|router|vpn_gateway|security_appliance</field>
+    <field name="setting_changed">logging_destination</field>
+    <description>EDGE-LOG-007 logging disabled or redirected via destination change</description>
+    <group>edge,logging,telemetry_gap,defense_evasion,t1562.001,</group>
+  </rule>
+  <rule id="110506" level="15">
+    <decoded_as>json</decoded_as>
+    <field name="asset_role">firewall|router|vpn_gateway|security_appliance</field>
+    <field name="setting_changed">dns|ntp|aaa|syslog|logging_destination</field>
+    <description>EDGE-CTRL-004 DNS/NTP/AAA/logging destination change</description>
+    <group>edge,dns,ntp,aaa,logging,config_drift,t1562,t1071,</group>
+  </rule>
+  <rule id="110507" level="15">
+    <decoded_as>json</decoded_as>
+    <field name="asset_role">firewall|router|vpn_gateway|security_appliance</field>
+    <field name="command">logging host|syslog server|ntp server|ip name-server|radius-server host|tacacs-server host</field>
+    <description>EDGE-CTRL-004 DNS/NTP/AAA/logging destination change via command</description>
+    <group>edge,dns,ntp,aaa,logging,config_drift,t1562,t1071,</group>
+  </rule>
+  <rule id="110508" level="10">
+    <decoded_as>json</decoded_as>
+    <field name="asset_role">firewall|router|vpn_gateway|security_appliance</field>
+    <field name="event_action">process_restart</field>
+    <description>EDGE-SVC-005 service restart on edge or security device</description>
+    <group>edge,service_restart,defense_evasion,t1562,</group>
+  </rule>
+  <rule id="110509" level="10">
+    <decoded_as>json</decoded_as>
+    <field name="asset_role">firewall|router|vpn_gateway|security_appliance</field>
+    <field name="message">service restarted|daemon restarted</field>
+    <description>EDGE-SVC-005 service restart on edge or security device</description>
+    <group>edge,service_restart,defense_evasion,t1562,</group>
+  </rule>
+  <rule id="110510" level="15">
+    <decoded_as>json</decoded_as>
+    <field name="src_asset_role">firewall|router|vpn_gateway|security_appliance</field>
+    <field name="direction">outbound</field>
+    <field name="dst_port">53|80|443|8080|8443|9443</field>
+    <description>EDGE-EGRESS-006 unexpected outbound egress from edge appliance</description>
+    <group>edge,egress,dns,https,c2,t1071,t1041,</group>
+  </rule>
+  <rule id="110511" level="15">
+    <decoded_as>json</decoded_as>
+    <field name="asset_role">firewall|router|vpn_gateway|security_appliance</field>
+    <field name="telemetry_heartbeat_missing">true</field>
+    <description>EDGE-LOG-007 logging disabled or redirected via telemetry gap</description>
+    <group>edge,logging,telemetry_gap,defense_evasion,t1562.001,</group>
+  </rule>
+  <rule id="110513" level="15">
+    <decoded_as>json</decoded_as>
+    <field name="asset_role">firewall|router|vpn_gateway|security_appliance</field>
+    <field name="command">no logging|logging disable</field>
+    <description>EDGE-LOG-007 logging disabled or redirected via command</description>
+    <group>edge,logging,telemetry_gap,defense_evasion,t1562.001,</group>
+  </rule>

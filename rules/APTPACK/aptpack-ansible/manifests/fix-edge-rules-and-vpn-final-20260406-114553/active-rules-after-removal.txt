@@ -1,0 +1,9 @@
+/var/ossec/etc/rules/110500-edge-appliance-access.xml
+/var/ossec/etc/rules/119500-edge-enterprise-runtime.xml
+/var/ossec/etc/rules/aptpack-initial-access.xml
+/var/ossec/etc/rules/local_rules.xml
+/var/ossec/etc/rules/local_rules.xml.2026-03-23-180004.bak
+/var/ossec/etc/rules/local_rules.xml.2026-03-23-180351.bak
+/var/ossec/etc/rules/local_rules.xml.bak.2026-03-22-164213
+/var/ossec/etc/rules/local_rules.xml.bak.2026-04-03-110838
+/var/ossec/etc/rules/local_rules.xml.bak.2026-04-03-111033

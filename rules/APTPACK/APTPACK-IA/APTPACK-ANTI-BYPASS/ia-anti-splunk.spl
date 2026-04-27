@@ -1,0 +1,3 @@
+index=* sourcetype=suricata alert.signature="APTPACK IA User-Agent Missing On Auth Request"
+| stats count by src_ip dest_ip alert.signature
+| eval phase="IA", anti_bypass="true", severity="medium"

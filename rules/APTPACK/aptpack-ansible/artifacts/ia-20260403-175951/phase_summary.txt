@@ -1,0 +1,20 @@
+APTPACK Phase Summary
+=====================
+
+Phase Code: IA
+Phase Directory: APTPACK-IA
+Kill Chain Stage: initial-access
+MITRE Tactics: TA0001, TA0006
+Severity: high
+Queue: initial-access
+
+Correlation Directory: /home/soc-admin/APTPACK/APTPACK-IA/APTPACK-CORR
+Anti-Bypass Directory: /home/soc-admin/APTPACK/APTPACK-IA/APTPACK-ANTI-BYPASS
+
+Correlation Files:
+- none found
+
+Anti-Bypass Files:
+- none found
+
+Artifact Directory: /home/soc-admin/APTPACK/aptpack-ansible/artifacts/ia-20260403-175951

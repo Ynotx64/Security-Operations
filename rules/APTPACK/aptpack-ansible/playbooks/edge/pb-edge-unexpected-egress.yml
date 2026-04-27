@@ -1,0 +1,19 @@
+playbook:
+  id: pb-edge-unexpected-egress
+  title: Unexpected outbound egress from edge appliance
+  severity: critical
+  applies_to_rules: [110570]
+  objective: Detect C2, relay behavior, or unauthorized beaconing from edge infrastructure.
+  immediate_actions:
+    - identify source asset, destination IP/FQDN, dst_port, and timing
+    - validate destination against approved update/license/telemetry services
+    - correlate with admin login, config export, and logging change events
+    - inspect Zeek/Suricata/NetFlow/PCAP if available
+  escalation_conditions:
+    - destination rare or previously unseen
+    - traffic appears after config/auth anomaly
+    - long-lived or periodic outbound sessions
+  containment:
+    - block destination at egress control if unauthorized
+    - isolate management-plane where feasible
+    - preserve packet captures and session metadata

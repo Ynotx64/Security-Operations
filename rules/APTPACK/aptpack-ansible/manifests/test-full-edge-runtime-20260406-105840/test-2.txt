@@ -1,0 +1,5 @@
+==================================================
+EVENT: {"admin_login_success":"true","first_seen_src_ip_for_asset":"true","asset_role":"router"}
+==================================================
+
+

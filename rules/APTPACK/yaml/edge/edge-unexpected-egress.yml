@@ -1,0 +1,45 @@
+id: EDGE-EGRESS-006
+name: edge_unexpected_egress
+version: 1.0
+status: enabled
+phase: command_and_control
+severity: critical
+confidence: medium
+log_source:
+  - netflow
+  - zeek_conn
+  - firewall_traffic
+  - dns_log
+mitre:
+  tactic:
+    - Command and Control
+    - Exfiltration
+  technique:
+    - T1071
+    - T1041
+metadata:
+  test_id: EDGE-EGRESS-006
+  response_playbook: pb-edge-unexpected-egress.yml
+  response_guidance: Identify destination, compare against allowlist, inspect parallel control-plane changes, consider immediate egress block.
+detection:
+  type: correlation
+  condition: >
+    src_asset_role IN ["firewall","router","vpn_gateway","security_appliance"]
+    AND direction == "outbound"
+    AND dst_ip NOT IN approved_edge_destinations
+    AND dst_domain NOT IN approved_edge_domains
+    AND dst_port IN [53,80,443,8080,8443,9443]
+fields:
+  required:
+    - timestamp
+    - src_ip
+    - dst_ip
+    - dst_port
+    - proto
+    - bytes_out
+tags:
+  - edge
+  - egress
+  - dns
+  - https
+  - c2

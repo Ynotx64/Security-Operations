@@ -1,0 +1,59 @@
+<group name="custom,edge,appliance_access,">
+
+  <rule id="110500" level="12">
+    <decoded_as>json</decoded_as>
+    <field name="management_login_success">true</field>
+    <description>EDGE-MGMT-008 after-hours management-plane access</description>
+    <group>edge,afterhours,management_plane,</group>
+  </rule>
+
+  <rule id="110501" level="12">
+    <decoded_as>json</decoded_as>
+    <field name="admin_login_success">true</field>
+    <description>EDGE-ADM-001 first-seen admin source IP to edge host</description>
+    <group>edge,admin,first_seen,management_plane,</group>
+  </rule>
+
+  <rule id="110502" level="13">
+    <decoded_as>json</decoded_as>
+    <field name="command">copy running-config</field>
+    <description>EDGE-CONFIG-002 config export or backup on edge appliance</description>
+    <group>edge,config,export,backup,</group>
+  </rule>
+
+  <rule id="110503" level="15">
+    <decoded_as>json</decoded_as>
+    <field name="event_action">local_user_created</field>
+    <description>EDGE-ACCT-003 local admin creation or privilege change</description>
+    <group>edge,account,persistence,privilege,</group>
+  </rule>
+
+  <rule id="110504" level="15">
+    <decoded_as>json</decoded_as>
+    <field name="setting_changed">dns</field>
+    <description>EDGE-CTRL-004 DNS/NTP/AAA/logging destination change</description>
+    <group>edge,dns,ntp,aaa,logging,config_drift,</group>
+  </rule>
+
+  <rule id="110505" level="10">
+    <decoded_as>json</decoded_as>
+    <field name="event_action">process_restart</field>
+    <description>EDGE-SVC-005 service restart on edge or security device</description>
+    <group>edge,service_restart,defense_evasion,</group>
+  </rule>
+
+  <rule id="110506" level="15">
+    <decoded_as>json</decoded_as>
+    <field name="direction">outbound</field>
+    <description>EDGE-EGRESS-006 unexpected outbound egress from edge appliance</description>
+    <group>edge,egress,dns,https,c2,</group>
+  </rule>
+
+  <rule id="110507" level="15">
+    <decoded_as>json</decoded_as>
+    <field name="telemetry_heartbeat_missing">true</field>
+    <description>EDGE-LOG-007 logging disabled or redirected</description>
+    <group>edge,logging,telemetry_gap,defense_evasion,</group>
+  </rule>
+
+</group>

@@ -1,0 +1,17 @@
+playbook:
+  id: pb-edge-first-seen-admin-source
+  title: First-seen admin source IP to edge host
+  severity: high
+  applies_to_rules: [110521]
+  objective: Identify potential new admin foothold or unauthorized management path.
+  immediate_actions:
+    - validate src_ip against bastion, jump host, VPN pool, admin subnet inventory
+    - review previous 30-day admin source history for this asset
+    - identify whether source IP is consumer ISP, cloud host, or remote office egress
+    - confirm MFA/AAA outcome
+  escalation_conditions:
+    - source IP unknown and login successful
+    - source IP linked to same window as config export or logging change
+  containment:
+    - temporary block src_ip on management-plane ACL
+    - force reauthentication and reset privileged credentials if needed

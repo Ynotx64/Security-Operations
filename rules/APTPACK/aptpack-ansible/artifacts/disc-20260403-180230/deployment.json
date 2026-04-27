@@ -1,0 +1,1 @@
+{"phase_code": "DISC", "phase_directory": "APTPACK-DISC", "kill_chain_stage": "discovery", "mitre_tactics": ["TA0007"], "severity": "medium", "queue": "discovery", "correlation_files": [], "anti_bypass_files": []}

@@ -1,0 +1,36 @@
+---
+- name: Query Splunk for Suricata alert hits
+  ansible.builtin.shell: |
+    curl -k -u {{ splunk_user | quote }}:{{ splunk_password | quote }} \
+      https://{{ splunk_api_host }}:{{ splunk_api_port }}/services/search/jobs/export \
+      -d search='search index={{ splunk_index }} sourcetype=suricata:json "{{ pipeline_test_string }}" | spath | eval sig_id=mvindex('\''alert.signature_id'\'',0), sig=mvindex('\''alert.signature'\'',0), category=mvindex('\''alert.category'\'',0), severity=mvindex('\''alert.severity'\'',0), src=mvindex(src_ip,0), dst=mvindex(dest_ip,0) | table _time host source src dst sig_id sig category severity' \
+      -d output_mode=json
+  args:
+    executable: /bin/bash
+  delegate_to: splunk
+  register: splunk_suricata_hits
+  changed_when: false
+
+- name: Query Splunk host activity for ids-management
+  ansible.builtin.shell: |
+    curl -k -u {{ splunk_user | quote }}:{{ splunk_password | quote }} \
+      https://{{ splunk_api_host }}:{{ splunk_api_port }}/services/search/jobs/export \
+      -d search='search index={{ splunk_index }} host=ids-management earliest=-60m latest=now | head 100' \
+      -d output_mode=json
+  args:
+    executable: /bin/bash
+  delegate_to: splunk
+  register: splunk_host_recent
+  changed_when: false
+
+- name: Save Splunk Suricata hits
+  ansible.builtin.copy:
+    dest: "{{ case_artifact_dir }}/splunk_suricata_hits.json"
+    mode: "0640"
+    content: "{{ splunk_suricata_hits.stdout | default('') }}"
+
+- name: Save Splunk recent host activity
+  ansible.builtin.copy:
+    dest: "{{ case_artifact_dir }}/splunk_host_recent.json"
+    mode: "0640"
+    content: "{{ splunk_host_recent.stdout | default('') }}"

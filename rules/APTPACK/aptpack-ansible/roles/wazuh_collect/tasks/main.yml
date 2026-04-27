@@ -1,0 +1,43 @@
+---
+- name: Set case artifact dir compatibility for Wazuh role
+  set_fact:
+    case_artifact_dir: "{{ case_artifact_dir | default(artifact_dir) }}"
+
+- name: Collect Wazuh agent status
+  become: true
+  delegate_to: "{{ collect_host }}"
+  shell: "systemctl status {{ wazuh_agent_service_name | default('wazuh-agent') }} --no-pager || true"
+  register: wazuh_agent_status_raw
+  changed_when: false
+
+- name: Collect Wazuh Suricata config references
+  become: true
+  delegate_to: "{{ collect_host }}"
+  shell: "(grep -R '<location>/var/log/suricata/eve.json</location>' /var/ossec/etc/ossec.conf /var/ossec/etc/ossec.conf.bak 2>/dev/null || true)"
+  register: wazuh_suricata_refs_raw
+  changed_when: false
+
+- name: Collect Wazuh recent log tail
+  become: true
+  delegate_to: "{{ collect_host }}"
+  shell: "tail -n 120 {{ wazuh_agent_log_path | default('/var/ossec/logs/ossec.log') }} || true"
+  register: wazuh_log_tail_raw
+  changed_when: false
+
+- name: Save Wazuh agent status
+  copy:
+    dest: "{{ case_artifact_dir }}/wazuh_agent_status.log"
+    content: "{{ wazuh_agent_status_raw.stdout | default('') }}\n"
+    mode: "0644"
+
+- name: Save Wazuh Suricata references
+  copy:
+    dest: "{{ case_artifact_dir }}/wazuh_suricata_refs.log"
+    content: "{{ wazuh_suricata_refs_raw.stdout | default('') }}\n"
+    mode: "0644"
+
+- name: Save Wazuh log tail
+  copy:
+    dest: "{{ case_artifact_dir }}/wazuh_log_tail.log"
+    content: "{{ wazuh_log_tail_raw.stdout | default('') }}\n"
+    mode: "0644"

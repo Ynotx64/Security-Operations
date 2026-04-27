@@ -1,0 +1,26 @@
+APTPACK Phase Summary
+=====================
+
+Phase Code: PE
+Phase Directory: APTPACK-PE
+Kill Chain Stage: persistence-privilege-escalation
+MITRE Tactics: TA0003, TA0004
+Severity: critical
+Queue: endpoint-persistence
+
+Correlation Directory: /home/soc-admin/APTPACK/APTPACK-PE/APTPACK-CORR
+Anti-Bypass Directory: /home/soc-admin/APTPACK/APTPACK-PE/APTPACK-ANTI-BYPASS
+
+Correlation Files:
+- /home/soc-admin/APTPACK/APTPACK-PE/APTPACK-CORR/pe-zeek.zeek
+- /home/soc-admin/APTPACK/APTPACK-PE/APTPACK-CORR/pe-wazuh.xml
+- /home/soc-admin/APTPACK/APTPACK-PE/APTPACK-CORR/pe-splunk.spl
+- /home/soc-admin/APTPACK/APTPACK-PE/APTPACK-CORR/pe-suricata.rules
+
+Anti-Bypass Files:
+- /home/soc-admin/APTPACK/APTPACK-PE/APTPACK-ANTI-BYPASS/pe-anti-wazuh.xml
+- /home/soc-admin/APTPACK/APTPACK-PE/APTPACK-ANTI-BYPASS/pe-anti-splunk.spl
+- /home/soc-admin/APTPACK/APTPACK-PE/APTPACK-ANTI-BYPASS/pe-anti-zeek.zeek
+- /home/soc-admin/APTPACK/APTPACK-PE/APTPACK-ANTI-BYPASS/pe-anti-suricata.rules
+
+Artifact Directory: /home/soc-admin/APTPACK/aptpack-ansible/artifacts/pe-20260403-183723

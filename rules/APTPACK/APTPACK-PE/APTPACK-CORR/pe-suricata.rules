@@ -1,0 +1,9 @@
+alert http $HOME_NET any -> $EXTERNAL_NET any (
+    msg:"APTPACK PE Persistence Artifact Retrieval";
+    flow:to_server,established;
+    http.uri; pcre:"/(startup|autorun|registry|service|scheduledtask|schtask)/Ui";
+    classtype:attempted-admin;
+    sid:700201;
+    rev:1;
+    metadata:mitre_tactic TA0003, mitre_tactic TA0004, phase PE, severity critical;
+)

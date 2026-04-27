@@ -1,0 +1,20 @@
+APTPACK Phase Summary
+=====================
+
+Phase Code: PE
+Phase Directory: APTPACK-PE
+Kill Chain Stage: persistence-privilege-escalation
+MITRE Tactics: TA0003, TA0004
+Severity: critical
+Queue: endpoint-persistence
+
+Correlation Directory: /home/soc-admin/APTPACK/APTPACK-PE/APTPACK-CORR
+Anti-Bypass Directory: /home/soc-admin/APTPACK/APTPACK-PE/APTPACK-ANTI-BYPASS
+
+Correlation Files:
+- none found
+
+Anti-Bypass Files:
+- none found
+
+Artifact Directory: /home/soc-admin/APTPACK/aptpack-ansible/artifacts/pe-20260403-180216

@@ -1,0 +1,19 @@
+playbook:
+  id: pb-edge-control-plane-destination-change
+  title: DNS/NTP/AAA/syslog destination change on edge device
+  severity: critical
+  applies_to_rules: [110550, 110551]
+  objective: Detect control-plane redirection, defense evasion, or traffic steering prep.
+  immediate_actions:
+    - identify exact setting changed and previous value if available
+    - compare against last approved baseline
+    - determine whether DNS, AAA, NTP, or syslog now points to untrusted infrastructure
+    - check for simultaneous outbound egress and admin anomalies
+  escalation_conditions:
+    - destination now points off-baseline or internet-routable endpoint
+    - AAA or syslog redirected
+    - multiple infrastructure services changed in same session
+  containment:
+    - restore known-good destination values
+    - lock management-plane to known admins
+    - collect running/startup config and diff immediately

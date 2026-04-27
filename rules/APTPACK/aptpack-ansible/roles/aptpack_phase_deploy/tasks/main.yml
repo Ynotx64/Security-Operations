@@ -1,0 +1,234 @@
+---
+- name: Load APTPACK shared vars explicitly
+  include_vars:
+    file: "{{ playbook_dir | dirname }}/group_vars/all.yml"
+
+- name: Validate required phase input
+  assert:
+    that:
+      - aptpack_phase_code is defined
+      - aptpack_phase_dir_name is defined
+      - aptpack_phase_code | length > 0
+      - aptpack_phase_dir_name | length > 0
+    fail_msg: "aptpack_phase_code and aptpack_phase_dir_name must be set"
+
+- name: Validate phase map exists
+  assert:
+    that:
+      - aptpack_phase_map is defined
+      - aptpack_phase_map[aptpack_phase_code] is defined
+    fail_msg: "aptpack_phase_map is missing or does not contain phase {{ aptpack_phase_code }}"
+
+- name: Set phase facts
+  set_fact:
+    aptpack_phase: "{{ aptpack_phase_map[aptpack_phase_code] }}"
+    aptpack_source_root: "{{ aptpack_root }}/{{ aptpack_phase_dir_name }}"
+    aptpack_corr_dir: "{{ aptpack_root }}/{{ aptpack_phase_dir_name }}/{{ aptpack_corr_subdir | default('APTPACK-CORR') }}"
+    aptpack_anti_bypass_dir: "{{ aptpack_root }}/{{ aptpack_phase_dir_name }}/{{ aptpack_anti_bypass_subdir | default('APTPACK-ANTI-BYPASS') }}"
+    aptpack_case_dir: "{{ aptpack_artifact_root }}/{{ aptpack_phase_code | lower }}-{{ ansible_date_time.date | regex_replace('-', '') }}-{{ ansible_date_time.time | regex_replace(':', '') }}"
+
+- name: Ensure artifact directory exists
+  file:
+    path: "{{ aptpack_case_dir }}"
+    state: directory
+    mode: "0755"
+  delegate_to: localhost
+  become: false
+
+- name: Ensure generated Splunk phase directory exists
+  file:
+    path: "{{ splunk_savedsearches_dir }}/{{ aptpack_phase_code | lower }}"
+    state: directory
+    mode: "0755"
+  delegate_to: localhost
+  become: false
+
+- name: Check source phase directory exists
+  stat:
+    path: "{{ aptpack_source_root }}"
+  register: aptpack_source_root_stat
+  delegate_to: localhost
+  become: false
+
+- name: Fail if source phase directory is missing
+  fail:
+    msg: "Missing source phase directory: {{ aptpack_source_root }}"
+  when: not aptpack_source_root_stat.stat.exists
+
+- name: Find correlation files
+  find:
+    paths: "{{ aptpack_corr_dir }}"
+    recurse: true
+    file_type: file
+  register: corr_files
+  delegate_to: localhost
+  become: false
+  failed_when: false
+
+- name: Find anti-bypass files
+  find:
+    paths: "{{ aptpack_anti_bypass_dir }}"
+    recurse: true
+    file_type: file
+  register: anti_bypass_files
+  delegate_to: localhost
+  become: false
+  failed_when: false
+
+- name: Ensure Suricata aptpack directory exists
+  file:
+    path: "{{ suricata_rules_dir }}/aptpack"
+    state: directory
+    mode: "0755"
+  delegate_to: "{{ groups['suricata_manager'][0] }}"
+  run_once: true
+  when:
+    - groups['suricata_manager'] is defined
+    - groups['suricata_manager'] | length > 0
+    - not aptpack_validate_only
+
+- name: Ensure Zeek aptpack directory exists
+  file:
+    path: "{{ zeek_site_dir }}/aptpack/{{ aptpack_phase_code | lower }}"
+    state: directory
+    mode: "0755"
+  delegate_to: "{{ groups['zeek_manager'][0] }}"
+  run_once: true
+  when:
+    - groups['zeek_manager'] is defined
+    - groups['zeek_manager'] | length > 0
+    - not aptpack_validate_only
+
+- name: Ensure Wazuh aptpack directory exists
+  file:
+    path: "{{ wazuh_rules_dir }}/aptpack"
+    state: directory
+    mode: "0750"
+  delegate_to: "{{ groups['wazuh_manager'][0] }}"
+  run_once: true
+  when:
+    - groups['wazuh_manager'] is defined
+    - groups['wazuh_manager'] | length > 0
+    - not aptpack_validate_only
+
+- name: Copy Suricata correlation rules
+  copy:
+    src: "{{ item.path }}"
+    dest: "{{ suricata_rules_dir }}/aptpack/{{ aptpack_phase_code | lower }}-corr-{{ item.path | basename }}"
+    mode: "0644"
+  loop: "{{ (corr_files.files | default([])) | selectattr('path', 'search', '\\.rules$') | list }}"
+  delegate_to: "{{ groups['suricata_manager'][0] }}"
+  when:
+    - groups['suricata_manager'] is defined
+    - groups['suricata_manager'] | length > 0
+    - not aptpack_validate_only
+  notify: restart suricata
+
+- name: Copy Suricata anti-bypass rules
+  copy:
+    src: "{{ item.path }}"
+    dest: "{{ suricata_rules_dir }}/aptpack/{{ aptpack_phase_code | lower }}-anti-{{ item.path | basename }}"
+    mode: "0644"
+  loop: "{{ (anti_bypass_files.files | default([])) | selectattr('path', 'search', '\\.rules$') | list }}"
+  delegate_to: "{{ groups['suricata_manager'][0] }}"
+  when:
+    - groups['suricata_manager'] is defined
+    - groups['suricata_manager'] | length > 0
+    - not aptpack_validate_only
+  notify: restart suricata
+
+- name: Copy Zeek correlation content
+  copy:
+    src: "{{ item.path }}"
+    dest: "{{ zeek_site_dir }}/aptpack/{{ aptpack_phase_code | lower }}/corr-{{ item.path | basename }}"
+    mode: "0644"
+  loop: "{{ (corr_files.files | default([])) | selectattr('path', 'search', '\\.(zeek|sig)$') | list }}"
+  delegate_to: "{{ groups['zeek_manager'][0] }}"
+  when:
+    - groups['zeek_manager'] is defined
+    - groups['zeek_manager'] | length > 0
+    - not aptpack_validate_only
+  notify: deploy zeek
+
+- name: Copy Zeek anti-bypass content
+  copy:
+    src: "{{ item.path }}"
+    dest: "{{ zeek_site_dir }}/aptpack/{{ aptpack_phase_code | lower }}/anti-{{ item.path | basename }}"
+    mode: "0644"
+  loop: "{{ (anti_bypass_files.files | default([])) | selectattr('path', 'search', '\\.(zeek|sig)$') | list }}"
+  delegate_to: "{{ groups['zeek_manager'][0] }}"
+  when:
+    - groups['zeek_manager'] is defined
+    - groups['zeek_manager'] | length > 0
+    - not aptpack_validate_only
+  notify: deploy zeek
+
+- name: Copy Wazuh correlation content
+  copy:
+    src: "{{ item.path }}"
+    dest: "{{ wazuh_rules_dir }}/aptpack/{{ aptpack_phase_code | lower }}-corr-{{ item.path | basename }}"
+    mode: "0640"
+  loop: "{{ (corr_files.files | default([])) | selectattr('path', 'search', '\\.(xml|conf|yaml|yml|txt)$') | list }}"
+  delegate_to: "{{ groups['wazuh_manager'][0] }}"
+  when:
+    - groups['wazuh_manager'] is defined
+    - groups['wazuh_manager'] | length > 0
+    - not aptpack_validate_only
+  notify: restart wazuh-manager
+
+- name: Copy Wazuh anti-bypass content
+  copy:
+    src: "{{ item.path }}"
+    dest: "{{ wazuh_rules_dir }}/aptpack/{{ aptpack_phase_code | lower }}-anti-{{ item.path | basename }}"
+    mode: "0640"
+  loop: "{{ (anti_bypass_files.files | default([])) | selectattr('path', 'search', '\\.(xml|conf|yaml|yml|txt)$') | list }}"
+  delegate_to: "{{ groups['wazuh_manager'][0] }}"
+  when:
+    - groups['wazuh_manager'] is defined
+    - groups['wazuh_manager'] | length > 0
+    - not aptpack_validate_only
+  notify: restart wazuh-manager
+
+- name: Copy Splunk correlation content
+  copy:
+    src: "{{ item.path }}"
+    dest: "{{ splunk_savedsearches_dir }}/{{ aptpack_phase_code | lower }}/corr-{{ item.path | basename }}"
+    mode: "0644"
+  loop: "{{ (corr_files.files | default([])) | selectattr('path', 'search', '\\.(spl|conf|txt|yaml|yml)$') | list }}"
+  delegate_to: localhost
+  become: false
+
+- name: Copy Splunk anti-bypass content
+  copy:
+    src: "{{ item.path }}"
+    dest: "{{ splunk_savedsearches_dir }}/{{ aptpack_phase_code | lower }}/anti-{{ item.path | basename }}"
+    mode: "0644"
+  loop: "{{ (anti_bypass_files.files | default([])) | selectattr('path', 'search', '\\.(spl|conf|txt|yaml|yml)$') | list }}"
+  delegate_to: localhost
+  become: false
+
+- name: Write phase summary
+  template:
+    src: phase_summary.j2
+    dest: "{{ aptpack_case_dir }}/phase_summary.txt"
+    mode: "0644"
+  delegate_to: localhost
+  become: false
+
+- name: Write deployment metadata
+  copy:
+    dest: "{{ aptpack_case_dir }}/deployment.json"
+    mode: "0644"
+    content: |
+      {
+        "phase_code": {{ aptpack_phase_code | to_json }},
+        "phase_directory": {{ aptpack_phase_dir_name | to_json }},
+        "kill_chain_stage": {{ aptpack_phase.kill_chain_stage | to_json }},
+        "mitre_tactics": {{ aptpack_phase.mitre_tactics | to_json }},
+        "severity": {{ aptpack_phase.severity | to_json }},
+        "queue": {{ aptpack_phase.queue | to_json }},
+        "correlation_files": {{ (corr_files.files | default([]) | map(attribute='path') | list) | to_json }},
+        "anti_bypass_files": {{ (anti_bypass_files.files | default([]) | map(attribute='path') | list) | to_json }}
+      }
+  delegate_to: localhost
+  become: false

@@ -1,0 +1,95 @@
+scenario:
+  id: APTPACK-CA-SCN-001
+  name: Command and Control - Repeated beaconing and jittered callbacks
+  phase_code: CA
+  phase_directory: APTPACK-CA
+  cyber_kill_chain: command_and_control_collection
+  severity: critical
+  confidence: medium
+  status: ready_for_validation
+
+threat_model:
+  summary: >
+    Simulates periodic beaconing followed by jittered callbacks to test C2-style network
+    visibility and anti-bypass analytics.
+  realistic_use_case: >
+    Mirrors low-and-slow callback behavior where fixed periodicity is replaced by variable
+    intervals.
+  attack_story: >
+    The operator first tests a regular cadence, then introduces jitter to reduce obvious
+    periodic signatures.
+
+mitre:
+  tactics:
+    - TA0011
+    - TA0009
+  techniques:
+    - id: T1071
+      name: Application Layer Protocol
+    - id: T1105
+      name: Ingress Tool Transfer
+
+metadata:
+  log_source:
+    - suricata_http
+    - zeek_http
+    - proxy_logs
+  test_ids:
+    corr: APTPACK-CA-CORR-001
+    anti: APTPACK-CA-ANTI-001
+  response_guidance:
+    - Review URI periodicity, user-agent stability, and destination rarity.
+    - Compare fixed interval versus jitter behavior.
+    - Investigate destination role and payload size regularity.
+
+triggers:
+  correlation_rule_intent: >
+    Match repeated beacon URI with steady cadence and APT-PACK-CA-BEACON user-agent.
+  anti_bypass_rule_intent: >
+    Match repeated callback URI with variable sleep and APT-PACK-CA-JITTER user-agent.
+
+demo:
+  prerequisites:
+    - TARGET must be a reachable HTTP endpoint visible to IDS.
+  commands:
+    - |
+      for i in 1 2 3 4 5; do
+        curl -A "APT-PACK-CA-BEACON" \
+          "http://$TARGET/beacon?test_id=APTPACK-CA-CORR-001" >/dev/null || true
+        sleep 10
+      done
+    - |
+      for i in 1 2 3 4 5; do
+        curl -A "APT-PACK-CA-JITTER" \
+          "http://$TARGET/jitter?test_id=APTPACK-CA-ANTI-001" >/dev/null || true
+        sleep $((RANDOM%10+5))
+      done
+  safety_notes:
+    - Uses benign HTTP requests only.
+
+expected_telemetry:
+  suricata:
+    - HTTP events including beacon or jitter URIs and user-agents
+  zeek:
+    - http.log with repeated URIs, same destination, differing intervals
+  splunk:
+    - searchable by test_id and user-agent
+  wazuh:
+    - only if web/proxy logs are ingested
+
+dashboard_searches:
+  splunk:
+    - '("APTPACK-CA-CORR-001" OR "APT-PACK-CA-BEACON")'
+    - '("APTPACK-CA-ANTI-001" OR "APT-PACK-CA-JITTER")'
+  zeek_grep:
+    - 'grep -R "APTPACK-CA-CORR-001\|APTPACK-CA-ANTI-001\|APT-PACK-CA" /opt/zeek/logs/current'
+  suricata_grep:
+    - 'grep -R "APTPACK-CA-CORR-001\|APTPACK-CA-ANTI-001\|APT-PACK-CA" /var/log/suricata'
+
+validation:
+  pass_criteria:
+    - Multiple callbacks visible for both fixed and jittered patterns.
+    - Query strings or user-agents permit unambiguous searching.
+  fail_indicators:
+    - HTTP target exists but traffic not visible to sensors.
+    - Only web server 404 output exists without IDS correlation.

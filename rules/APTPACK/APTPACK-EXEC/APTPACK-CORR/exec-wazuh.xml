@@ -1,0 +1,11 @@
+<group name="aptpack,exec,correlation">
+  <rule id="170101" level="13">
+    <if_group>suricata,</if_group>
+    <field name="alert.signature">APTPACK EXEC Script Download Followed By Command Pattern</field>
+    <description>APTPACK EXEC - probable script execution or remote command retrieval</description>
+    <mitre>
+      <id>T1059</id>
+    </mitre>
+    <group>attack,execution,aptpack_exec,</group>
+  </rule>
+</group>

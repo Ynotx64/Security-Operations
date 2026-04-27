@@ -1,0 +1,16 @@
+Incident ID: {{ incident_id }}
+Case directory: {{ case_artifact_dir }}
+
+Summary
+=======
+Source IP: {{ detected_src | default('unknown') }}
+Destination IP: {{ detected_dst | default('unknown') }}
+Signature ID: {{ detected_sig_id | default('unknown') }}
+Signature: {{ detected_sig | default('unknown') }}
+Category: {{ detected_category | default('unknown') }}
+Severity: {{ detected_severity | default('unknown') }}
+
+Decision
+========
+Escalation: {{ ir_escalate | default(false) }}
+Containment Recommended: {{ ir_containment_recommended | default(false) }}

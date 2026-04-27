@@ -1,0 +1,90 @@
+scenario:
+  id: APTPACK-EXEC-SCN-001
+  name: Execution - Encoded PowerShell style command and shell eval bypass marker
+  phase_code: EXEC
+  phase_directory: APTPACK-EXEC
+  cyber_kill_chain: execution
+  severity: high
+  confidence: high
+  status: ready_for_validation
+
+threat_model:
+  summary: >
+    Simulates suspicious command execution telemetry using structured local log events
+    rather than uncontrolled live malware behavior.
+  realistic_use_case: >
+    Mirrors investigations where encoded command strings and shell eval usage appear
+    in process creation, shell history, EDR telemetry, or forwarded syslog.
+  attack_story: >
+    A hostile operator executes an encoded command and then attempts to blend follow-on
+    execution using shell eval semantics.
+
+mitre:
+  tactics:
+    - TA0002
+  techniques:
+    - id: T1059
+      name: Command and Scripting Interpreter
+    - id: T1027
+      name: Obfuscated/Compressed Files and Information
+
+metadata:
+  log_source:
+    - journald
+    - syslog
+    - wazuh_logcollector
+  test_ids:
+    corr: APTPACK-EXEC-CORR-001
+    anti: APTPACK-EXEC-ANTI-001
+  response_guidance:
+    - Extract the full command string.
+    - Decode base64 content if present.
+    - Review parent process and execution context.
+    - Pivot to adjacent activity on the same host within ±5 minutes.
+
+triggers:
+  correlation_rule_intent: >
+    Match event_type aptpack_exec_test with encoded-command marker.
+  anti_bypass_rule_intent: >
+    Match event_type aptpack_exec_bypass with shell eval semantics.
+
+demo:
+  prerequisites:
+    - Wazuh journald/syslog collection enabled on soc-admin.
+  commands:
+    - |
+      logger '{"event_type":"aptpack_exec_test","cmd":"powershell -enc QUFQVFBBQ0s=","test_id":"APTPACK-EXEC-CORR-001","phase":"EXEC"}'
+    - |
+      logger '{"event_type":"aptpack_exec_bypass","cmd":"bash -c eval echo bypass","test_id":"APTPACK-EXEC-ANTI-001","phase":"EXEC"}'
+  safety_notes:
+    - Uses logger only; no real encoded payload execution occurs.
+
+expected_telemetry:
+  wazuh:
+    - alerts.json or archives contain aptpack_exec_test and APTPACK-EXEC-CORR-001
+    - alerts.json or archives contain aptpack_exec_bypass and APTPACK-EXEC-ANTI-001
+  splunk:
+    - Searchable as structured syslog/journald events
+  suricata:
+    - Not expected for this scenario
+  zeek:
+    - Not expected for this scenario
+
+dashboard_searches:
+  wazuh:
+    - 'full_log:*APTPACK-EXEC-CORR-001*'
+    - 'full_log:*APTPACK-EXEC-ANTI-001*'
+    - 'full_log:*aptpack_exec_test*'
+    - 'full_log:*aptpack_exec_bypass*'
+  splunk:
+    - '("APTPACK-EXEC-CORR-001" OR "aptpack_exec_test")'
+    - '("APTPACK-EXEC-ANTI-001" OR "aptpack_exec_bypass" OR "eval echo bypass")'
+
+validation:
+  pass_criteria:
+    - Correlation event appears with EXEC test_id.
+    - Anti-bypass event appears with EXEC anti test_id.
+    - Results are not confused with unrelated sudo activity.
+  fail_indicators:
+    - Only rule 100520 or other admin activity appears.
+    - No aptpack_exec markers exist in raw logs.

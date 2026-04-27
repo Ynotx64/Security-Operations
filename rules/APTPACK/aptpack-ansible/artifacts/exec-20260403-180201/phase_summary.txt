@@ -1,0 +1,20 @@
+APTPACK Phase Summary
+=====================
+
+Phase Code: EXEC
+Phase Directory: APTPACK-EXEC
+Kill Chain Stage: execution
+MITRE Tactics: TA0002
+Severity: high
+Queue: execution
+
+Correlation Directory: /home/soc-admin/APTPACK/APTPACK-EXEC/APTPACK-CORR
+Anti-Bypass Directory: /home/soc-admin/APTPACK/APTPACK-EXEC/APTPACK-ANTI-BYPASS
+
+Correlation Files:
+- none found
+
+Anti-Bypass Files:
+- none found
+
+Artifact Directory: /home/soc-admin/APTPACK/aptpack-ansible/artifacts/exec-20260403-180201

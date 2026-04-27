@@ -1,0 +1,25 @@
+playbook:
+  id: pb-edge-afterhours-management-access
+  title: After-hours management-plane access on edge device
+  severity: high
+  applies_to_rules: [110520]
+  objective: Confirm authorized access versus compromised edge administration.
+  immediate_actions:
+    - identify device hostname, asset_role, src_ip, admin user, vendor, product
+    - confirm maintenance window and approved change ticket
+    - determine whether source IP is known, expected, VPN-backed, jump-host-backed, and geolocated as expected
+    - pull adjacent auth activity 30m before and after
+    - pull config changes within same session
+  escalation_conditions:
+    - no approved change window
+    - source IP not previously associated with admin access
+    - concurrent config export, account creation, logging change, or unusual egress
+  containment:
+    - restrict admin source ACL or temporary management-plane access
+    - rotate local admin/shared credentials if compromise suspected
+    - preserve running config and audit logs before making disruptive changes
+  evidence_to_collect:
+    - full raw syslog line(s)
+    - config audit history
+    - AAA / TACACS / RADIUS traces
+    - NetFlow/Zeek/Suricata around session time

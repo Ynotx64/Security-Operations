@@ -1,0 +1,10 @@
+alert http $EXTERNAL_NET any -> $HOME_NET any (
+    msg:"APTPACK IA Suspicious Login POST";
+    flow:to_server,established;
+    http.method; content:"POST";
+    http.uri; pcre:"/\/(login|signin|auth|session)/Ui";
+    classtype:attempted-user;
+    sid:700001;
+    rev:1;
+    metadata:attack_target Client_Endpoint, mitre_tactic TA0001, mitre_tactic TA0006, phase IA, severity high;
+)

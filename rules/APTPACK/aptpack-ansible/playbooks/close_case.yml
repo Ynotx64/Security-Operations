@@ -1,0 +1,28 @@
+---
+- name: Close IR case
+  hosts: soc-admin
+  gather_facts: false
+  tasks:
+    - name: Ensure case artifact directory exists
+      ansible.builtin.file:
+        path: "{{ case_artifact_dir }}"
+        state: directory
+        mode: "0750"
+
+    - name: Build final case closure note
+      ansible.builtin.copy:
+        dest: "{{ case_artifact_dir }}/closure.txt"
+        mode: "0640"
+        content: |
+          Incident ID: {{ incident_id }}
+          Status: Closed
+          Closed At: {{ lookup('pipe', 'date --iso-8601=seconds') }}
+          Summary:
+          - Suricata detection observed
+          - Wazuh ingestion validated
+          - Splunk indexing validated
+          - Case artifacts retained under {{ case_artifact_dir }}
+
+    - name: Render final case report
+      ansible.builtin.include_role:
+        name: report_case

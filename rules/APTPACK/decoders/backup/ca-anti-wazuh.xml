@@ -1,0 +1,11 @@
+<group name="aptpack,ca,anti_bypass">
+  <rule id="170402" level="14">
+    <if_group>suricata,</if_group>
+    <field name="alert.signature">APTPACK CA Domain Fronting Or Header Mismatch</field>
+    <description>APTPACK CA anti-bypass - suspicious HTTP host/header mismatch</description>
+    <mitre>
+      <id>T1090</id>
+    </mitre>
+    <group>attack,command_and_control,defense_evasion,aptpack_ca_anti_bypass,</group>
+  </rule>
+</group>

@@ -1,0 +1,12 @@
+<group name="aptpack,stage,anti_bypass">
+  <rule id="170502" level="14">
+    <if_group>suricata,</if_group>
+    <field name="alert.signature">APTPACK STAGE Chunked Or Encoded Exfil Indicator</field>
+    <description>APTPACK STAGE anti-bypass - chunked or encoded outbound transfer observed</description>
+    <mitre>
+      <id>T1027</id>
+      <id>T1041</id>
+    </mitre>
+    <group>attack,exfiltration,defense_evasion,aptpack_stage_anti_bypass,</group>
+  </rule>
+</group>

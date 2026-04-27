@@ -1,0 +1,13 @@
+runner_notes:
+  important_fixes:
+    - Search by test_id, not just by rule description.
+    - Do not validate IA using generic sudo events.
+    - Ensure TARGET is real and reachable for IA/CA/STAGE HTTP scenarios.
+    - Keep DISC traffic inside monitored lab scope.
+
+wazuh_noise_control:
+  problem: generic sudo rule 100520 is catching admin activity
+  recommendation:
+    - create a dedicated local rule file under /var/ossec/etc/rules/
+    - include it from ossec.conf if needed
+    - suppress only Ansible/become artifacts, not all sudo activity

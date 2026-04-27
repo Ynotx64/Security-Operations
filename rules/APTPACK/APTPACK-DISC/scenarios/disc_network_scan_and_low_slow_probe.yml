@@ -1,0 +1,96 @@
+scenario:
+  id: APTPACK-DISC-SCN-001
+  name: Discovery - Network scan and low-and-slow SSH reachability probes
+  phase_code: DISC
+  phase_directory: APTPACK-DISC
+  cyber_kill_chain: internal_discovery
+  severity: medium
+  confidence: high
+  status: ready_for_validation
+
+threat_model:
+  summary: >
+    Simulates internal discovery behavior using TCP connect scan plus sparse targeted
+    probes to emulate slower operator-led host validation.
+  realistic_use_case: >
+    Mirrors investigations where broad discovery is followed by selective low-volume
+    verification of reachable infrastructure.
+  attack_story: >
+    The operator scans a subnet, then performs deliberate SSH connection checks against
+    selected assets.
+
+mitre:
+  tactics:
+    - TA0007
+  techniques:
+    - id: T1046
+      name: Network Service Discovery
+    - id: T1018
+      name: Remote System Discovery
+
+metadata:
+  log_source:
+    - suricata_flow
+    - zeek_conn
+    - firewall
+  test_ids:
+    corr: APTPACK-DISC-CORR-001
+    anti: APTPACK-DISC-ANTI-001
+  response_guidance:
+    - Identify source asset and subnet scope.
+    - Compare scan breadth versus targeted follow-on probes.
+    - Review whether discovered services align to sensitive infrastructure.
+
+triggers:
+  correlation_rule_intent: >
+    Match repeated discovery traffic consistent with active network scanning.
+  anti_bypass_rule_intent: >
+    Match slower host-by-host connection attempts that avoid broad scan signatures.
+
+demo:
+  prerequisites:
+    - nmap and nc installed on soc-admin.
+    - IDS path must see soc-admin traffic.
+  variables:
+    subnet_default: 192.168.1.0/24
+    hosts_default:
+      - 192.168.1.1
+      - 192.168.1.46
+      - 192.168.1.106
+  commands:
+    - |
+      nmap -sT 192.168.1.0/24
+    - |
+      for h in 192.168.1.1 192.168.1.46 192.168.1.106; do
+        nc -zv $h 22
+        sleep 5
+      done
+  safety_notes:
+    - Keep scope limited to owned lab or approved internal assets.
+
+expected_telemetry:
+  suricata:
+    - scan-like or multiple connection events from soc-admin source
+  zeek:
+    - conn.log entries from soc-admin to target subnet and SSH destinations
+  wazuh:
+    - only if related network logs are ingested
+  splunk:
+    - network telemetry or firewall logs searchable by source and destination set
+
+dashboard_searches:
+  suricata_grep:
+    - 'grep -R "192.168.1.46\|192.168.1.1\|192.168.1.106" /var/log/suricata'
+  zeek_grep:
+    - 'grep -R "192.168.1.46\|192.168.1.1\|192.168.1.106" /opt/zeek/logs/current'
+  splunk:
+    - '"192.168.1.46" OR "192.168.1.1" OR "192.168.1.106"'
+
+validation:
+  pass_criteria:
+    - Broad scan appears in network telemetry.
+    - Targeted probes appear as distinct follow-on connections.
+    - Operator can pivot from broad discovery to selected assets.
+  fail_indicators:
+    - Traffic bypasses monitored interface.
+    - Only local shell output exists with no sensor visibility.

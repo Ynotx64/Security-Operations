@@ -1,0 +1,20 @@
+==================================================
+RAW: date=2026-04-06 time=11:12:14 devname="FGT-EDGE-01" devid="FG100E" type="event" subtype="system" user="admin" ui="ssh(203.0.113.44)" action="login" status="success" srcip=203.0.113.44 msg="Administrator admin logged in successfully from ssh(203.0.113.44)"
+==================================================
+
+
+==================================================
+RAW: <14>Apr  6 11:15:22 edge-rtr-01 mgd[1234]: UI_CFG_AUDIT: User 'netadmin' set system syslog host 198.51.100.20
+==================================================
+
+
+==================================================
+RAW: <14>Apr  6 11:16:09 edge-rtr-01 sshd[5555]: Accepted password for netadmin from 198.51.100.77 port 52522 ssh2
+==================================================
+
+
+==================================================
+RAW: 2026/04/06 11:17:55 [charon] 12[IKE] IKE_SA edge-vpn[7] established between 198.51.100.2[edge-vpn]...203.0.113.88[remote-peer]
+==================================================
+
+

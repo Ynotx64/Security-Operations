@@ -1,0 +1,45 @@
+id: EDGE-ADM-001
+name: edge_first_seen_admin_source
+version: 1.0
+status: enabled
+phase: edge_appliance_access
+severity: high
+confidence: medium
+log_source:
+  - firewall_auth
+  - router_auth
+  - vpn_auth
+  - tacacs
+  - radius
+mitre:
+  tactic:
+    - Initial Access
+    - Persistence
+  technique:
+    - T1078
+    - T1133
+metadata:
+  test_id: EDGE-ADM-001
+  response_playbook: pb-edge-first-seen-admin-source.yml
+  response_guidance: Verify source, isolate management plane, capture config diff, rotate appliance creds if unauthorized.
+detection:
+  type: correlation
+  condition: >
+    admin_login_success == true
+    AND asset_role IN ["firewall","router","vpn_gateway","security_appliance"]
+    AND src_ip NOT IN approved_management_sources
+    AND first_seen_src_ip_for_asset == true
+fields:
+  required:
+    - timestamp
+    - asset_hostname
+    - asset_ip
+    - src_ip
+    - username
+    - auth_result
+    - asset_role
+tags:
+  - edge
+  - admin
+  - first_seen
+  - management_plane

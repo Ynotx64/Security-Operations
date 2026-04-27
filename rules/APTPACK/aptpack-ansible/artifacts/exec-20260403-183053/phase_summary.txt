@@ -1,0 +1,26 @@
+APTPACK Phase Summary
+=====================
+
+Phase Code: EXEC
+Phase Directory: APTPACK-EXEC
+Kill Chain Stage: execution
+MITRE Tactics: TA0002
+Severity: high
+Queue: execution
+
+Correlation Directory: /home/soc-admin/APTPACK/APTPACK-EXEC/APTPACK-CORR
+Anti-Bypass Directory: /home/soc-admin/APTPACK/APTPACK-EXEC/APTPACK-ANTI-BYPASS
+
+Correlation Files:
+- /home/soc-admin/APTPACK/APTPACK-EXEC/APTPACK-CORR/exec-zeek.zeek
+- /home/soc-admin/APTPACK/APTPACK-EXEC/APTPACK-CORR/exec-wazuh.xml
+- /home/soc-admin/APTPACK/APTPACK-EXEC/APTPACK-CORR/exec-splunk.spl
+- /home/soc-admin/APTPACK/APTPACK-EXEC/APTPACK-CORR/exec-suricata.rules
+
+Anti-Bypass Files:
+- /home/soc-admin/APTPACK/APTPACK-EXEC/APTPACK-ANTI-BYPASS/exec-anti-suricata.rules
+- /home/soc-admin/APTPACK/APTPACK-EXEC/APTPACK-ANTI-BYPASS/exec-anti-splunk.spl
+- /home/soc-admin/APTPACK/APTPACK-EXEC/APTPACK-ANTI-BYPASS/exec-anti-wazuh.xml
+- /home/soc-admin/APTPACK/APTPACK-EXEC/APTPACK-ANTI-BYPASS/exec-anti-zeek.zeek
+
+Artifact Directory: /home/soc-admin/APTPACK/aptpack-ansible/artifacts/exec-20260403-183053

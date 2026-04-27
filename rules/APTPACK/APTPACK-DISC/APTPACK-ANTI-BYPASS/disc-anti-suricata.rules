@@ -1,0 +1,9 @@
+alert http $HOME_NET any -> $EXTERNAL_NET any (
+    msg:"APTPACK DISC Encoded Discovery Commands";
+    flow:to_server,established;
+    pcre:"/(whoami|ipconfig|ifconfig|hostname).{0,20}(base64|%20|%2f|%5c)/Ui";
+    classtype:bad-unknown;
+    sid:700302;
+    rev:1;
+    metadata:mitre_tactic TA0007, phase DISC, anti_bypass true, severity medium;
+)

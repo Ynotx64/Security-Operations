@@ -1,0 +1,12 @@
+<group name="aptpack,ia,correlation">
+  <rule id="170001" level="12">
+    <if_group>suricata,</if_group>
+    <field name="alert.signature">APTPACK IA Suspicious Login POST</field>
+    <description>APTPACK IA - Suspicious authentication POST observed by Suricata</description>
+    <mitre>
+      <id>T1078</id>
+      <id>T1110</id>
+    </mitre>
+    <group>attack,initial_access,credential_access,aptpack_ia,</group>
+  </rule>
+</group>

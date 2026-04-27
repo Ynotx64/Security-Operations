@@ -1,0 +1,86 @@
+field_model:
+  purpose: >
+    Common normalized edge telemetry model for firewall, router, VPN gateway,
+    relay-fed syslog, and network-derived telemetry used by Wazuh correlation.
+  identity:
+    vendor:
+      description: Device vendor or telemetry source family
+      examples: [cisco, fortinet, paloalto, juniper, mikrotik, openvpn, strongswan, zeek, suricata, syslog_relay]
+    product:
+      description: Product or platform name
+      examples: [asa, ftd, ios, iosxe, panos, fortigate, srx, routeros, openvpn, strongswan]
+    hostname:
+      description: Device hostname
+    asset_role:
+      description: Normalized edge role
+      allowed: [firewall, router, vpn_gateway, security_appliance]
+  session:
+    src_ip:
+      description: Remote source IP for management/admin/auth/session event
+    dst_ip:
+      description: Destination IP if present
+    dst_port:
+      description: Destination port if present
+    direction:
+      description: Normalized flow direction
+      allowed: [inbound, outbound]
+  auth_and_admin:
+    management_login_success:
+      description: True when management-plane login succeeds
+      type: string
+      values: ["true", "false"]
+    admin_login_success:
+      description: True when privileged/admin login succeeds
+      type: string
+      values: ["true", "false"]
+    first_seen_src_ip_for_asset:
+      description: True when source IP is new for that device admin plane
+      type: string
+      values: ["true", "false"]
+    in_maintenance_window:
+      description: True when event occurs in approved change window
+      type: string
+      values: ["true", "false"]
+  config_and_change:
+    command:
+      description: Canonical CLI command or reduced command family
+    url_path:
+      description: Canonical web admin path if config action occurred via GUI
+    event_action:
+      description: Canonical action such as local_user_created, role_changed, privilege_assigned, process_restart
+    setting_changed:
+      description: Canonical setting family
+      allowed: [dns, ntp, aaa, syslog, logging_destination]
+  logging_and_health:
+    telemetry_heartbeat_missing:
+      description: True when expected device telemetry heartbeat is absent
+      type: string
+      values: ["true", "false"]
+    message:
+      description: Reduced plain-language event message when command/action field is unavailable
+  egress:
+    src_asset_role:
+      description: Normalized source device role for network telemetry
+      allowed: [firewall, router, vpn_gateway, security_appliance]
+
+normalization_rules:
+  asset_role_map:
+    firewall:
+      match_terms: [firewall, fortigate, panos, asa, ftd, srx]
+    router:
+      match_terms: [router, ios, iosxe, junos, mikrotik, routeros]
+    vpn_gateway:
+      match_terms: [openvpn, strongswan, vpn, remote-access-gateway]
+    security_appliance:
+      match_terms: [security_appliance, edge_appliance, secure_gateway]
+  setting_changed_map:
+    dns:
+      match_terms: ["ip name-server", "dns", "dns server", "domain resolver"]
+    ntp:
+      match_terms: ["ntp", "ntp server"]
+    aaa:
+      match_terms: ["aaa", "radius", "tacacs", "authentication server"]
+    syslog:
+      match_terms: ["syslog", "syslog server", "logging host"]
+    logging_destination:
+      match_terms: ["logging destination", "no logging", "logging disable"]

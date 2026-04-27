@@ -1,0 +1,1 @@
+{"timestamp":"2026-04-03T18:11:00-0400","event_type":"alert","src_ip":"192.168.20.148","dest_ip":"198.51.100.20","proto":"TCP","alert":{"signature":"APTPACK EXEC Script Download Followed By Command Pattern","category":"Attempted Administrator Privilege Gain","severity":2}}

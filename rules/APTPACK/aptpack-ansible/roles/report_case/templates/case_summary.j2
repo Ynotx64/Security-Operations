@@ -1,0 +1,32 @@
+Incident ID: {{ incident_id | default('unknown') }}
+Generated: {{ ansible_date_time.iso8601 | default('unknown') }}
+
+Summary
+=======
+{% if suricata_hit_count is defined %}
+Suricata pipeline hits: {{ suricata_hit_count }}
+{% endif %}
+{% if escalation_decision is defined %}
+Decision: {{ escalation_decision }}
+{% endif %}
+{% if escalation_reason is defined %}
+Reason: {{ escalation_reason }}
+{% endif %}
+
+Artifacts
+=========
+{% if case_artifact_dir is defined %}Artifact directory: {{ case_artifact_dir }}{% endif %}
+
+Collected Files
+===============
+- suricata_pipeline_hits.log
+- suricata_eve_recent.log
+- suricata_fast_recent.log
+- wazuh_agent_status.log
+- wazuh_suricata_refs.log
+- wazuh_log_tail.log
+- host_triage.txt
+
+Notes
+=====
+This report was generated from the automated Suricata -> Wazuh triage workflow.

@@ -1,0 +1,10 @@
+alert http $HOME_NET any -> $EXTERNAL_NET any (
+    msg:"APTPACK CA Beacon Or C2 Checkin Pattern";
+    flow:to_server,established;
+    http.uri; pcre:"/(beacon|checkin|tasking|heartbeat|c2|command)/Ui";
+    detection_filter:track by_src, count 3, seconds 120;
+    classtype:trojan-activity;
+    sid:700401;
+    rev:1;
+    metadata:mitre_tactic TA0011, mitre_tactic TA0009, phase CA, severity critical;
+)

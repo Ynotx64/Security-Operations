@@ -1,0 +1,26 @@
+---
+- name: Set case artifact dir compatibility for report role
+  set_fact:
+    case_artifact_dir: "{{ case_artifact_dir | default(artifact_dir) }}"
+
+- name: Render case summary report
+  template:
+    src: case_summary.j2
+    dest: "{{ case_artifact_dir }}/case_summary.txt"
+    mode: "0644"
+
+- name: Write markdown case report
+  copy:
+    dest: "{{ case_artifact_dir }}/case_report.md"
+    mode: "0644"
+    content: |
+      # Incident Case Report
+
+      **Incident ID:** {{ incident_id }}
+
+      ## Detection
+      - Suricata pipeline hits: {{ suricata_hit_count | default(0) }}
+
+      ## Outcome
+      - Escalate: {{ escalation_decision | default(false) }}
+      - Reason: {{ escalation_reason | default('unknown') }}

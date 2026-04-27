@@ -1,0 +1,11 @@
+<group name="aptpack,disc,anti_bypass">
+  <rule id="170302" level="10">
+    <if_group>suricata,</if_group>
+    <field name="alert.signature">APTPACK DISC Encoded Discovery Commands</field>
+    <description>APTPACK DISC anti-bypass - encoded discovery sequence observed</description>
+    <mitre>
+      <id>T1027</id>
+    </mitre>
+    <group>attack,discovery,defense_evasion,aptpack_disc_anti_bypass,</group>
+  </rule>
+</group>

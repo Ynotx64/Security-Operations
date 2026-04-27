@@ -1,0 +1,11 @@
+alert http $HOME_NET any -> $EXTERNAL_NET any (
+    msg:"APTPACK CA Domain Fronting Or Header Mismatch";
+    flow:to_server,established;
+    http.host;
+    pcre:"/.+/";
+    pcre:!"Host\x3a\s+[A-Za-z0-9\.\-]+/smi";
+    classtype:bad-unknown;
+    sid:700402;
+    rev:1;
+    metadata:mitre_tactic TA0011, phase CA, anti_bypass true, severity critical;
+)

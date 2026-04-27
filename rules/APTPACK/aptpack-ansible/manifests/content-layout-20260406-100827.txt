@@ -1,0 +1,19 @@
+Unified detection content root: /opt/soc/detection-content
+
+Subdirectories:
+- packs/yaml/edge        : design/source YAML pack content
+- packs/xml/wazuh        : Wazuh-native XML rules
+- packs/suricata         : Suricata custom rules
+- playbooks/edge         : incident/response playbooks
+- scripts                : search, validation, conversion, helper scripts
+- manifests              : inventories, manifests, hashes
+- docs                   : future documentation
+- archive/20260406-100827     : retired legacy directories and backups
+
+Legacy sources retired:
+- /home/soc-admin/EDR-DPLY
+- /home/soc-admin/APTPACK
+
+Important:
+- YAML under packs/yaml is source content, not active Wazuh runtime content
+- Active Wazuh XML still must be deployed under /var/ossec/etc/rules when ready

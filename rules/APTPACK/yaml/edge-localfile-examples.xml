@@ -1,0 +1,29 @@
+<!-- Example ossec.conf localfile entries for relay-fed edge logs.
+     Merge carefully into /var/ossec/etc/ossec.conf if these paths exist. -->
+
+<ossec_config>
+  <localfile>
+    <location>/var/log/syslog</location>
+    <log_format>syslog</log_format>
+  </localfile>
+
+  <localfile>
+    <location>/var/log/edge/firewall.log</location>
+    <log_format>syslog</log_format>
+  </localfile>
+
+  <localfile>
+    <location>/var/log/edge/router.log</location>
+    <log_format>syslog</log_format>
+  </localfile>
+
+  <localfile>
+    <location>/var/log/edge/vpn.log</location>
+    <log_format>syslog</log_format>
+  </localfile>
+
+  <localfile>
+    <location>/var/log/edge/normalized-edge.jsonl</location>
+    <log_format>json</log_format>
+  </localfile>
+</ossec_config>

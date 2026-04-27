@@ -1,0 +1,46 @@
+id: EDGE-ACCT-003
+name: edge_local_admin_creation_or_priv_change
+version: 1.0
+status: enabled
+phase: persistence
+severity: critical
+confidence: high
+log_source:
+  - firewall_audit
+  - router_audit
+  - aaa_audit
+  - local_account_log
+mitre:
+  tactic:
+    - Persistence
+    - Privilege Escalation
+  technique:
+    - T1136
+    - T1098
+metadata:
+  test_id: EDGE-ACCT-003
+  response_playbook: pb-edge-local-admin-change.yml
+  response_guidance: Disable new account, preserve commands and session source, rotate admin creds, verify AAA integrity.
+detection:
+  type: rule
+  match_any:
+    - command CONTAINS "username"
+    - command CONTAINS "user add"
+    - command CONTAINS "create admin"
+    - event_action == "local_user_created"
+    - event_action == "role_changed"
+    - event_action == "privilege_assigned"
+  condition: >
+    asset_role IN ["firewall","router","vpn_gateway","security_appliance"]
+fields:
+  required:
+    - timestamp
+    - asset_hostname
+    - username
+    - target_account
+    - new_role
+tags:
+  - edge
+  - account
+  - persistence
+  - privilege

@@ -1,0 +1,11 @@
+---
+- name: Install local SOC correlation content reference
+  hosts: soc-admin
+  gather_facts: false
+  tasks:
+    - name: Show local content paths
+      debug:
+        msg:
+          - "Copy Wazuh rules from wazuh/rules/100200-suricata-zeek-correlation.xml into manager local_rules.xml or ruleset include path"
+          - "Copy Suricata rules from suricata/rules/99-custom-actor-packs.rules into local.rules include path"
+          - "Copy Zeek content from zeek/site/local.zeek into site/local.zeek or dedicated policy file and redeploy"

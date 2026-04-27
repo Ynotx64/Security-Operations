@@ -1,0 +1,68 @@
+<!--
+  Valid Wazuh custom decoder file:
+  - no <decoder_list>
+  - no <decoders>
+  - just consecutive <decoder> blocks
+-->
+
+<!-- Cisco / ASA / IOS / FTD family -->
+<decoder name="edge-cisco-base">
+  <prematch type="pcre2">%ASA-|%FTD-|%SEC_LOGIN-|%AUTHPRIV-|%PARSER-|%SYS-|%AAA-|%SSH-</prematch>
+</decoder>
+
+<decoder name="edge-cisco-auth-success">
+  <parent>edge-cisco-base</parent>
+  <regex type="pcre2">(Successful|success|accepted).*(?:from|IP|ip)[ =:]+([0-9]{1,3}(?:\.[0-9]{1,3}){3})</regex>
+  <order>message,srcip</order>
+</decoder>
+
+<decoder name="edge-cisco-config-command">
+  <parent>edge-cisco-base</parent>
+  <regex type="pcre2">(executed|Configured from|CMD|command).*[\"']([^\"']+)[\"']</regex>
+  <order>message,extra_data</order>
+</decoder>
+
+<!-- Fortinet key=value logs -->
+<decoder name="edge-fortinet-base">
+  <prematch type="pcre2">date=.*time=.*devname=.*</prematch>
+</decoder>
+
+<decoder name="edge-fortinet-auth">
+  <parent>edge-fortinet-base</parent>
+  <regex type="pcre2">user="([^"]+)".*srcip=([0-9]{1,3}(?:\.[0-9]{1,3}){3}).*action="([^"]+)".*status="([^"]+)"</regex>
+  <order>dstuser,srcip,action,status</order>
+</decoder>
+
+<decoder name="edge-fortinet-config">
+  <parent>edge-fortinet-base</parent>
+  <regex type="pcre2">cfgpath="([^"]+)".*cfgobj="([^"]+)".*action="([^"]+)"</regex>
+  <order>extra_data,data,action</order>
+</decoder>
+
+<!-- Juniper -->
+<decoder name="edge-juniper-base">
+  <prematch type="pcre2">mgd|UI_COMMIT|UI_CFG_AUDIT|sshd|SYSTEM_AUTH</prematch>
+</decoder>
+
+<decoder name="edge-juniper-auth">
+  <parent>edge-juniper-base</parent>
+  <regex type="pcre2">Accepted password for ([^ ]+) from ([0-9]{1,3}(?:\.[0-9]{1,3}){3})</regex>
+  <order>dstuser,srcip</order>
+</decoder>
+
+<decoder name="edge-juniper-config">
+  <parent>edge-juniper-base</parent>
+  <regex type="pcre2">(UI_CFG_AUDIT|UI_COMMIT).*'([^']+)'</regex>
+  <order>message,extra_data</order>
+</decoder>
+
+<!-- VPN / IPsec -->
+<decoder name="edge-vpn-base">
+  <prematch type="pcre2">openvpn|OpenVPN|charon|strongSwan|ikev2|ipsec|vpn</prematch>
+</decoder>
+
+<decoder name="edge-vpn-session">
+  <parent>edge-vpn-base</parent>
+  <regex type="pcre2">(AUTH_SUCCESS|login success|session established|IKE_SA established).*(?:from|src|peer)?[ =:]*([0-9]{1,3}(?:\.[0-9]{1,3}){3})?</regex>
+  <order>message,srcip</order>
+</decoder>

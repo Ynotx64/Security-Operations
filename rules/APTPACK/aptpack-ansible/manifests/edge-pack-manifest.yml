@@ -1,0 +1,23 @@
+pack: edge_appliance_access_pack
+version: 1.0
+scope:
+  - edge appliance access
+  - post-compromise admin behavior
+rules:
+  - EDGE-ADM-001
+  - EDGE-CONFIG-002
+  - EDGE-ACCT-003
+  - EDGE-CTRL-004
+  - EDGE-SVC-005
+  - EDGE-EGRESS-006
+  - EDGE-LOG-007
+  - EDGE-MGMT-008
+playbooks:
+  - pb-edge-first-seen-admin-source.yml
+  - pb-edge-config-export.yml
+  - pb-edge-local-admin-change.yml
+  - pb-edge-control-plane-destination-change.yml
+  - pb-edge-service-restart.yml
+  - pb-edge-unexpected-egress.yml
+  - pb-edge-logging-disabled-or-redirected.yml
+  - pb-edge-afterhours-management-access.yml

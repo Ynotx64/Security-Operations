@@ -1,0 +1,184 @@
+<group name="custom,edge,enterprise_runtime,">
+
+  <!-- =========================================================================
+       BASE / VENDOR CLASSIFICATION
+       ========================================================================= -->
+
+  <rule id="110500" level="3">
+    <decoded_as>json</decoded_as>
+    <field name="asset_role">firewall|router|vpn_gateway|security_appliance</field>
+    <description>EDGE-BASE normalized edge telemetry observed</description>
+    <group>edge,normalized,base,</group>
+    <options>no_full_log</options>
+  </rule>
+
+  <!-- =========================================================================
+       HIGH-SPECIFICITY LOGGING IMPAIRMENT RULES FIRST
+       ========================================================================= -->
+
+  <rule id="110512" level="15">
+    <if_sid>110500</if_sid>
+    <field name="setting_changed">logging_destination</field>
+    <description>EDGE-LOG-007 logging disabled or redirected via destination change</description>
+    <group>edge,logging,telemetry_gap,defense_evasion,t1562.001,</group>
+  </rule>
+
+  <rule id="110513" level="15">
+    <if_sid>110500</if_sid>
+    <field name="command">no logging|logging disable</field>
+    <description>EDGE-LOG-007 logging disabled or redirected via command</description>
+    <group>edge,logging,telemetry_gap,defense_evasion,t1562.001,</group>
+  </rule>
+
+  <rule id="110511" level="15">
+    <if_sid>110500</if_sid>
+    <field name="telemetry_heartbeat_missing">true</field>
+    <description>EDGE-LOG-007 logging disabled or redirected via telemetry gap</description>
+    <group>edge,logging,telemetry_gap,defense_evasion,t1562.001,</group>
+  </rule>
+
+  <!-- =========================================================================
+       MANAGEMENT / ADMIN AUTH
+       ========================================================================= -->
+
+  <rule id="110520" level="12">
+    <if_sid>110500</if_sid>
+    <field name="management_login_success">true</field>
+    <field name="in_maintenance_window">false</field>
+    <description>EDGE-MGMT-008 after-hours management-plane access</description>
+    <group>edge,afterhours,management_plane,t1078,t1133,</group>
+  </rule>
+
+  <rule id="110521" level="12">
+    <if_sid>110500</if_sid>
+    <field name="admin_login_success">true</field>
+    <field name="first_seen_src_ip_for_asset">true</field>
+    <description>EDGE-ADM-001 first-seen admin source IP to edge host</description>
+    <group>edge,admin,first_seen,management_plane,t1078,t1133,</group>
+  </rule>
+
+  <!-- =========================================================================
+       CONFIG EXPORT / BACKUP
+       ========================================================================= -->
+
+  <rule id="110530" level="13">
+    <if_sid>110500</if_sid>
+    <field name="command">show running-config|copy running-config|backup config|export configuration</field>
+    <description>EDGE-CONFIG-002 config export or backup on edge appliance</description>
+    <group>edge,config,export,backup,t1005,t1041,</group>
+  </rule>
+
+  <rule id="110531" level="13">
+    <if_sid>110500</if_sid>
+    <field name="url_path">/backup|/export</field>
+    <description>EDGE-CONFIG-002 config export or backup on edge appliance via web path</description>
+    <group>edge,config,export,backup,t1005,t1041,</group>
+  </rule>
+
+  <!-- =========================================================================
+       ACCOUNT / PRIVILEGE CHANGES
+       ========================================================================= -->
+
+  <rule id="110540" level="15">
+    <if_sid>110500</if_sid>
+    <field name="event_action">local_user_created|role_changed|privilege_assigned</field>
+    <description>EDGE-ACCT-003 local admin creation or privilege change</description>
+    <group>edge,account,persistence,privilege,t1136,t1098,</group>
+  </rule>
+
+  <rule id="110541" level="15">
+    <if_sid>110500</if_sid>
+    <field name="command">username|user add|create admin</field>
+    <description>EDGE-ACCT-003 local admin creation or privilege change via command</description>
+    <group>edge,account,persistence,privilege,t1136,t1098,</group>
+  </rule>
+
+  <!-- =========================================================================
+       CONTROL PLANE / DESTINATION CHANGES
+       ========================================================================= -->
+
+  <rule id="110550" level="15">
+    <if_sid>110500</if_sid>
+    <field name="setting_changed">dns|ntp|aaa|syslog</field>
+    <description>EDGE-CTRL-004 DNS/NTP/AAA/logging destination change</description>
+    <group>edge,dns,ntp,aaa,logging,config_drift,t1562,t1071,</group>
+  </rule>
+
+  <rule id="110551" level="15">
+    <if_sid>110500</if_sid>
+    <field name="command">logging host|syslog server|ntp server|ip name-server|radius-server host|tacacs-server host</field>
+    <description>EDGE-CTRL-004 DNS/NTP/AAA/logging destination change via command</description>
+    <group>edge,dns,ntp,aaa,logging,config_drift,t1562,t1071,</group>
+  </rule>
+
+  <!-- =========================================================================
+       SERVICE RESTART
+       ========================================================================= -->
+
+  <rule id="110560" level="10">
+    <if_sid>110500</if_sid>
+    <field name="event_action">process_restart</field>
+    <description>EDGE-SVC-005 service restart on edge or security device</description>
+    <group>edge,service_restart,defense_evasion,t1562,</group>
+  </rule>
+
+  <rule id="110561" level="10">
+    <if_sid>110500</if_sid>
+    <field name="message">service restarted|daemon restarted</field>
+    <description>EDGE-SVC-005 service restart on edge or security device</description>
+    <group>edge,service_restart,defense_evasion,t1562,</group>
+  </rule>
+
+  <!-- =========================================================================
+       EGRESS / NETWORK-DERIVED
+       ========================================================================= -->
+
+  <rule id="110570" level="15">
+    <decoded_as>json</decoded_as>
+    <field name="src_asset_role">firewall|router|vpn_gateway|security_appliance</field>
+    <field name="direction">outbound</field>
+    <field name="dst_port">53|80|443|8080|8443|9443</field>
+    <description>EDGE-EGRESS-006 unexpected outbound egress from edge appliance</description>
+    <group>edge,egress,dns,https,c2,t1071,t1041,</group>
+  </rule>
+
+  <!-- =========================================================================
+       VENDOR-ASSIST RULES FOR RAW TELEMETRY NORMALIZATION VALIDATION
+       ========================================================================= -->
+
+  <rule id="110580" level="5">
+    <match>FortiGate|fortigate|FortiOS</match>
+    <description>EDGE-VENDOR Fortinet raw telemetry observed</description>
+    <group>edge,vendor,fortinet,</group>
+    <options>no_full_log</options>
+  </rule>
+
+  <rule id="110581" level="5">
+    <match>%ASA|%FTD|IOS|IOS-XE|SEC_LOGIN|CONFIG_I</match>
+    <description>EDGE-VENDOR Cisco raw telemetry observed</description>
+    <group>edge,vendor,cisco,</group>
+    <options>no_full_log</options>
+  </rule>
+
+  <rule id="110582" level="5">
+    <match>panos|Palo Alto|SYSTEM|CONFIG|TRAFFIC|AUTH</match>
+    <description>EDGE-VENDOR Palo Alto raw telemetry observed</description>
+    <group>edge,vendor,paloalto,</group>
+    <options>no_full_log</options>
+  </rule>
+
+  <rule id="110583" level="5">
+    <match>UI_CFG_AUDIT|UI_COMMIT|mgd|sshd|SYSTEM_AUTH</match>
+    <description>EDGE-VENDOR Juniper raw telemetry observed</description>
+    <group>edge,vendor,juniper,</group>
+    <options>no_full_log</options>
+  </rule>
+
+  <rule id="110584" level="5">
+    <match>OpenVPN|openvpn|strongSwan|charon|ikev2|ipsec</match>
+    <description>EDGE-VENDOR VPN raw telemetry observed</description>
+    <group>edge,vendor,vpn,</group>
+    <options>no_full_log</options>
+  </rule>
+
+</group>

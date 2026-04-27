@@ -1,0 +1,9 @@
+alert http $HOME_NET any -> $EXTERNAL_NET any (
+    msg:"APTPACK EXEC Base64 Or Encoded Command Indicator";
+    flow:to_server,established;
+    pcre:"/(frombase64string|base64,|powershell.+-enc|cmd\.exe.+\/c)/Ui";
+    classtype:bad-unknown;
+    sid:700102;
+    rev:1;
+    metadata:mitre_tactic TA0002, phase EXEC, anti_bypass true, severity high;
+)

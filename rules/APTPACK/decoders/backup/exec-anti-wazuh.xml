@@ -1,0 +1,12 @@
+<group name="aptpack,exec,anti_bypass">
+  <rule id="170102" level="12">
+    <if_group>suricata,</if_group>
+    <field name="alert.signature">APTPACK EXEC Base64 Or Encoded Command Indicator</field>
+    <description>APTPACK EXEC anti-bypass - encoded command execution observed</description>
+    <mitre>
+      <id>T1027</id>
+      <id>T1140</id>
+    </mitre>
+    <group>attack,defense_evasion,execution,aptpack_exec_anti_bypass,</group>
+  </rule>
+</group>

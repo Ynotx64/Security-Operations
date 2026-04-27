@@ -1,0 +1,4 @@
+{"asset_role":"vpn_gateway","vendor":"strongswan","service":"charon","event_category":"vpn","event_action":"ike_sa_established","vpn_tunnel_name":"edge-vpn","src_ip":"198.51.100.2","dst_ip":"203.0.113.88"}
+{"asset_role":"vpn_gateway","vendor":"strongswan","service":"charon","event_category":"vpn","event_action":"ike_sa_established","vpn_tunnel_name":"edge-vpn","src_ip":"198.51.100.2","dst_ip":"203.0.113.88","first_seen_dst_ip_for_asset":"true"}
+{"asset_role":"vpn_gateway","vendor":"strongswan","service":"charon","event_category":"vpn","event_action":"ike_sa_established","vpn_tunnel_name":"edge-vpn","src_ip":"198.51.100.2","dst_ip":"203.0.113.88","in_maintenance_window":"false"}
+{"asset_role":"vpn_gateway","vendor":"strongswan","service":"charon","event_category":"vpn","event_action":"ike_sa_established","vpn_tunnel_name":"edge-vpn","src_ip":"198.51.100.2","dst_ip":"203.0.113.88","peer_reputation":"unknown"}

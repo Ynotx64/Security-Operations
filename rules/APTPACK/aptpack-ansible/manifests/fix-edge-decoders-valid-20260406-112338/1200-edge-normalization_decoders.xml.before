@@ -1,0 +1,76 @@
+<decoders>
+
+  <!-- Generic JSON -->
+  <decoder name="edge-json-base">
+    <prematch>^\{.*\}$</prematch>
+    <plugin_decoder>JSON_Decoder</plugin_decoder>
+  </decoder>
+
+  <!-- Cisco ASA / IOS / FTD / NXOS style syslog -->
+  <decoder name="edge-cisco-base">
+    <prematch>%ASA-|%FTD-|%SEC_LOGIN-|%AUTHPRIV-|%PARSER-|%SYS-|%AAA-|%SSH-</prematch>
+  </decoder>
+
+  <decoder name="edge-cisco-auth-success">
+    <parent>edge-cisco-base</parent>
+    <regex>.*(Successful|success|accepted).*(from|src)[ =:]+([0-9]{1,3}(?:\.[0-9]{1,3}){3})</regex>
+    <order>message,src_ip</order>
+  </decoder>
+
+  <decoder name="edge-cisco-config-cmd">
+    <parent>edge-cisco-base</parent>
+    <regex>.*(Configured from|CMD|command)[ :"]+([^"]+)</regex>
+    <order>message,command</order>
+  </decoder>
+
+  <!-- Fortinet key=value -->
+  <decoder name="edge-fortinet-base">
+    <prematch>date=.*time=.*devname=.*(FortiGate|fortigate)</prematch>
+  </decoder>
+
+  <decoder name="edge-fortinet-auth">
+    <parent>edge-fortinet-base</parent>
+    <regex>.*user="([^"]+)".*srcip=([0-9]{1,3}(?:\.[0-9]{1,3}){3}).*action="([^"]+)".*status="([^"]+)"</regex>
+    <order>dst_user,src_ip,event_action,message</order>
+  </decoder>
+
+  <decoder name="edge-fortinet-config">
+    <parent>edge-fortinet-base</parent>
+    <regex>.*cfgpath="([^"]+)".*cfgobj="([^"]+)".*action="([^"]+)"</regex>
+    <order>setting_changed,command,event_action</order>
+  </decoder>
+
+  <!-- PAN-OS CSV-ish -->
+  <decoder name="edge-panos-base">
+    <prematch>,(SYSTEM|CONFIG|AUTH|TRAFFIC),</prematch>
+  </decoder>
+
+  <decoder name="edge-panos-config">
+    <parent>edge-panos-base</parent>
+    <regex>.*,(CONFIG),.*,(commit|set|edit|delete),.*</regex>
+    <order>message,event_action</order>
+  </decoder>
+
+  <!-- Juniper -->
+  <decoder name="edge-juniper-base">
+    <prematch>(mgd|UI_COMMIT|UI_CFG_AUDIT|sshd|SYSTEM_AUTH)</prematch>
+  </decoder>
+
+  <decoder name="edge-juniper-config">
+    <parent>edge-juniper-base</parent>
+    <regex>.*(UI_CFG_AUDIT|UI_COMMIT).*'(.*)'</regex>
+    <order>message,command</order>
+  </decoder>
+
+  <!-- VPN -->
+  <decoder name="edge-vpn-base">
+    <prematch>(openvpn|OpenVPN|charon|strongSwan|ikev2|ipsec|vpn)</prematch>
+  </decoder>
+
+  <decoder name="edge-vpn-session">
+    <parent>edge-vpn-base</parent>
+    <regex>.*(AUTH_SUCCESS|login success|session established|IKE_SA established).*(from|src|peer)[ =:]+([0-9]{1,3}(?:\.[0-9]{1,3}){3})</regex>
+    <order>message,src_ip</order>
+  </decoder>
+
+</decoders>

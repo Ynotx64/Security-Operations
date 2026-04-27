@@ -1,0 +1,20 @@
+APTPACK Phase Summary
+=====================
+
+Phase Code: CA
+Phase Directory: APTPACK-CA
+Kill Chain Stage: command-and-control-collection
+MITRE Tactics: TA0011, TA0009
+Severity: critical
+Queue: command-and-control
+
+Correlation Directory: /home/soc-admin/APTPACK/APTPACK-CA/APTPACK-CORR
+Anti-Bypass Directory: /home/soc-admin/APTPACK/APTPACK-CA/APTPACK-ANTI-BYPASS
+
+Correlation Files:
+- none found
+
+Anti-Bypass Files:
+- none found
+
+Artifact Directory: /home/soc-admin/APTPACK/aptpack-ansible/artifacts/ca-20260403-180244

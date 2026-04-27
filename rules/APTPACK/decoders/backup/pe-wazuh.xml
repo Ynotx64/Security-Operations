@@ -1,0 +1,12 @@
+<group name="aptpack,pe,correlation">
+  <rule id="170201" level="14">
+    <if_group>suricata,</if_group>
+    <field name="alert.signature">APTPACK PE Persistence Artifact Retrieval</field>
+    <description>APTPACK PE - persistence or privilege escalation artifact retrieval</description>
+    <mitre>
+      <id>T1547</id>
+      <id>T1543</id>
+    </mitre>
+    <group>attack,persistence,privilege_escalation,aptpack_pe,</group>
+  </rule>
+</group>

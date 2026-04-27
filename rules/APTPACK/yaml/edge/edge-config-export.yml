@@ -1,0 +1,46 @@
+id: EDGE-CONFIG-002
+name: edge_config_export_or_backup
+version: 1.0
+status: enabled
+phase: post_compromise_admin_behavior
+severity: high
+confidence: high
+log_source:
+  - firewall_audit
+  - router_audit
+  - web_admin_audit
+  - cli_command_log
+mitre:
+  tactic:
+    - Collection
+    - Exfiltration
+  technique:
+    - T1005
+    - T1041
+metadata:
+  test_id: EDGE-CONFIG-002
+  response_playbook: pb-edge-config-export.yml
+  response_guidance: Confirm authorized backup job, identify destination, hash exported file if present, rotate secrets if config leaked.
+detection:
+  type: rule
+  match_any:
+    - command CONTAINS "show running-config"
+    - command CONTAINS "copy running-config"
+    - command CONTAINS "backup config"
+    - command CONTAINS "export configuration"
+    - url_path CONTAINS "/backup"
+    - url_path CONTAINS "/export"
+  condition: >
+    asset_role IN ["firewall","router","vpn_gateway","security_appliance"]
+fields:
+  required:
+    - timestamp
+    - asset_hostname
+    - username
+    - command
+    - destination
+tags:
+  - edge
+  - config
+  - export
+  - backup

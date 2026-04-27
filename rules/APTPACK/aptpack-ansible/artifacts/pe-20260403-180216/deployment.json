@@ -1,0 +1,1 @@
+{"phase_code": "PE", "phase_directory": "APTPACK-PE", "kill_chain_stage": "persistence-privilege-escalation", "mitre_tactics": ["TA0003", "TA0004"], "severity": "critical", "queue": "endpoint-persistence", "correlation_files": [], "anti_bypass_files": []}

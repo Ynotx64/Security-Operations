@@ -1,0 +1,28 @@
+APTPACK Phase Summary
+=====================
+
+Phase Code: {{ aptpack_phase_code }}
+Phase Directory: {{ aptpack_phase_dir_name }}
+Kill Chain Stage: {{ aptpack_phase.kill_chain_stage }}
+MITRE Tactics: {{ aptpack_phase.mitre_tactics | join(', ') }}
+Severity: {{ aptpack_phase.severity }}
+Queue: {{ aptpack_phase.queue }}
+
+Correlation Directory: {{ aptpack_corr_dir }}
+Anti-Bypass Directory: {{ aptpack_anti_bypass_dir }}
+
+Correlation Files:
+{% for f in (corr_files.files | default([])) %}
+- {{ f.path }}
+{% else %}
+- none found
+{% endfor %}
+
+Anti-Bypass Files:
+{% for f in (anti_bypass_files.files | default([])) %}
+- {{ f.path }}
+{% else %}
+- none found
+{% endfor %}
+
+Artifact Directory: {{ aptpack_case_dir }}

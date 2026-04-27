@@ -1,0 +1,5 @@
+==================================================
+EVENT: {"management_login_success":"true","in_maintenance_window":"false","asset_role":"firewall"}
+==================================================
+
+

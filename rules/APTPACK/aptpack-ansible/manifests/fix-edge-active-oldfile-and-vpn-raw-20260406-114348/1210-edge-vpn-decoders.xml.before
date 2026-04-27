@@ -1,0 +1,9 @@
+<decoder name="edge-vpn-base">
+  <program_name>charon</program_name>
+</decoder>
+
+<decoder name="edge-vpn-ike-established">
+  <parent>edge-vpn-base</parent>
+  <regex>IKE_SA ([^ ]+) established between ([0-9]+\.[0-9]+\.[0-9]+\.[0-9]+).+([0-9]+\.[0-9]+\.[0-9]+\.[0-9]+)</regex>
+  <order>vpn_tunnel,srcip,dstip</order>
+</decoder>

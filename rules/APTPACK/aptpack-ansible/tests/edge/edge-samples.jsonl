@@ -1,0 +1,8 @@
+{"management_login_success":"true","asset_role":"firewall","in_maintenance_window":"false","asset_hostname":"edge-fw-01","username":"admin","src_ip":"192.168.122.44","management_protocol":"https"}
+{"admin_login_success":"true","asset_role":"router","first_seen_src_ip_for_asset":"true","asset_hostname":"edge-rtr-01","src_ip":"192.168.122.77","username":"netadmin"}
+{"asset_role":"vpn_gateway","command":"copy running-config tftp://192.168.122.44/fw.cfg","asset_hostname":"vpn-01","username":"admin","destination":"tftp://192.168.122.44/fw.cfg"}
+{"asset_role":"security_appliance","event_action":"local_user_created","asset_hostname":"sec-01","username":"admin","target_account":"svc_backup","new_role":"super_admin"}
+{"asset_role":"firewall","setting_changed":"dns","asset_hostname":"edge-fw-01","old_value":"192.168.122.10","new_value":"8.8.8.8"}
+{"asset_role":"router","event_action":"process_restart","asset_hostname":"edge-rtr-01","service_name":"syslogd"}
+{"src_asset_role":"firewall","direction":"outbound","src_ip":"192.168.122.1","dst_ip":"198.51.100.22","dst_port":"443","proto":"tcp","bytes_out":"4096"}
+{"asset_role":"firewall","telemetry_heartbeat_missing":"true","asset_hostname":"edge-fw-01","event_action":"telemetry_gap"}

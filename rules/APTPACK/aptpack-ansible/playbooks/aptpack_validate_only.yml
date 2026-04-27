@@ -1,0 +1,12 @@
+---
+- name: Validate APTPACK Initial Access phase inputs only
+  hosts: soc-admin
+  gather_facts: true
+  vars_files:
+    - ../group_vars/all.yml
+  vars:
+    aptpack_phase_code: IA
+    aptpack_phase_dir_name: APTPACK-IA
+    aptpack_validate_only: true
+  roles:
+    - role: aptpack_phase_deploy

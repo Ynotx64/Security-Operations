@@ -1,0 +1,25 @@
+Incident ID: IR-20260403-175121
+Generated: 2026-04-03T21:51:21Z
+
+Summary
+=======
+Suricata pipeline hits: 4
+Decision: True
+Reason: Matched Suricata alert(s) collected and correlated into case artifacts
+
+Artifacts
+=========
+Artifact directory: /home/soc-admin/soc-ir-automation/artifacts/IR-20260403-175121
+Collected Files
+===============
+- suricata_pipeline_hits.log
+- suricata_eve_recent.log
+- suricata_fast_recent.log
+- wazuh_agent_status.log
+- wazuh_suricata_refs.log
+- wazuh_log_tail.log
+- host_triage.txt
+
+Notes
+=====
+This report was generated from the automated Suricata -> Wazuh triage workflow.

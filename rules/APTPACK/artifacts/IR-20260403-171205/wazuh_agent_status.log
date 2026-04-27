@@ -1,0 +1,23 @@
+● wazuh-agent.service - Wazuh agent
+     Loaded: loaded (/usr/lib/systemd/system/wazuh-agent.service; enabled; preset: enabled)
+     Active: active (running) since Fri 2026-04-03 14:38:08 EDT; 2h 34min ago
+    Process: 33671 ExecStart=/usr/bin/env /var/ossec/bin/wazuh-control start (code=exited, status=0/SUCCESS)
+      Tasks: 34 (limit: 9354)
+     Memory: 27.3M (peak: 39.2M)
+        CPU: 1min 6.811s
+     CGroup: /system.slice/wazuh-agent.service
+             ├─33694 /var/ossec/bin/wazuh-execd
+             ├─33702 /var/ossec/bin/wazuh-agentd
+             ├─33716 /var/ossec/bin/wazuh-syscheckd
+             ├─33726 /var/ossec/bin/wazuh-logcollector
+             └─33740 /var/ossec/bin/wazuh-modulesd
+
+Apr 03 14:38:05 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 systemd[1]: Starting wazuh-agent.service - Wazuh agent...
+Apr 03 14:38:05 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 env[33671]: Starting Wazuh v4.14.0...
+Apr 03 14:38:05 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 env[33671]: Started wazuh-execd...
+Apr 03 14:38:06 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 env[33671]: Started wazuh-agentd...
+Apr 03 14:38:06 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 env[33671]: Started wazuh-syscheckd...
+Apr 03 14:38:06 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 env[33671]: Started wazuh-logcollector...
+Apr 03 14:38:06 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 env[33671]: Started wazuh-modulesd...
+Apr 03 14:38:08 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 env[33671]: Completed.
+Apr 03 14:38:08 ids-management-Ubuntu-24-04-PC-Q35-ICH9-2009 systemd[1]: Started wazuh-agent.service - Wazuh agent.

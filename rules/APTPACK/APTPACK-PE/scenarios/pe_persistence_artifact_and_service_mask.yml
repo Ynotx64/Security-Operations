@@ -1,0 +1,89 @@
+scenario:
+  id: APTPACK-PE-SCN-001
+  name: Persistence / Privilege Escalation - Cron-style persistence artifact and disguised service marker
+  phase_code: PE
+  phase_directory: APTPACK-PE
+  cyber_kill_chain: persistence_and_privilege_escalation
+  severity: critical
+  confidence: high
+  status: ready_for_validation
+
+threat_model:
+  summary: >
+    Simulates endpoint persistence telemetry by logging persistence-like artifacts
+    without installing real persistence.
+  realistic_use_case: >
+    Mirrors cases where scheduled tasks, service names, or disguised maintenance jobs
+    are used to preserve foothold.
+  attack_story: >
+    The operator plants a cron-like persistence artifact and labels a follow-on action
+    as a benign system service.
+
+mitre:
+  tactics:
+    - TA0003
+    - TA0004
+  techniques:
+    - id: T1053
+      name: Scheduled Task/Job
+    - id: T1543
+      name: Create or Modify System Process
+
+metadata:
+  log_source:
+    - journald
+    - syslog
+    - wazuh_logcollector
+  test_ids:
+    corr: APTPACK-PE-CORR-001
+    anti: APTPACK-PE-ANTI-001
+  response_guidance:
+    - Inspect cron, systemd units, and service creation activity.
+    - Review user context and startup paths.
+    - Check whether file or service names mimic legitimate maintenance tooling.
+
+triggers:
+  correlation_rule_intent: >
+    Match aptpack_pe_test with cron-style persistence value.
+  anti_bypass_rule_intent: >
+    Match aptpack_pe_bypass with disguised helper service semantics.
+
+demo:
+  prerequisites:
+    - Wazuh log collection active on soc-admin.
+  commands:
+    - |
+      logger '{"event_type":"aptpack_pe_test","artifact":"cron","value":"@reboot /tmp/.aptpack","test_id":"APTPACK-PE-CORR-001","phase":"PE"}'
+    - |
+      logger '{"event_type":"aptpack_pe_bypass","service":"system-update-helper","action":"persist","test_id":"APTPACK-PE-ANTI-001","phase":"PE"}'
+  safety_notes:
+    - No actual cron or service is created.
+
+expected_telemetry:
+  wazuh:
+    - aptpack_pe_test and APTPACK-PE-CORR-001 searchable
+    - aptpack_pe_bypass and APTPACK-PE-ANTI-001 searchable
+  splunk:
+    - structured log markers searchable
+  suricata:
+    - not expected
+  zeek:
+    - not expected
+
+dashboard_searches:
+  wazuh:
+    - 'full_log:*APTPACK-PE-CORR-001*'
+    - 'full_log:*APTPACK-PE-ANTI-001*'
+    - 'full_log:*aptpack_pe_test*'
+    - 'full_log:*aptpack_pe_bypass*'
+  splunk:
+    - '("APTPACK-PE-CORR-001" OR "aptpack_pe_test" OR "@reboot /tmp/.aptpack")'
+    - '("APTPACK-PE-ANTI-001" OR "aptpack_pe_bypass" OR "system-update-helper")'
+
+validation:
+  pass_criteria:
+    - Both PE markers are visible in raw log path and SIEM search.
+    - Anti-bypass search is distinct from generic host admin activity.
+  fail_indicators:
+    - Missing test IDs.
+    - Searches only return unrelated maintenance/admin events.

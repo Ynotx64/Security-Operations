@@ -1,0 +1,9 @@
+alert http $HOME_NET any -> $EXTERNAL_NET any (
+    msg:"APTPACK STAGE Archive Or Exfil Artifact Transfer";
+    flow:to_server,established;
+    http.uri; pcre:"/(\.zip|\.7z|\.rar|\.tar|upload|exfil|stage|collect)/Ui";
+    classtype:data-theft;
+    sid:700501;
+    rev:1;
+    metadata:mitre_tactic TA0005, mitre_tactic TA0010, phase STAGE, severity critical;
+)

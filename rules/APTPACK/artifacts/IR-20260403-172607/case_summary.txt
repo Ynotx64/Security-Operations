@@ -1,0 +1,22 @@
+Incident ID: IR-20260403-172607
+Generated: unknown
+
+Summary
+=======
+
+Artifacts
+=========
+
+Collected Files
+===============
+- suricata_pipeline_hits.log
+- suricata_eve_recent.log
+- suricata_fast_recent.log
+- wazuh_agent_status.log
+- wazuh_suricata_refs.log
+- wazuh_log_tail.log
+- host_triage.txt
+
+Notes
+=====
+This report was generated from the automated Suricata -> Wazuh triage workflow.

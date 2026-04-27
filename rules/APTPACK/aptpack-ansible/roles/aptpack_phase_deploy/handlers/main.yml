@@ -1,0 +1,33 @@
+---
+- name: restart suricata
+  service:
+    name: suricata
+    state: restarted
+  delegate_to: ids-management
+  become: true
+  listen: restart suricata
+
+- name: deploy zeek
+  shell: |
+    if command -v zeekctl >/dev/null 2>&1; then
+      zeekctl deploy
+    elif [ -x /opt/zeek/bin/zeekctl ]; then
+      /opt/zeek/bin/zeekctl deploy
+    elif [ -x /usr/local/zeek/bin/zeekctl ]; then
+      /usr/local/zeek/bin/zeekctl deploy
+    else
+      echo "zeekctl not installed on this host; skipping deploy"
+      exit 0
+    fi
+  args:
+    executable: /bin/bash
+  delegate_to: ids-management
+  become: true
+  listen: deploy zeek
+
+- name: restart wazuh-manager
+  service:
+    name: wazuh-manager
+    state: restarted
+  become: true
+  listen: restart wazuh-manager

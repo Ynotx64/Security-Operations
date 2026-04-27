@@ -1,0 +1,82 @@
+<group name="suricata,zeek,soc,correlation">
+
+  <rule id="100200" level="8">
+    <if_group>suricata</if_group>
+    <field name="alert.signature">SOC ACTOR PACK|GPL ATTACK_RESPONSE id check returned root</field>
+    <description>SOC: Suricata suspicious web response detected</description>
+    <mitre>
+      <id>T1071</id>
+    </mitre>
+    <options>no_full_log</options>
+  </rule>
+
+  <rule id="100201" level="10">
+    <if_group>suricata</if_group>
+    <field name="alert.signature">Volt Typhoon suspicious web probe</field>
+    <description>SOC: Suricata actor-pack web probe detected</description>
+    <mitre>
+      <id>T1190</id>
+    </mitre>
+    <options>no_full_log</options>
+  </rule>
+
+  <rule id="100202" level="7">
+    <decoded_as>json</decoded_as>
+    <field name="note">SOC::Long_Lived_Low_Volume</field>
+    <description>SOC: Zeek long-lived low-volume behavior</description>
+    <mitre>
+      <id>T1071</id>
+      <id>T1090</id>
+    </mitre>
+  </rule>
+
+  <rule id="100203" level="9">
+    <decoded_as>json</decoded_as>
+    <field name="note">SOC::Rare_External_Admin_Service</field>
+    <description>SOC: Zeek rare external admin service access</description>
+    <mitre>
+      <id>T1021</id>
+      <id>T1078</id>
+    </mitre>
+  </rule>
+
+  <rule id="100210" level="12" frequency="2" timeframe="600">
+    <if_matched_sid>100200</if_matched_sid>
+    <same_field>alert.signature</same_field>
+    <description>SOC: repeated Suricata suspicious web-response alerts</description>
+    <mitre>
+      <id>T1071</id>
+    </mitre>
+  </rule>
+
+  <rule id="100220" level="14" frequency="2" timeframe="900">
+    <if_matched_sid>100200</if_matched_sid>
+    <if_matched_sid>100202</if_matched_sid>
+    <description>SOC: correlated Suricata + Zeek network behavior</description>
+    <mitre>
+      <id>T1071</id>
+      <id>T1090</id>
+    </mitre>
+  </rule>
+
+  <rule id="100221" level="15" frequency="2" timeframe="900">
+    <if_matched_sid>100201</if_matched_sid>
+    <if_matched_sid>100203</if_matched_sid>
+    <description>SOC: correlated actor-pack exploit/public-facing + rare admin service</description>
+    <mitre>
+      <id>T1190</id>
+      <id>T1021</id>
+    </mitre>
+  </rule>
+
+  <rule id="100230" level="16">
+    <if_matched_sid>100220</if_matched_sid>
+    <match>Lost connection with manager|Unable to connect</match>
+    <description>SOC: correlated network alert plus agent instability</description>
+    <mitre>
+      <id>T1071</id>
+      <id>T1562</id>
+    </mitre>
+  </rule>
+
+</group>

@@ -1,0 +1,9 @@
+<decoder name="edge-vpn-base">
+  <prematch>charon|IKE_SA</prematch>
+</decoder>
+
+<decoder name="edge-vpn-base">
+  <parent>edge-vpn-base</parent>
+  <regex offset="after_prematch">established between ([0-9]+\.[0-9]+\.[0-9]+\.[0-9]+).+([0-9]+\.[0-9]+\.[0-9]+\.[0-9]+)</regex>
+  <order>srcip,dstip</order>
+</decoder>
