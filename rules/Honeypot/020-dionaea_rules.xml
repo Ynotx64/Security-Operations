@@ -1,0 +1,5 @@
+<group name="honeypot,dionaea,tpot,">
+  <rule id="111120" level="6"><match>dionaea</match><regex>connection|accept|listen</regex><description>Dionaea network interaction observed</description><group>dionaea,recon,</group></rule>
+  <rule id="111121" level="10"><match>dionaea</match><regex>download|file|md5|sha1|sha256|malware</regex><description>Dionaea malware or file download activity observed</description><group>dionaea,malware,payload_delivery,</group><mitre><id>T1105</id></mitre></rule>
+  <rule id="111122" level="12"><match>dionaea</match><regex>smb|mssql|ftp|http|mqtt|tftp</regex><description>Dionaea exploitation activity against emulated service</description><group>dionaea,exploitation,</group><mitre><id>T1190</id></mitre></rule>
+</group>

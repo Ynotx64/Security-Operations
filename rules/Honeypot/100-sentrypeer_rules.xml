@@ -1,0 +1,4 @@
+<group name="honeypot,sentrypeer,tpot,">
+  <rule id="111280" level="6"><match>sentrypeer</match><description>SentryPeer SIP interaction observed</description><group>sentrypeer,sip,voip,</group></rule>
+  <rule id="111281" level="10"><match>sentrypeer</match><regex>INVITE|REGISTER|OPTIONS|BYE|ACK|SIP/2.0</regex><description>SentryPeer SIP scanning or abuse activity observed</description><group>sentrypeer,sip,scan,</group></rule>
+</group>

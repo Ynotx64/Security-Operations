@@ -1,0 +1,5 @@
+<group name="honeypot,network_sensor,tpot,">
+  <rule id="111380" level="6"><match>fatt</match><description>FATT network fingerprint event observed</description><group>fatt,network_sensor,</group></rule>
+  <rule id="111381" level="6"><match>p0f</match><description>p0f passive fingerprint event observed</description><group>p0f,network_sensor,</group></rule>
+  <rule id="111382" level="8"><regex>os fingerprint|syn|ttl|window size|signature</regex><description>Passive fingerprinting telemetry observed</description><group>network_sensor,fingerprinting,</group><mitre><id>T1595</id></mitre></rule>
+</group>

@@ -1,0 +1,4 @@
+<group name="honeypot,ciscoasa,tpot,">
+  <rule id="111260" level="7"><match>ciscoasa</match><description>Cisco ASA honeypot event observed</description><group>ciscoasa,vpn,web,</group></rule>
+  <rule id="111261" level="10"><match>ciscoasa</match><regex>login|auth|vpn|webvpn|group</regex><description>Cisco ASA authentication or VPN interaction observed</description><group>ciscoasa,authentication,vpn,</group><mitre><id>T1133</id></mitre></rule>
+</group>

@@ -1,0 +1,5 @@
+<group name="honeypot,medical,tpot,">
+  <rule id="111320" level="7"><match>dicompot</match><description>Dicompot medical imaging interaction observed</description><group>dicompot,medical,</group></rule>
+  <rule id="111321" level="7"><match>medpot</match><description>MedPot medical device interaction observed</description><group>medpot,medical,</group></rule>
+  <rule id="111322" level="10"><regex>dicom|c-find|c-store|study|series|patient|hl7|medical</regex><description>Medical protocol enumeration or transaction observed</description><group>medical,recon,</group></rule>
+</group>

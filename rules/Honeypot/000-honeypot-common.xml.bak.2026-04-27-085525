@@ -1,0 +1,186 @@
+<group name="honeypot,tpot,common,">
+
+  <!--
+    Common strategy:
+    1. Prefer decoded_as / program_name / structured field matches over generic raw-text service names.
+    2. Use common taxonomy groups across all honeypots.
+    3. Promote severity by protocol + action confidence.
+    4. Use correlation rules later for "first seen", repetition, and cross-sensor activity.
+  -->
+
+  <!-- Low-confidence generic decoded honeypot event -->
+  <rule id="111000" level="2">
+    <decoded_as>json</decoded_as>
+    <description>Structured honeypot event observed</description>
+    <group>honeypot,tpot,telemetry,</group>
+  </rule>
+
+  <!-- Generic service families / taxonomy tags -->
+  <rule id="111001" level="3">
+    <match>cowrie</match>
+    <description>Honeypot taxonomy match: Cowrie</description>
+    <group>honeypot,tpot,cowrie,interactive_access,ssh,telnet,</group>
+  </rule>
+
+  <rule id="111002" level="3">
+    <match>dionaea</match>
+    <description>Honeypot taxonomy match: Dionaea</description>
+    <group>honeypot,tpot,dionaea,malware_capture,exploitation,</group>
+  </rule>
+
+  <rule id="111003" level="3">
+    <match>heralding</match>
+    <description>Honeypot taxonomy match: Heralding</description>
+    <group>honeypot,tpot,heralding,credential_access,auth_service,</group>
+  </rule>
+
+  <rule id="111004" level="3">
+    <match>honeytrap</match>
+    <description>Honeypot taxonomy match: Honeytrap</description>
+    <group>honeypot,tpot,honeytrap,network_probe,recon,</group>
+  </rule>
+
+  <rule id="111005" level="3">
+    <match>mailoney</match>
+    <description>Honeypot taxonomy match: Mailoney</description>
+    <group>honeypot,tpot,mailoney,smtp,email_service,</group>
+  </rule>
+
+  <rule id="111006" level="3">
+    <match>elasticpot</match>
+    <description>Honeypot taxonomy match: ElasticPot</description>
+    <group>honeypot,tpot,elasticpot,web,datastore,</group>
+  </rule>
+
+  <rule id="111007" level="3">
+    <match>redishoneypot</match>
+    <description>Honeypot taxonomy match: Redis honeypot</description>
+    <group>honeypot,tpot,redis,datastore,command_service,</group>
+  </rule>
+
+  <rule id="111008" level="3">
+    <match>adbhoney</match>
+    <description>Honeypot taxonomy match: ADBHoney</description>
+    <group>honeypot,tpot,adbhoney,adb,interactive_access,</group>
+  </rule>
+
+  <rule id="111009" level="3">
+    <match>ciscoasa</match>
+    <description>Honeypot taxonomy match: Cisco ASA</description>
+    <group>honeypot,tpot,ciscoasa,vpn,remote_access,web,</group>
+  </rule>
+
+  <rule id="111010" level="3">
+    <match>sentrypeer</match>
+    <description>Honeypot taxonomy match: SentryPeer</description>
+    <group>honeypot,tpot,sentrypeer,sip,voip,</group>
+  </rule>
+
+  <rule id="111011" level="3">
+    <match>dicompot</match>
+    <description>Honeypot taxonomy match: Dicompot</description>
+    <group>honeypot,tpot,dicompot,medical,</group>
+  </rule>
+
+  <rule id="111012" level="3">
+    <match>medpot</match>
+    <description>Honeypot taxonomy match: MedPot</description>
+    <group>honeypot,tpot,medpot,medical,</group>
+  </rule>
+
+  <rule id="111013" level="3">
+    <match>conpot</match>
+    <description>Honeypot taxonomy match: Conpot</description>
+    <group>honeypot,tpot,conpot,ics,ot,industrial_protocol,</group>
+  </rule>
+
+  <rule id="111014" level="3">
+    <match>suricata</match>
+    <description>Sensor taxonomy match: Suricata IDS</description>
+    <group>honeypot,tpot,suricata,ids,network_sensor,</group>
+  </rule>
+
+  <rule id="111015" level="3">
+    <match>fatt</match>
+    <description>Sensor taxonomy match: FATT</description>
+    <group>honeypot,tpot,fatt,network_sensor,fingerprinting,</group>
+  </rule>
+
+  <rule id="111016" level="3">
+    <match>p0f</match>
+    <description>Sensor taxonomy match: p0f</description>
+    <group>honeypot,tpot,p0f,network_sensor,fingerprinting,</group>
+  </rule>
+
+  <!-- Per-protocol grouping tiers -->
+  <rule id="111030" level="4">
+    <regex>ssh|SSH</regex>
+    <description>Honeypot event mapped to SSH protocol family</description>
+    <group>honeypot,protocol_ssh,interactive_access,</group>
+  </rule>
+
+  <rule id="111031" level="4">
+    <regex>telnet|TELNET</regex>
+    <description>Honeypot event mapped to Telnet protocol family</description>
+    <group>honeypot,protocol_telnet,interactive_access,</group>
+  </rule>
+
+  <rule id="111032" level="4">
+    <regex>smtp|SMTP|mail</regex>
+    <description>Honeypot event mapped to SMTP protocol family</description>
+    <group>honeypot,protocol_smtp,email_service,</group>
+  </rule>
+
+  <rule id="111033" level="4">
+    <regex>http|https|GET |POST |HEAD |User-Agent:</regex>
+    <description>Honeypot event mapped to HTTP protocol family</description>
+    <group>honeypot,protocol_http,web,</group>
+  </rule>
+
+  <rule id="111034" level="4">
+    <regex>modbus|iec104|ipmi|kamstrup|guardian_ast|snmp</regex>
+    <description>Honeypot event mapped to industrial protocol family</description>
+    <group>honeypot,protocol_industrial,ics,ot,</group>
+  </rule>
+
+  <rule id="111035" level="4">
+    <regex>redis|INFO|CONFIG|SLAVEOF|REPLICAOF</regex>
+    <description>Honeypot event mapped to datastore protocol family</description>
+    <group>honeypot,protocol_datastore,datastore,</group>
+  </rule>
+
+  <!-- Severity tiers -->
+  <rule id="111050" level="5">
+    <regex>login attempt|auth|connection|probe|scan|register|invite</regex>
+    <description>Honeypot low-to-medium confidence hostile interaction observed</description>
+    <group>honeypot,interaction,confidence_medium,</group>
+  </rule>
+
+  <rule id="111051" level="8">
+    <regex>failed|denied|invalid|bruteforce|dictionary|spray</regex>
+    <description>Honeypot authentication abuse or repeated hostile interaction observed</description>
+    <group>honeypot,abuse,confidence_high,</group>
+  </rule>
+
+  <rule id="111052" level="10">
+    <regex>success|accepted|authenticated|session|CMD:|command</regex>
+    <description>Honeypot confirmed adversary interaction or session activity observed</description>
+    <group>honeypot,confirmed_activity,confidence_high,</group>
+  </rule>
+
+  <rule id="111053" level="12">
+    <regex>wget |curl |tftp |busybox|chmod \+x|/bin/sh|/bin/bash|dropper|miner|payload|sha256|md5</regex>
+    <description>Honeypot malicious payload delivery or post-compromise behavior observed</description>
+    <group>honeypot,payload_delivery,post_compromise,confidence_very_high,</group>
+  </rule>
+
+  <!-- First-seen source IP placeholder correlation pattern.
+       This is a starter rule: real first-seen logic should move to decoder-backed fields and/or CDB/list lookup. -->
+  <rule id="111070" level="7" frequency="1" timeframe="86400">
+    <if_matched_group>honeypot,interaction</if_matched_group>
+    <same_source_ip />
+    <description>Honeypot first-observed source IP activity for current observation window</description>
+    <group>honeypot,first_seen_source,source_tracking,</group>
+  </rule>
+
+</group>

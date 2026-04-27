@@ -1,0 +1,4 @@
+<group name="honeypot,honeytrap,tpot,">
+  <rule id="111160" level="6"><match>honeytrap</match><description>Honeytrap event observed</description><group>honeytrap,recon,</group></rule>
+  <rule id="111161" level="9"><match>honeytrap</match><regex>scan|syn|udp|probe|payload</regex><description>Honeytrap scan or probe activity detected</description><group>honeytrap,scan,network_discovery,</group><mitre><id>T1046</id></mitre></rule>
+</group>

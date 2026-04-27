@@ -1,0 +1,5 @@
+<group name="honeypot,heralding,tpot,">
+  <rule id="111140" level="7"><match>heralding</match><regex>auth|login|password|username</regex><description>Heralding credential interaction observed</description><group>heralding,authentication,</group><mitre><id>T1110</id></mitre></rule>
+  <rule id="111141" level="10"><match>heralding</match><regex>failed|invalid|denied</regex><description>Heralding brute-force or failed credential attempt</description><group>heralding,authentication_failed,bruteforce,</group><mitre><id>T1110</id></mitre></rule>
+  <rule id="111142" level="12"><match>heralding</match><regex>success|accepted|authenticated</regex><description>Heralding successful credential use observed</description><group>heralding,authentication_success,</group><mitre><id>T1078</id></mitre></rule>
+</group>

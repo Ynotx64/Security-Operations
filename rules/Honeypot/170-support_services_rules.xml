@@ -1,0 +1,5 @@
+<group name="honeypot,support_services,tpot,">
+  <rule id="111420" level="4"><match>snare</match><description>SNARE web collector/support service event observed</description><group>snare,support_service,</group></rule>
+  <rule id="111421" level="4"><match>ewsposter</match><description>EWSPoster support service event observed</description><group>ewsposter,support_service,</group></rule>
+  <rule id="111422" level="4"><match>spiderfoot</match><description>SpiderFoot support service event observed</description><group>spiderfoot,support_service,</group></rule>
+</group>

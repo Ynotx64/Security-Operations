@@ -1,0 +1,5 @@
+<group name="honeypot,elasticpot,tpot,">
+  <rule id="111200" level="7"><match>elasticpot</match><description>ElasticPot event observed</description><group>elasticpot,web,</group></rule>
+  <rule id="111201" level="10"><match>elasticpot</match><regex>_search|_cat|_cluster|_nodes|_bulk|_msearch|/_search</regex><description>ElasticPot Elasticsearch enumeration or query activity</description><group>elasticpot,recon,web,</group><mitre><id>T1046</id></mitre></rule>
+  <rule id="111202" level="12"><match>elasticpot</match><regex>PUT |POST |DELETE |_bulk|_scripts</regex><description>ElasticPot modification or destructive API activity</description><group>elasticpot,impact,web,</group><mitre><id>T1485</id></mitre></rule>
+</group>

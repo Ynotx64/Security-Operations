@@ -1,0 +1,5 @@
+<group name="honeypot,printing,tpot,">
+  <rule id="111360" level="6"><match>ipphoney</match><description>IPPHoney print protocol interaction observed</description><group>ipphoney,ipp,printing,</group></rule>
+  <rule id="111361" level="6"><match>miniprint</match><description>MiniPrint printer interaction observed</description><group>miniprint,printing,</group></rule>
+  <rule id="111362" level="10"><regex>IPP|print|job|cups|attributes|printer</regex><description>Printing service enumeration or job interaction observed</description><group>printing,recon,</group></rule>
+</group>

@@ -1,0 +1,26 @@
+<group name="honeypot,tpot,">
+  <rule id="111000" level="3"><match>cowrie</match><description>T-Pot honeypot event observed: Cowrie</description><group>honeypot,cowrie,tpot,</group></rule>
+  <rule id="111001" level="3"><match>dionaea</match><description>T-Pot honeypot event observed: Dionaea</description><group>honeypot,dionaea,tpot,</group></rule>
+  <rule id="111002" level="3"><match>heralding</match><description>T-Pot honeypot event observed: Heralding</description><group>honeypot,heralding,tpot,</group></rule>
+  <rule id="111003" level="3"><match>honeytrap</match><description>T-Pot honeypot event observed: Honeytrap</description><group>honeypot,honeytrap,tpot,</group></rule>
+  <rule id="111004" level="3"><match>mailoney</match><description>T-Pot honeypot event observed: Mailoney</description><group>honeypot,mailoney,tpot,</group></rule>
+  <rule id="111005" level="3"><match>elasticpot</match><description>T-Pot honeypot event observed: ElasticPot</description><group>honeypot,elasticpot,tpot,</group></rule>
+  <rule id="111006" level="3"><match>redishoneypot</match><description>T-Pot honeypot event observed: Redis honeypot</description><group>honeypot,redis,tpot,</group></rule>
+  <rule id="111007" level="3"><match>adbhoney</match><description>T-Pot honeypot event observed: ADBHoney</description><group>honeypot,adbhoney,tpot,</group></rule>
+  <rule id="111008" level="3"><match>ciscoasa</match><description>T-Pot honeypot event observed: Cisco ASA honeypot</description><group>honeypot,ciscoasa,tpot,</group></rule>
+  <rule id="111009" level="3"><match>sentrypeer</match><description>T-Pot honeypot event observed: SentryPeer</description><group>honeypot,sentrypeer,tpot,</group></rule>
+  <rule id="111010" level="3"><match>dicompot</match><description>T-Pot honeypot event observed: Dicompot</description><group>honeypot,dicompot,tpot,</group></rule>
+  <rule id="111011" level="3"><match>ipphoney</match><description>T-Pot honeypot event observed: IPPHoney</description><group>honeypot,ipphoney,tpot,</group></rule>
+  <rule id="111012" level="3"><match>miniprint</match><description>T-Pot honeypot event observed: MiniPrint</description><group>honeypot,miniprint,tpot,</group></rule>
+  <rule id="111013" level="3"><match>medpot</match><description>T-Pot honeypot event observed: MedPot</description><group>honeypot,medpot,tpot,</group></rule>
+  <rule id="111014" level="3"><match>wordpot</match><description>T-Pot honeypot event observed: WordPot</description><group>honeypot,wordpot,tpot,</group></rule>
+  <rule id="111015" level="3"><match>honeyaml</match><description>T-Pot honeypot event observed: HoneyAML</description><group>honeypot,honeyaml,tpot,</group></rule>
+  <rule id="111016" level="3"><match>h0neytr4p</match><description>T-Pot honeypot event observed: h0neytr4p</description><group>honeypot,h0neytr4p,tpot,</group></rule>
+  <rule id="111017" level="3"><match>conpot</match><description>T-Pot honeypot event observed: Conpot</description><group>honeypot,conpot,tpot,ics,</group></rule>
+  <rule id="111018" level="3"><match>fatt</match><description>T-Pot sensor event observed: FATT</description><group>honeypot,fatt,tpot,network_sensor,</group></rule>
+  <rule id="111019" level="3"><match>p0f</match><description>T-Pot sensor event observed: p0f</description><group>honeypot,p0f,tpot,network_sensor,</group></rule>
+  <rule id="111020" level="3"><match>suricata</match><description>T-Pot IDS event observed: Suricata</description><group>honeypot,suricata,tpot,ids,</group></rule>
+  <rule id="111021" level="3"><match>snare</match><description>T-Pot sensor event observed: SNARE</description><group>honeypot,snare,tpot,</group></rule>
+  <rule id="111022" level="3"><match>spiderfoot</match><description>T-Pot intel/support service event observed: SpiderFoot</description><group>honeypot,spiderfoot,tpot,</group></rule>
+  <rule id="111023" level="3"><match>ewsposter</match><description>T-Pot intel/support service event observed: EWSPoster</description><group>honeypot,ewsposter,tpot,</group></rule>
+</group>

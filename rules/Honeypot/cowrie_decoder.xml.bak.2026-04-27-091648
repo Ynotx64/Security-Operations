@@ -1,0 +1,38 @@
+<decoder name="cowrie-base">
+  <prematch>cowrie|HoneyPotSSHTransport|cowrie.command.input|cowrie.session.file_download|cowrie.ssh.userauth</prematch>
+</decoder>
+
+<decoder name="cowrie-login-attempt">
+  <parent>cowrie-base</parent>
+  <prematch>login attempt</prematch>
+  <regex>^\S+\s+\[HoneyPotSSHTransport,\d+,([0-9.]+)\]\s+login attempt \[b'([^']*)'/b'([^']*)'\]\s+(failed|succeeded)$</regex>
+  <order>srcip, dstuser, password, status</order>
+</decoder>
+
+<decoder name="cowrie-failed-auth">
+  <parent>cowrie-base</parent>
+  <prematch>failed auth</prematch>
+  <regex>^\S+\s+\[cowrie\.ssh\.userauth\.[^\]]+\]\s+b'([^']*)'\s+failed auth\s+b'([^']*)'$</regex>
+  <order>dstuser, password</order>
+</decoder>
+
+<decoder name="cowrie-ssh-version">
+  <parent>cowrie-base</parent>
+  <prematch>Remote SSH version:</prematch>
+  <regex>^\S+\s+\[HoneyPotSSHTransport,\d+,([0-9.]+)\]\s+Remote SSH version:\s+(.+)$</regex>
+  <order>srcip, extra_data</order>
+</decoder>
+
+<decoder name="cowrie-command">
+  <parent>cowrie-base</parent>
+  <prematch>CMD:</prematch>
+  <regex>^\S+\s+\[cowrie\.command\.input\]\s+CMD:\s+(.+)$</regex>
+  <order>command</order>
+</decoder>
+
+<decoder name="cowrie-file-download">
+  <parent>cowrie-base</parent>
+  <prematch>Saved </prematch>
+  <regex>^\S+\s+\[cowrie\.session\.file_download\]\s+Saved\s+(https?://\S+)\s+to\s+(\S+)\s+SHA256:\s+([A-Fa-f0-9]{64})$</regex>
+  <order>url, file, sha256</order>
+</decoder>

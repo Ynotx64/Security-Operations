@@ -1,0 +1,4 @@
+<group name="honeypot,adbhoney,tpot,">
+  <rule id="111240" level="7"><match>adbhoney</match><description>ADBHoney event observed</description><group>adbhoney,adb,</group></rule>
+  <rule id="111241" level="11"><match>adbhoney</match><regex>shell|push|pull|install|pm install</regex><description>ADBHoney device manipulation attempt observed</description><group>adbhoney,adb,command_execution,</group><mitre><id>T1059</id></mitre></rule>
+</group>

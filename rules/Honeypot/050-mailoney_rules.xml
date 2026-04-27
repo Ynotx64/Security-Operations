@@ -1,0 +1,5 @@
+<group name="honeypot,mailoney,tpot,">
+  <rule id="111180" level="6"><match>mailoney</match><description>Mailoney SMTP interaction observed</description><group>mailoney,smtp,</group></rule>
+  <rule id="111181" level="9"><match>mailoney</match><regex>helo|ehlo|mail from|rcpt to|auth</regex><description>Mailoney SMTP command sequence observed</description><group>mailoney,smtp,recon,</group></rule>
+  <rule id="111182" level="11"><match>mailoney</match><regex>auth|login|plain|relay</regex><description>Mailoney suspicious mail authentication or relay attempt</description><group>mailoney,authentication,smtp_abuse,</group><mitre><id>T1110</id></mitre></rule>
+</group>

@@ -1,0 +1,154 @@
+<group name="honeypot,cowrie,tpot,">
+
+  <!-- Base cowrie taxonomy -->
+  <rule id="111100" level="4">
+    <match>cowrie</match>
+    <description>Cowrie honeypot event observed</description>
+    <group>honeypot,tpot,cowrie,interactive_access,</group>
+  </rule>
+
+  <!-- Protocol split -->
+  <rule id="111101" level="5">
+    <match>cowrie</match>
+    <regex>ssh|SSH</regex>
+    <description>Cowrie SSH interaction observed</description>
+    <group>cowrie,protocol_ssh,interactive_access,</group>
+  </rule>
+
+  <rule id="111102" level="5">
+    <match>cowrie</match>
+    <regex>telnet|TELNET</regex>
+    <description>Cowrie Telnet interaction observed</description>
+    <group>cowrie,protocol_telnet,interactive_access,</group>
+  </rule>
+
+  <!-- Authentication -->
+  <rule id="111110" level="6">
+    <match>cowrie</match>
+    <regex>login attempt</regex>
+    <description>Cowrie authentication attempt observed</description>
+    <group>cowrie,authentication,interaction,</group>
+    <mitre><id>T1110</id></mitre>
+  </rule>
+
+  <rule id="111111" level="8">
+    <match>cowrie</match>
+    <regex>login attempt \[.*\] failed|failed auth|unauthorized login</regex>
+    <description>Cowrie failed authentication attempt observed</description>
+    <group>cowrie,authentication_failed,bruteforce,</group>
+    <mitre><id>T1110</id></mitre>
+  </rule>
+
+  <rule id="111112" level="10">
+    <match>cowrie</match>
+    <regex>login attempt \[.*\] succeeded|accepted password|authenticated|login succeeded</regex>
+    <description>Cowrie successful authentication observed</description>
+    <group>cowrie,authentication_success,valid_account_use,</group>
+    <mitre><id>T1078</id></mitre>
+  </rule>
+
+  <!-- Session open -->
+  <rule id="111113" level="9">
+    <match>cowrie</match>
+    <regex>New connection|Remote SSH version|starting service b'ssh-userauth'|session:</regex>
+    <description>Cowrie session establishment or session metadata observed</description>
+    <group>cowrie,session_open,interactive_access,</group>
+  </rule>
+
+  <!-- Command execution -->
+  <rule id="111114" level="10">
+    <match>cowrie</match>
+    <regex>CMD:|command found|executing command|sh -c|/bin/sh|/bin/bash</regex>
+    <description>Cowrie command execution observed</description>
+    <group>cowrie,command_execution,post_auth,</group>
+    <mitre><id>T1059</id></mitre>
+  </rule>
+
+  <!-- File download -->
+  <rule id="111115" level="12">
+    <match>cowrie</match>
+    <regex>wget |curl |tftp |ftpget |busybox wget|busybox tftp|http://|https://</regex>
+    <description>Cowrie downloader or remote file retrieval behavior observed</description>
+    <group>cowrie,file_download,payload_delivery,</group>
+    <mitre><id>T1105</id></mitre>
+  </rule>
+
+  <!-- File upload -->
+  <rule id="111116" level="11">
+    <match>cowrie</match>
+    <regex>New file|saved to|SHA256:|MD5:|file uploaded|download complete</regex>
+    <description>Cowrie file upload or captured file artifact observed</description>
+    <group>cowrie,file_upload,artifact_capture,</group>
+    <mitre><id>T1105</id></mitre>
+  </rule>
+
+  <!-- Downloader patterns -->
+  <rule id="111120" level="12">
+    <match>cowrie</match>
+    <regex>wget |curl |tftp |busybox|ftpget |powershell.+download|certutil.+http</regex>
+    <description>Cowrie downloader pattern detected</description>
+    <group>cowrie,payload_delivery,downloader,</group>
+    <mitre><id>T1105</id></mitre>
+  </rule>
+
+  <!-- Shell patterns -->
+  <rule id="111121" level="12">
+    <match>cowrie</match>
+    <regex>/bin/sh|/bin/bash|sh -i|bash -i|nohup|setsid|nc -e|ncat -e|socat</regex>
+    <description>Cowrie shell execution or interactive shell pattern detected</description>
+    <group>cowrie,shell_activity,post_auth,</group>
+    <mitre><id>T1059</id></mitre>
+  </rule>
+
+  <!-- Miner patterns -->
+  <rule id="111122" level="13">
+    <match>cowrie</match>
+    <regex>xmrig|minerd|stratum\+tcp|cryptonight|rig\.json|monero|coinhive</regex>
+    <description>Cowrie cryptominer deployment pattern detected</description>
+    <group>cowrie,miner,resource_hijacking,</group>
+    <mitre><id>T1496</id></mitre>
+  </rule>
+
+  <!-- Default credential families -->
+  <rule id="111123" level="9">
+    <match>cowrie</match>
+    <regex>\[(root/root|root/admin|admin/admin|ubnt/ubnt|pi/raspberry|support/support|user/user)\]</regex>
+    <description>Cowrie default credential attempt detected</description>
+    <group>cowrie,default_credentials,authentication_failed,</group>
+    <mitre><id>T1110</id></mitre>
+  </rule>
+
+  <!-- Success after failures -->
+  <rule id="111130" level="13" frequency="5" timeframe="300">
+    <if_matched_group>cowrie,authentication_failed</if_matched_group>
+    <same_source_ip />
+    <description>Cowrie repeated failed authentication attempts from same source</description>
+    <group>cowrie,bruteforce_burst,authentication_failed,</group>
+    <mitre><id>T1110</id></mitre>
+  </rule>
+
+  <rule id="111131" level="14" frequency="1" timeframe="300">
+    <if_matched_group>cowrie,authentication_success</if_matched_group>
+    <same_source_ip />
+    <description>Cowrie successful authentication after prior activity from same source</description>
+    <group>cowrie,success_after_fail,valid_account_use,</group>
+    <mitre><id>T1078</id></mitre>
+  </rule>
+
+  <!-- URL IOC joins placeholder -->
+  <rule id="111140" level="12">
+    <match>cowrie</match>
+    <regex>http://|https://</regex>
+    <description>Cowrie URL observed for enrichment / IOC matching</description>
+    <group>cowrie,url_observed,ioc_candidate,</group>
+  </rule>
+
+  <!-- Hash IOC joins placeholder -->
+  <rule id="111141" level="12">
+    <match>cowrie</match>
+    <regex>SHA256:|MD5:|SHA1:</regex>
+    <description>Cowrie file hash observed for enrichment / IOC matching</description>
+    <group>cowrie,hash_observed,ioc_candidate,</group>
+  </rule>
+
+</group>

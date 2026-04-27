@@ -1,0 +1,5 @@
+<group name="honeypot,redis,tpot,">
+  <rule id="111220" level="7"><match>redishoneypot</match><description>Redis honeypot event observed</description><group>redis,honeypot,</group></rule>
+  <rule id="111221" level="10"><match>redishoneypot</match><regex>INFO|PING|CONFIG|AUTH|SET|GET|SLAVEOF|REPLICAOF</regex><description>Redis enumeration or command activity observed</description><group>redis,recon,command_execution,</group></rule>
+  <rule id="111222" level="12"><match>redishoneypot</match><regex>CONFIG SET|MODULE LOAD|SLAVEOF|REPLICAOF|EVAL</regex><description>Redis abuse or takeover behavior observed</description><group>redis,impact,persistence,</group><mitre><id>T1505</id></mitre></rule>
+</group>

@@ -1,0 +1,4 @@
+<group name="honeypot,suricata,tpot,ids,">
+  <rule id="111400" level="7"><match>suricata</match><description>Suricata IDS event observed from T-Pot stack</description><group>suricata,ids,network,</group></rule>
+  <rule id="111401" level="12"><match>suricata</match><regex>ET |GPL |alert|signature|sid</regex><description>Suricata signature or IDS alert triggered</description><group>suricata,ids,signature_match,</group></rule>
+</group>

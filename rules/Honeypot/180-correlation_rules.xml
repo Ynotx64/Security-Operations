@@ -1,0 +1,5 @@
+<group name="honeypot,correlation,tpot,">
+  <rule id="111450" level="12" frequency="10" timeframe="120"><if_matched_group>authentication_failed</if_matched_group><description>Authentication brute-force burst detected in honeypot telemetry</description><group>correlation,bruteforce,honeypot,</group><mitre><id>T1110</id></mitre></rule>
+  <rule id="111451" level="12" frequency="3" timeframe="300"><if_matched_group>payload_delivery</if_matched_group><description>Repeated payload retrieval behavior across honeypot telemetry</description><group>correlation,malware,payload_delivery,</group><mitre><id>T1105</id></mitre></rule>
+  <rule id="111452" level="12" frequency="5" timeframe="300"><if_matched_group>suricata,ids</if_matched_group><description>Repeated IDS signature activity correlated in T-Pot telemetry</description><group>correlation,ids,network,</group></rule>
+</group>

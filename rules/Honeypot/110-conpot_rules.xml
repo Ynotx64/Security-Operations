@@ -1,0 +1,5 @@
+<group name="honeypot,conpot,tpot,ics,">
+  <rule id="111300" level="7"><match>conpot</match><description>Conpot ICS event observed</description><group>conpot,ics,ot,</group></rule>
+  <rule id="111301" level="10"><match>conpot</match><regex>modbus|snmp|iec104|ipmi|kamstrup|guardian_ast</regex><description>Conpot industrial protocol interaction observed</description><group>conpot,ics,recon,</group><mitre><id>T1046</id></mitre></rule>
+  <rule id="111302" level="12"><match>conpot</match><regex>write|set|command|coil|register</regex><description>Conpot industrial write or manipulation attempt observed</description><group>conpot,ics,impact,</group><mitre><id>T0831</id></mitre></rule>
+</group>

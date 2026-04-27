@@ -1,0 +1,8 @@
+<group name="honeypot,webcms,tpot,">
+  <rule id="111340" level="7"><match>wordpot</match><description>WordPot WordPress interaction observed</description><group>wordpot,wordpress,web,</group></rule>
+  <rule id="111341" level="10"><match>wordpot</match><regex>wp-login|xmlrpc|wp-admin|wp-content|xmlrpc.php</regex><description>WordPot WordPress probing or exploitation attempt</description><group>wordpot,wordpress,web,exploitation,</group><mitre><id>T1190</id></mitre></rule>
+  <rule id="111342" level="7"><match>honeyaml</match><description>HoneyAML YAML parser interaction observed</description><group>honeyaml,web,</group></rule>
+  <rule id="111343" level="10"><match>honeyaml</match><regex>yaml|load|deserialize|python/object|!!python</regex><description>HoneyAML insecure deserialization or YAML exploit attempt</description><group>honeyaml,deserialization,web,</group><mitre><id>T1190</id></mitre></rule>
+  <rule id="111344" level="7"><match>h0neytr4p</match><description>h0neytr4p HTTPS interaction observed</description><group>h0neytr4p,https,web,</group></rule>
+  <rule id="111345" level="10"><match>h0neytr4p</match><regex>GET |POST |HEAD |User-Agent:|/login|/admin|/api</regex><description>h0neytr4p web probing or exploitation activity</description><group>h0neytr4p,web,recon,</group></rule>
+</group>
