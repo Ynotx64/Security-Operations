@@ -1,0 +1,18 @@
+title: Linux XRDP Authentication Failures
+id: 1d278b0f-4a54-4d66-8ff9-1b9fdhv0003
+status: experimental
+description: Detects repeated XRDP authentication failures on Linux systems.
+logsource:
+  product: linux
+  service: xrdp
+detection:
+  keywords:
+    - "xrdp"
+    - "login failed"
+  timeframe: 15m
+  condition: keywords
+falsepositives:
+  - User mistyping credentials
+level: medium
+tags:
+  - attack.t1110

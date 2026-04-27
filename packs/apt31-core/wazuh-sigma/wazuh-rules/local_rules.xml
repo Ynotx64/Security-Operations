@@ -1,0 +1,27 @@
+<group name="apt31,">
+  <rule id="110500" level="10">
+    <if_group>windows,</if_group>
+    <field name="win.system.eventID">4625</field>
+    <description>APT31: failed authentication event</description>
+    <group>authentication_failed,identity,apt31,</group>
+  </rule>
+
+  <rule id="110501" level="12" frequency="10" timeframe="900">
+    <if_matched_sid>110500</if_matched_sid>
+    <description>APT31: password spray threshold reached</description>
+    <group>attack,password_spray,credential_access,apt31,</group>
+  </rule>
+
+  <rule id="110502" level="10">
+    <if_group>office365,</if_group>
+    <match>New-InboxRule</match>
+    <description>APT31: mailbox rule creation detected</description>
+    <group>cloud,collection,mailbox_rule,apt31,</group>
+  </rule>
+
+  <rule id="110503" level="12" frequency="5" timeframe="3600">
+    <if_matched_sid>110502</if_matched_sid>
+    <description>APT31: mailbox rule or collection spike threshold reached</description>
+    <group>attack,collection,mailbox_abuse,apt31,</group>
+  </rule>
+</group>

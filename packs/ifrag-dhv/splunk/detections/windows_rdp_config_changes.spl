@@ -1,0 +1,3 @@
+index=* (sourcetype=WinEventLog:Security OR sourcetype=XmlWinEventLog:Microsoft-Windows-Sysmon/Operational)
+(("fDenyTSConnections" OR "UserAuthentication" OR "RDP-Tcp") OR (EventCode=13 registry_path="*Terminal Server*"))
+| stats values(registry_path) as registry_paths values(Image) as processes count by host user

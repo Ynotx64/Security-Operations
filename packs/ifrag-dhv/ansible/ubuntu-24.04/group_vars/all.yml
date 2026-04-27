@@ -1,0 +1,17 @@
+---
+ifrag_allowed_rdp_sources:
+  - "10.0.0.0/8"
+  - "192.168.0.0/16"
+
+ifrag_allowed_ssh_sources:
+  - "10.0.0.0/8"
+  - "192.168.0.0/16"
+
+ifrag_enable_xrdp: false
+ifrag_xrdp_port: 3389
+ifrag_enable_ufw: true
+ifrag_enable_fail2ban: true
+ifrag_enable_auditd: true
+ifrag_enable_unattended_upgrades: true
+ifrag_disable_root_ssh: true
+ifrag_disable_password_ssh: true

@@ -1,0 +1,5 @@
+FROM logs-*, m365-*, o365-*
+| WHERE event.action IN ("New-InboxRule","Set-InboxRule","UpdateInboxRules","MailItemsAccessed","SearchQueryInitiated")
+| STATS action_count = COUNT(), actions = VALUES(event.action) BY user.name, DATE_TRUNC(1 hour, @timestamp)
+| WHERE action_count >= 5
+| SORT action_count DESC

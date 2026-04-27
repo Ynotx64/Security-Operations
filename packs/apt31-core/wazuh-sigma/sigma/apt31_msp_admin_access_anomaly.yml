@@ -1,0 +1,18 @@
+title: APT31 MSP Admin Access Anomaly
+id: apt31-0003
+status: experimental
+description: Detects delegated admin or MSP-associated access outside expected baseline.
+logsource:
+  category: authentication
+detection:
+  selection:
+    User|contains:
+      - "msp"
+      - "admin"
+  condition: selection
+falsepositives:
+  - Authorized MSP maintenance
+level: high
+tags:
+  - attack.t1078
+  - attack.initial_access

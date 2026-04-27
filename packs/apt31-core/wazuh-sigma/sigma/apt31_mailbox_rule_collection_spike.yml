@@ -1,0 +1,19 @@
+title: APT31 Mailbox Rule Collection Spike
+id: apt31-0005
+status: experimental
+description: Detects mailbox-rule changes or message access activity that may indicate collection.
+logsource:
+  category: cloud
+detection:
+  keywords:
+    - "New-InboxRule"
+    - "Set-InboxRule"
+    - "MailItemsAccessed"
+    - "SearchQueryInitiated"
+  condition: keywords
+falsepositives:
+  - Legitimate mailbox automation and eDiscovery activity
+level: high
+tags:
+  - attack.t1114
+  - attack.collection

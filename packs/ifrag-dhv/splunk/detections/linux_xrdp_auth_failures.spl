@@ -1,0 +1,7 @@
+index=* (source="/var/log/xrdp-sesman.log" OR sourcetype=syslog)
+("xrdp" AND ("login failed" OR "authentication failure"))
+| rex field=_raw "(?<src_ip>\d{1,3}(?:\.\d{1,3}){3})"
+| bucket _time span=15m
+| stats count as fail_count values(src_ip) as src_ips by host _time
+| where fail_count>=5
+| sort - fail_count

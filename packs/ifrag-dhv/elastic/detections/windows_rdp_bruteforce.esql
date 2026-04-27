@@ -1,0 +1,5 @@
+FROM logs-*, winlogbeat-*, filebeat-*
+| WHERE event.code == "4625" AND winlog.event_data.LogonType == "10"
+| STATS fail_count = COUNT(), src_ips = VALUES(source.ip) BY host.name, user.name, DATE_TRUNC(15 minutes, @timestamp)
+| WHERE fail_count >= 8
+| SORT fail_count DESC

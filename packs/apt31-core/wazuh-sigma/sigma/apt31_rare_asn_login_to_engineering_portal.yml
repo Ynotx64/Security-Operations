@@ -1,0 +1,18 @@
+title: APT31 Rare ASN Login To Engineering Portal
+id: apt31-0004
+status: experimental
+description: Detects successful portal access from unusual ASN or network context.
+logsource:
+  category: webserver
+detection:
+  selection:
+    cs-uri-stem|contains:
+      - "engineering"
+      - "portal"
+  condition: selection
+falsepositives:
+  - Travel or new VPN provider
+level: medium
+tags:
+  - attack.t1078
+  - attack.discovery

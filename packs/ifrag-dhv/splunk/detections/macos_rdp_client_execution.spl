@@ -1,0 +1,3 @@
+index=* host_os_type=macos
+(process_name="Microsoft Remote Desktop" OR process_name="Windows App" OR process_name="xfreerdp" OR process_name="rdesktop" OR process_name="FreeRDP")
+| stats values(process) as process_cmd values(dest) as destinations count by host user process_name

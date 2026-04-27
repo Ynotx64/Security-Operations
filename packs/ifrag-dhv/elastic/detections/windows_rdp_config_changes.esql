@@ -1,0 +1,4 @@
+FROM logs-*, winlogbeat-*, filebeat-*
+| WHERE event.category == "registry" AND (registry.path LIKE "*\Control\Terminal Server\fDenyTSConnections" OR registry.path LIKE "*\Terminal Server\WinStations\RDP-Tcp\UserAuthentication")
+| KEEP @timestamp, host.name, user.name, registry.path, registry.data.strings, process.name
+| SORT @timestamp DESC

@@ -1,0 +1,150 @@
+---
+- name: ifrag-dhv Ubuntu 24.04 hardening
+  hosts: all
+  become: true
+  vars_files:
+    - group_vars/all.yml
+
+  handlers:
+    - name: restart ssh
+      ansible.builtin.service:
+        name: ssh
+        state: restarted
+
+  tasks:
+    - name: Ensure base packages are present
+      ansible.builtin.apt:
+        name:
+          - ufw
+          - fail2ban
+          - auditd
+          - unattended-upgrades
+          - apt-listchanges
+        state: present
+        update_cache: true
+
+    - name: Ensure unattended upgrades are enabled
+      ansible.builtin.copy:
+        dest: /etc/apt/apt.conf.d/20auto-upgrades
+        mode: "0644"
+        content: |
+          APT::Periodic::Update-Package-Lists "1";
+          APT::Periodic::Unattended-Upgrade "1";
+      when: ifrag_enable_unattended_upgrades | bool
+
+    - name: Disable SSH root login
+      ansible.builtin.lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: '^#?PermitRootLogin'
+        line: 'PermitRootLogin no'
+      when: ifrag_disable_root_ssh | bool
+      notify: restart ssh
+
+    - name: Disable SSH password authentication
+      ansible.builtin.lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: '^#?PasswordAuthentication'
+        line: 'PasswordAuthentication no'
+      when: ifrag_disable_password_ssh | bool
+      notify: restart ssh
+
+    - name: Ensure UFW default deny incoming
+      community.general.ufw:
+        direction: incoming
+        policy: deny
+      when: ifrag_enable_ufw | bool
+
+    - name: Ensure UFW default allow outgoing
+      community.general.ufw:
+        direction: outgoing
+        policy: allow
+      when: ifrag_enable_ufw | bool
+
+    - name: Allow SSH only from approved sources
+      community.general.ufw:
+        rule: allow
+        port: "22"
+        proto: tcp
+        src: "{{ item }}"
+      loop: "{{ ifrag_allowed_ssh_sources }}"
+      when: ifrag_enable_ufw | bool
+
+    - name: Deny XRDP by default when disabled
+      community.general.ufw:
+        rule: deny
+        port: "{{ ifrag_xrdp_port }}"
+        proto: tcp
+      when:
+        - ifrag_enable_ufw | bool
+        - not ifrag_enable_xrdp | bool
+
+    - name: Install XRDP when enabled
+      ansible.builtin.apt:
+        name: xrdp
+        state: present
+      when: ifrag_enable_xrdp | bool
+
+    - name: Restrict XRDP to approved source networks
+      community.general.ufw:
+        rule: allow
+        port: "{{ ifrag_xrdp_port }}"
+        proto: tcp
+        src: "{{ item }}"
+      loop: "{{ ifrag_allowed_rdp_sources }}"
+      when:
+        - ifrag_enable_ufw | bool
+        - ifrag_enable_xrdp | bool
+
+    - name: Ensure XRDP service state matches policy
+      ansible.builtin.service:
+        name: xrdp
+        enabled: "{{ ifrag_enable_xrdp }}"
+        state: "{{ 'started' if ifrag_enable_xrdp else 'stopped' }}"
+      when: ifrag_enable_xrdp | bool
+
+    - name: Configure fail2ban jail for SSH
+      ansible.builtin.copy:
+        dest: /etc/fail2ban/jail.d/ifrag-ssh.local
+        mode: "0644"
+        content: |
+          [sshd]
+          enabled = true
+          maxretry = 5
+          bantime = 3600
+          findtime = 600
+      when: ifrag_enable_fail2ban | bool
+
+    - name: Configure fail2ban jail for XRDP
+      ansible.builtin.copy:
+        dest: /etc/fail2ban/jail.d/ifrag-xrdp.local
+        mode: "0644"
+        content: |
+          [xrdp-sesman]
+          enabled = true
+          port = {{ ifrag_xrdp_port }}
+          logpath = /var/log/xrdp-sesman.log
+          maxretry = 5
+          bantime = 3600
+          findtime = 600
+      when:
+        - ifrag_enable_fail2ban | bool
+        - ifrag_enable_xrdp | bool
+
+    - name: Ensure fail2ban is enabled
+      ansible.builtin.service:
+        name: fail2ban
+        state: started
+        enabled: true
+      when: ifrag_enable_fail2ban | bool
+
+    - name: Ensure auditd is enabled
+      ansible.builtin.service:
+        name: auditd
+        state: started
+        enabled: true
+      when: ifrag_enable_auditd | bool
+
+    - name: Ensure UFW is enabled
+      community.general.ufw:
+        state: enabled
+      when: ifrag_enable_ufw | bool

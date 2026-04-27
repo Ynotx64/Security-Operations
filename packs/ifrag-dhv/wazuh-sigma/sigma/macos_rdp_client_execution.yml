@@ -1,0 +1,21 @@
+title: macOS RDP Client Execution
+id: 1d278b0f-4a54-4d66-8ff9-1b9fdhv0004
+status: experimental
+description: Detects execution of Microsoft Remote Desktop or common FreeRDP clients on macOS endpoints.
+logsource:
+  category: process_creation
+  product: macos
+detection:
+  selection:
+    Image|endswith:
+      - "/Microsoft Remote Desktop"
+      - "/Windows App"
+      - "/xfreerdp"
+      - "/rdesktop"
+      - "/FreeRDP"
+  condition: selection
+falsepositives:
+  - Authorized administrators remotely managing Windows hosts
+level: low
+tags:
+  - attack.t1021.001

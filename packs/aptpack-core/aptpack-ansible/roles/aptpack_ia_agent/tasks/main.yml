@@ -1,0 +1,72 @@
+---
+- name: Install required packages
+  apt:
+    name: "{{ aptpack_required_packages }}"
+    state: present
+    update_cache: true
+
+- name: Ensure journald drop-in directory exists
+  file:
+    path: /etc/systemd/journald.conf.d
+    state: directory
+    mode: '0755'
+
+- name: Configure persistent journald storage
+  template:
+    src: journald.conf.override.j2
+    dest: /etc/systemd/journald.conf.d/99-aptpack.conf
+    owner: root
+    group: root
+    mode: '0644'
+  notify: restart journald
+
+- name: Ensure audit rules directory exists
+  file:
+    path: /etc/audit/rules.d
+    state: directory
+    mode: '0755'
+
+- name: Deploy APTPACK initial access audit rules
+  template:
+    src: aptpack-initial-access.rules.j2
+    dest: /etc/audit/rules.d/aptpack-initial-access.rules
+    owner: root
+    group: root
+    mode: '0640'
+  notify: reload audit rules
+
+- name: Deploy shell history telemetry settings
+  template:
+    src: aptpack-history.sh.j2
+    dest: /etc/profile.d/aptpack-history.sh
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Disable core dumps
+  copy:
+    dest: /etc/security/limits.d/99-aptpack-nocore.conf
+    owner: root
+    group: root
+    mode: '0644'
+    content: |
+      * hard core 0
+      * soft core 0
+
+- name: Ensure rsyslog is enabled
+  systemd:
+    name: rsyslog
+    enabled: true
+    state: started
+
+- name: Ensure auditd is enabled
+  systemd:
+    name: auditd
+    enabled: true
+    state: started
+
+- name: Ensure wazuh-agent is enabled
+  systemd:
+    name: wazuh-agent
+    enabled: true
+    state: started
